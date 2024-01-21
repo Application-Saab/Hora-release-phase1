@@ -1592,6 +1592,10 @@ const HospitalityService = ({navigation}) => {
           </View>
         </RBSheet>
       </View>
+      <View>
+        <Text style={{color:"black"}}>Total Payment: {getTotalAmount()} </Text>
+        <Text style={{color:"black"}}>Advance Amount: {getAdvanceAmount()}</Text>
+      </View>
         <View
          >
 		<TouchableHighlight
