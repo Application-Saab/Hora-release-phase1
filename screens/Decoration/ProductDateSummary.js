@@ -43,6 +43,7 @@ const ProductDateSummary = ({ route, navigation }) => {
 
     const handleCommentsChange = (text) => {
         setComments(text);
+        console.log(text);
       };
       
     const handleWarningClose = () => {
@@ -258,7 +259,7 @@ const ProductDateSummary = ({ route, navigation }) => {
                     "is_gst": "0",
                     "order_type": true,
                     "items": items,
-                    "decoration_comment":comments
+                    "decoration_comments":comments
                 }
                 console.log(requestData)
                 const token = await AsyncStorage.getItem('token');
@@ -685,14 +686,17 @@ const ProductDateSummary = ({ route, navigation }) => {
 
                                     </View>
                                     <ScrollView>
+                <Text style={{color:"black"}}>Share your comments(if any):</Text>
                 <TextInput
                     editable
                     multiline
                     numberOfLines={5}
                     maxLength={100}
                     style={styles.textArea}
-                    placeholder="Share the comments"
-																																																																										
+                    placeholder="No extra charges for customizing balloon color or replacing tags (Happy Birthday/Anniversary).
+                    Charges will be applied for additional items."
+                    placeholderTextColor="#ddd" 
+                    onChangeText={handleCommentsChange}
 																																		
                 />
             </ScrollView>

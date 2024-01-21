@@ -27,6 +27,7 @@ const OrderDetails = ({ navigation, route }) => {
 	const [decorationItems, setDecorationItems] = useState([]);
     const [hospitalityServiceCount , setHospitalityServiceCount] = useState(0);
     const [hospitalityServiceTotalAmount , setHospitalityServiceTotalAmount] = useState(0);
+    const [decorationComments, setDecorationComments] = useState('');
 															   
 																			   
 																						   
@@ -161,6 +162,7 @@ const OrderDetails = ({ navigation, route }) => {
                     console.log("responseData11", responseData.data.items[0].decoration)
                     setOrderDetail(responseData.data._doc)
                     setDecorationItems(responseData.data.items[0].decoration)
+                    setDecorationComments(responseData.data._doc.decoration_comments)
                 }
                 catch (error) {
                     console.log(error)
@@ -196,7 +198,8 @@ const OrderDetails = ({ navigation, route }) => {
     const getItemInclusion = (inclusion) => {
         const htmlString = inclusion[0];
         const withoutDivTags = htmlString.replace(/<\/?div>/g, '');
-        const statements = withoutDivTags.split('<div>');
+        const withoutBrTags = withoutDivTags.replace(/<\/?br>/g, '');
+        const statements = withoutBrTags.split('<div>');
         const bulletedList = statements
             .filter(statement => statement.trim() !== '')
             .map(statement => `- ${statement.trim()}`);
@@ -287,11 +290,14 @@ const OrderDetails = ({ navigation, route }) => {
                                             <View style={{ width: '50%' }}>
                                                 <Text style={styles.productName}>{product.name}</Text>
                                                 <Text style={styles.productPrice}>₹{product.price}</Text>
-                                                <Text>{getItemInclusion(product.inclusion)}</Text>
+                                                <Text style={{color:"black"}}>{getItemInclusion(product.inclusion)}</Text>
+                                                
                                             </View>
                                         </View>
                                     </View>
                                 ))}
+                                <Text style = {{color:"black", fontWeight:"bold", paddingBottom:10}}>Your comments, if any:</Text>
+                                <Text style = {{color:"black", paddingBottom:100}}>{decorationComments}</Text>
                             </View>
                         </View>
                     )}
@@ -487,6 +493,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '900',
         marginTop: 10,
+        color:"#000",
     },
     productId: {
         fontSize: 14,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import { ScrollView } from  'react-native';
-										   
+			 
 
 const OrderDetailsMenu = ({ OrderMenu }) => {
   var Appetizer = [];
@@ -12,34 +12,49 @@ const OrderDetailsMenu = ({ OrderMenu }) => {
   var Mocktails = [];
   var SaladPapad = [];
   var SoupBeverages = [];
+  var preparationTextList = []
   OrderMenu.forEach((item) => {
     if (item.mealId[0].name === 'Appetizer') {
       Appetizer.push({ name: item.name, image: item.image, price: item.price });
+      preparationTextList.push(item.preperationtext);
     }
     else if (item.mealId[0].name === 'Breads, Rice and Raita') {
       Breads.push({ name: item.name, image: item.image, price: item.price });
+      preparationTextList.push(item.preperationtext)
     }
     else if (item.mealId[0].name === 'Breakfast') {
       Breakfast.push({ name: item.name, image: item.image, price: item.price });
+      preparationTextList.push(item.preperationtext)
     }
     else if (item.mealId[0].name === 'Dessert') {
       Dessert.push({ name: item.name, image: item.image, price: item.price });
+      preparationTextList.push(item.preperationtext)
     }
     else if (item.mealId[0].name === 'Main course') {
       Maincourse.push({ name: item.name, image: item.image, price: item.price });
+      preparationTextList.push(item.preperationtext)
     }
     else if (item.mealId[0].name === 'Mocktails') {
       Mocktails.push({ name: item.name, image: item.image, price: item.price });
+      preparationTextList.push(item.preperationtext)
     }
     else if (item.mealId[0].name === 'Salad & Papad') {
       SaladPapad.push({ name: item.name, image: item.image, price: item.price });
+      preparationTextList.push(item.preperationtext)
     }
     else if (item.mealId[0].name === 'Soups & Beverages') {
       SoupBeverages.push({ name: item.name, image: item.image, price: item.price });
+      preparationTextList.push(item.preperationtext)
     }
   });
   return (
     <ScrollView style={styles.orderCon}>
+      <View>
+      <View style={{ marginTop: 9, flexDirection: 'column', padding: 10, width: Dimensions.get('window').width*0.7 , marginLeft:10}}>
+                        <Text style={{ color: '#9252AA', fontSize: 12, fontWeight: '700' }}>*Advance Preparations required</Text>
+                        <Text style={{ color: '#4B4B4B', fontSize: 12, fontWeight: '400' }}>{preparationTextList ? preparationTextList : "NA"}</Text>
+       </View>
+      </View>
       {Appetizer.length > 0 && (
         <View style={styles.foodItemsContainer}>
           <View>
@@ -53,7 +68,7 @@ const OrderDetailsMenu = ({ OrderMenu }) => {
                 </View>
                 <View style={styles.foodItemDetails}>
                 <Text style={styles.foodItemName}>{item.name}</Text>
-
+                <Text style={styles.foodItemName}>{item.preperationtext}</Text>
                 </View>
               </View>
             ))}
@@ -214,20 +229,20 @@ const OrderDetailsMenu = ({ OrderMenu }) => {
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
-	orderCon:{
+  orderCon:{
     height: Dimensions.get('window').height*0.65,
     backgroundColor:"#fff",
-  },		
-												
-						   
-	
+  },
+			
+		 
+ 
   menuCat: {
     color: "#000",
     fontSize: 16,
     fontWeight: "bold"
   },
   foodItemsContainer:{
-    backgroundColor:"#fff",
+						   
     paddingTop:10,
     paddingLeft:12,
     paddingRight:10,
