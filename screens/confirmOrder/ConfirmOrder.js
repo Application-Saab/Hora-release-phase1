@@ -5,7 +5,7 @@ import CustomHeader from '../../components/CustomeHeader';
 const ConfirmOrder = ({ navigation }) => {
 
   const handleOpenBottomSheet = () => {
-    navigation.navigate('DrawerNavigator')
+    navigation.navigate('OrderList')
   }
 
   const trackorder = () => {

@@ -1049,9 +1049,6 @@ const HospitalityService = ({navigation}) => {
 			  <View style={styles.view2}>
                 <Text style={styles.text2}>{'(Additional hour of service charged at 150.)'}</Text>
               </View>
-										 
-																								  
-					 
               <View
                 style={{
                   flexDirection: 'row',
@@ -1592,14 +1589,21 @@ const HospitalityService = ({navigation}) => {
           </View>
         </RBSheet>
       </View>
-      <View>
-        <Text style={{color:"black"}}>Total Payment: {getTotalAmount()} </Text>
-        <Text style={{color:"black"}}>Advance Amount: {getAdvanceAmount()}</Text>
+      <View style={{backgroundColor:"#fff",borderWidth:1, paddingHorizontal:10,paddingVertical:10 , marginTop:10 ,  borderColor: '#ddd',}}>
+       <View style={{justifyContent:"space-between" , alignItems:"center" , flexDirection:"row"}}>
+       <Text style={{color:"#9252AA" , fontWeight:"500"}}>Total Payment:</Text>
+       <Text style={{color:"#9252AA" , fontWeight:"500"}}>{getTotalAmount()} </Text>
+       </View>
+      <View style={{justifyContent:"space-between" , alignItems:"center" , flexDirection:"row"}}>
+      <Text style={{color:"#9252AA" , fontWeight:"500"}}>Advance Amount: </Text>
+        <Text style={{color:"#9252AA" , fontWeight:"500" }}>{getAdvanceAmount()}</Text>
+      </View>
+      
       </View>
         <View
          >
 		<TouchableHighlight
-            // onPress={() => addDish(selectedProducts, totalPrice)}
+            onPress={onContinueClick}
             style={[
               styles.continueButton,
               {
@@ -1623,6 +1627,7 @@ const HospitalityService = ({navigation}) => {
                 0,
               ) === 0
             }>
+            
             <View style={styles.buttonContent}>
               <Text
                 onPress={onContinueClick}
@@ -1639,6 +1644,7 @@ const HospitalityService = ({navigation}) => {
                 Continue
               </Text>
               <Text
+                onPress={onContinueClick}
                 style={[
                   styles.continueButtonRightText,
                   {
@@ -1687,7 +1693,7 @@ const styles = StyleSheet.create({
     paddingTop:12,
     marginBottom: 3
   },
-  view1: { flexDirection: 'row', backgroundColor: '#EFF0F3', elevation: 2, width: Dimensions.get('window').width  , marginBottom:15 , alignItems:"center" , justifyContent:"center"},
+  view1: { flexDirection: 'row', backgroundColor: '#EFF0F3', elevation: 2, width: Dimensions.get('window').width  , marginBottom:1 , alignItems:"center" , justifyContent:"center"},
   text1: { color: '#676767', fontSize: 14, fontWeight: '400', paddingVertical: 5, marginStart: 8 },
   view2: { flexDirection: 'row', backgroundColor: '#EFF0F3' , alignItems:"center" , justifyContent:"center" , marginTop:5},
   text2: { color: '#676767', fontSize: 12, fontWeight: '400', paddingVertical: 5, marginStart: 8 },
@@ -1715,9 +1721,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   decCatimage: {
-    width: '100%',
-    width: 80,
-    height: 80,
+    width: Dimensions.get("window").width*0.22,
+    height: Dimensions.get("window").height*0.1,
     borderRadius: 10,
     marginBottom: 3,
   },

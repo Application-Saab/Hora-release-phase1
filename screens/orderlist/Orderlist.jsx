@@ -67,7 +67,7 @@ const Orderlist = ({navigation}) => {
           // console.log("responseData.data.order", responseData.data.order)
           if (responseData && responseData.data && responseData.data.order) {
             const sortedOrders = responseData.data.order.sort(
-              (a, b) => new Date(b.order_date) - new Date(a.order_date),
+              (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
             );
             setOrderData(sortedOrders);
           } else {
@@ -92,7 +92,7 @@ const Orderlist = ({navigation}) => {
 
     message = message + dishes.order_date.slice(0, 10);
 
-    message = message + ' ' + dishes.order_time;
+    message = message + ' ' + formatTime(dishes.order_time);
 
     dishes.selecteditems.forEach((dish, index) => {
       message += '\n' + (index + 1) + '. ' + dish.name;
@@ -120,6 +120,17 @@ const Orderlist = ({navigation}) => {
     }
   };
 
+  function formatTime(inputTimeString) {
+    const timeComponents = inputTimeString.split(':');
+    const hours = parseInt(timeComponents[0], 10);
+    const minutes = timeComponents[1];
+    const period = timeComponents[2].split(' ')[1]; // Grab the AM/PM part
+  
+    const formattedTime = `${hours}:${minutes} ${period}`;
+  
+    return formattedTime;
+  }
+  
   const getOrderStatus = orderStatusValue => {
     if (orderStatusValue === 0) {
       return 'Booked';
@@ -398,7 +409,7 @@ const Orderlist = ({navigation}) => {
                             fontWeight: '600',
                           }}>
 						 
-                          {orderData[item].order_time}
+                          {formatTime(orderData[item].order_time)}
                         </Text>
                       </View>
                       {orderData[item].type === 2 ? (

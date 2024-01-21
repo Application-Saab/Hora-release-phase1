@@ -34,7 +34,7 @@ const OrderDetailsIngre = ({ OrderDetail}) => {
             </View>
             <View style={styles.foodItemDetails}>
               <Text style={styles.foodItemName}>{item}</Text>
-              <Text style={{fontSize:12}}>{orderIngredients[item].qty + " " + orderIngredients[item].unit}</Text>
+              <Text style={{fontSize:12, color:"black"}}>{orderIngredients[item].qty + " " + orderIngredients[item].unit}</Text>
             </View>
           </View>
         ))}

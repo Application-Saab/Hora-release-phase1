@@ -421,7 +421,7 @@ const ProductDateSummary = ({ route, navigation }) => {
         
     }
 	 const contactUsedRedirection = () =>{
-        Linking.openURL('whatsapp://send?phone=+918884221487&text=Hello%20wanted%20to%20know%20about%20fooddelivery!');
+        Linking.openURL('whatsapp://send?phone=+918982321487&text=Hello%20wanted%20to%20know%20about%20fooddelivery!');
     }
 
 
@@ -485,7 +485,7 @@ const ProductDateSummary = ({ route, navigation }) => {
 
 
     const contactUsRedirection = () => {
-        Linking.openURL('whatsapp://send?phone=+918884221487&text=Hello%20wanted%20to%20know%20about%20your%20service%20decoration');
+        Linking.openURL('whatsapp://send?phone=+918982321487&text=Hello%20wanted%20to%20know%20about%20your%20service%20decoration');
     }
 
 

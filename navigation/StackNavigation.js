@@ -23,6 +23,7 @@ import HospitalityService from '../screens/hospitalityservice/HospitalityService
 import Gifts from '../screens/gifts/Gifts';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen/AuthLoadingScreen';
 import Entertainment from '../screens/entertainment/Entertainment';
+import Orderlist from '../screens/orderlist/Orderlist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { useEffect } from 'react';
@@ -102,6 +103,7 @@ const handleLogout = async () => {
       <Stack.Screen name="FoodDelivery" component={FoodDelivery}  options={{headerShown:true}}/>
       <Stack.Screen name="HospitalityService" component={HospitalityService}  options={{headerShown:true}}/>
       <Stack.Screen name="Gifts" component={Gifts}  options={{headerShown:true}}/>
+      <Stack.Screen name="OrderList" component={Orderlist}  options={{headerShown:true}}/>
 	  <Stack.Screen name="Entertainment" component={Entertainment} options={{headerShown:true}}/>
 																								 
 

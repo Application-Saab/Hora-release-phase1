@@ -7,6 +7,7 @@ import OrderDetailsMenu from '../../components/OrderDetailsMenu';
 import OrderDetailsIngre from '../../components/OrderDetailsIngre';
 import CustomHeader from '../../components/CustomeHeader';
 import OrderDetailsAppli from '../../components/OrderDetailsAppli';
+import Orderlist from '../orderlist/Orderlist';
 import { BASE_URL, ORDER_DETAILS_ENDPOINT, ORDER_CANCEL , GET_DECORATION_DETAILS} from '../../utils/ApiConstants';
 // import Share from 'react-native-share';
 
@@ -81,7 +82,7 @@ const OrderDetails = ({ navigation, route }) => {
     };
 
     const contactUsRedirection = () => {
-        Linking.openURL('whatsapp://send?phone=+918982321487&text=I%20wanted%20to%20Share%20feedback%20of%20your%20service');
+        Linking.openURL(`whatsapp://send?phone=+918982321487&text=I've canceled my order, kindly assist with the refund process. Thanks!`);
     }
 
     const handleRating = () => {
@@ -219,6 +220,7 @@ const OrderDetails = ({ navigation, route }) => {
             // Handle success response
        
             alert('Order cancelled successfully');
+            navigation.navigate("OrderList");
         } catch (error) {
             // Handle error response
             console.log('Error updating profile:', error);
@@ -310,7 +312,7 @@ const OrderDetails = ({ navigation, route }) => {
                         {orderDetail.order_status === 4 ?
                             <View style={styles.cancelorderbox}>
                                 <View>
-                                    <Text style={styles.cancelorderboxtext1}>We Regret to inform you that your order has been canceled! we are working hard to make your experience better and hustle free
+                                    <Text style={styles.cancelorderboxtext1}>We regret to inform you that your order has been cancelled! We are working hard to make your experience better and hassle free.
                                     </Text>
                                 </View>
                                 <View>

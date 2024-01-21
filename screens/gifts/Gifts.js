@@ -8,7 +8,7 @@ const Gifts = ({ navigation }) => {
     const screenHeight = Dimensions.get('window').height - 30;
 
     const handlePage = () => {
-        Linking.openURL('whatsapp://send?phone=+918884221487&text=Hello%20I%20wanted%20to%20know%20about%20return%20gift%20service');
+        Linking.openURL('whatsapp://send?phone=+918982321487&text=Hello%20I%20wanted%20to%20know%20about%20return%20gift%20service');
     }
     return (
         <ScrollView>
