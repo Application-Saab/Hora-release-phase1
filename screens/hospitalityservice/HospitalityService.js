@@ -839,6 +839,12 @@ const HospitalityService = ({navigation}) => {
     );
   };
 
+  const getAdvanceAmount = () => {
+    const advanceAmount = categoryCounts["waiter"] * 160 + categoryCounts["bartender"]*450 + categoryCounts["cleaner"] * 160;
+
+    return advanceAmount;
+  };
+
   return (
     <ScrollView>
       <CustomHeader title={'Hospitality Service'} navigation={navigation} />
@@ -1643,7 +1649,7 @@ const HospitalityService = ({navigation}) => {
                   (totalCount, count) => totalCount + count,
                   0,
                 )}{' '}
-                Items | ₹ {getTotalAmount()}
+                Items | ₹ {getAdvanceAmount()}
               </Text>
             </View>
           </TouchableHighlight>
