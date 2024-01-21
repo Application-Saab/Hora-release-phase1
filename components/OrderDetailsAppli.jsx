@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 
 const OrderDetailsAppli = ({ OrderAppl }) => {
   return (
-     <View style={{ paddingTop: 20, backgroundColor: "#fff",  height: Dimensions.get('window').height*0.7,paddingTop: 20, paddingLeft: 20 }}>
+     <View style={{ paddingTop: 20, backgroundColor: "#fff",  height: Dimensions.get('window').height*0.65,paddingTop: 20, paddingLeft: 20 }}>
       <View>
         <Text style={{ fontWeight: "600", color: "#000", fontSize: 16 }}>Required Burners</Text>
         <Text style={{ color: "#969696", fontSize: 11, fontWeight: "500" }}>(Burners would be used at your location)</Text>

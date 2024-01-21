@@ -78,14 +78,13 @@ const Home = ({ navigation }) => {
 
   
   const bookNowData = [
-     { id: '1', image: require('../../assets/homebanner1.png'), name: 'Decoration', text: "Book Decorations for your Events", openLink: 'DecorationPage', category: "decoration" },
-    { id: '2', image: require('../../assets/homebanner2.png'), name: 'Chef for Party',text: "Chef for party - Food by Top Chef at just ₹80 / Person", openLink: 'CreateOrder', category: "chef" },
-    { id: '3', image: require('../../assets/homebanner3.png'), name: 'Hospitality Services', text: "Waiter/Cleaner/Helper - at just Rs 650",  openLink: 'HospitalityService', category: "hospitalityService" },
-    { id: '4', image: require('../../assets/homebanner4.png'), name: 'Food Delivery', text: "Food Delivery - Starting at just Rs 300 per person with multiple dish options", openLink: 'FoodDelivery', category: "foodDelivery" },
-    { id: '5', image: require('../../assets/homebanner5.png'), name: 'Gift & Party Supplies',text: "Buy Gifts to Surprise", openLink: 'Gifts', category: "gifts" },
-    { id: '6', image: require('../../assets/homebanner5.png'), name: 'Entertainment', text: "Entertainment", openLink: 'Entertainment', category: "enterntainment" },
-
-  ];
+    { id: '1', image: require('../../assets/homebanner1.png'), name: 'Decoration', text: "Book Decorations for your Events", openLink: 'DecorationPage', category: "decoration" },
+   { id: '2', image: require('../../assets/homebanner2.png'), name: 'Chef for Party',text: "Book Chef for party - Food by Trained Chef", openLink: 'CreateOrder', category: "chef" },
+   { id: '3', image: require('../../assets/homebanner4.png'), name: 'Hospitality Services', text: "Waiter/Cleaner/Helper - Professionals at your home",  openLink: 'HospitalityService', category: "hospitalityService" },
+   // { id: '4', image: require('../../assets/homebanner3.png'), name: 'Food Delivery', text: "Food Delivery - Starting at just Rs 300 per person with multiple dish options", openLink: 'FoodDelivery', category: "foodDelivery" },
+   // { id: '5', image: require('../../assets/homebanner5.png'), name: 'Gift & Party Supplies',text: "Buy Gifts to Surprise", openLink: 'Gifts', category: "gifts" },
+   // { id: '6', image: require('../../assets/homebanner5.png'), name: 'Entertainment', text: "Entertainment", openLink: 'Entertainment', category: "enterntainment" },
+ ];
 
   const popularDishes = [
     { id: '1', image: require('../../assets/homeslider2-firstimg.png') },

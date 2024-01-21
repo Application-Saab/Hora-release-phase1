@@ -85,6 +85,11 @@ const OrderDetails = ({ navigation, route }) => {
         Linking.openURL(`whatsapp://send?phone=+918982321487&text=I've canceled my order, kindly assist with the refund process. Thanks!`);
     }
 
+	const cancelcontactUsRedirection = () =>{
+        Linking.openURL('whatsapp://send?phone=+918982321487&text=I%20have%20canceled%20my%20order%20kindly%20assist%20with%20the%20refund%20process%20Thanks!');
+
+    }
+
     const handleRating = () => {
         alert("rate us")
     }
@@ -120,7 +125,7 @@ const OrderDetails = ({ navigation, route }) => {
     //   };
 
     if (orderType === 2) {
-        console.log("orderType2 chef")
+        
         
         useEffect(() => {
             
@@ -151,7 +156,7 @@ const OrderDetails = ({ navigation, route }) => {
             async function fetchDecorationOrderDetails() {
                 console.log("orderurl===" + BASE_URL + GET_DECORATION_DETAILS + '/' + route.params?.orderId)
                 try {
-                    const response = await fetch(BASE_URL + GET_DECORATION_DETAILS + '/' + 296);
+                    const response = await fetch(BASE_URL + GET_DECORATION_DETAILS + '/' + route.params?.orderId);
                     const responseData = await response.json();
                     console.log("responseData11", responseData.data.items[0].decoration)
                     setOrderDetail(responseData.data._doc)
@@ -248,27 +253,27 @@ const OrderDetails = ({ navigation, route }) => {
                     ) : orderType === 3 ? (
                         <View style={{ marginTop:10 ,  justifyContent: 'center', alignItems: 'center'  , marginTop:100}}>
                         <Image source={require('../../assets/waiter.jpeg')} style={{ width: 200, height: 200  , marginBottom:10}} />
-                        <Text style={{fontWeight:"700", color:"#333"}}>You have booked Waiter for your event.</Text>
-                        <Text style={{fontWeight:"600", color:"#333"}}>Number of Waiter: {hospitalityServiceCount}</Text>
-                        <Text style={{fontWeight:"600", color:"#333"}}>Price: {hospitalityServiceTotalAmount}</Text>
+                        <Text style={{fontWeight:"700"}}>You have booked Waiter for your event.</Text>
+                        <Text>Number of Waiter: {hospitalityServiceCount}</Text>
+                        <Text>Price: {hospitalityServiceTotalAmount}</Text>
                     </View>
                     ) : orderType === 4 ? (
                         // Add your rendering logic for orderType 4 here
                      <View style={{ marginTop:10 ,  justifyContent: 'center', alignItems: 'center' , marginTop:100 }}>
                         
                             <Image source={require('../../assets/bartender.jpg')} style={{width:200 , height:200  , marginBottom:10}}  />
-                            <Text  style={{fontWeight:"700", color:"#333"}}>You have Bartender for your event.</Text>
-                            <Text style={{fontWeight:"600", color:"#333"}}>Number of Bartender: {hospitalityServiceCount}</Text>
-                            <Text style={{fontWeight:"600", color:"#333"}}>Price: {hospitalityServiceTotalAmount}</Text>
+                            <Text  style={{fontWeight:"700"}}>You have Bartender for your event.</Text>
+                            <Text >Number of Bartender: {hospitalityServiceCount}</Text>
+                            <Text>Price: {hospitalityServiceTotalAmount}</Text>
                         </View>
                     ) : orderType === 5 ? (
 
                         <View style={{ marginTop:10 ,  justifyContent: 'center', alignItems: 'center' , marginTop:100 }}>
                             <Image source={require('../../assets/cleaner.jpg')}style={{width:200 , height:200  , marginBottom:10}}  />
 
-                            <Text  style={{fontWeight:"700", color:"#333"}}>You have booked Cleaner for your event.</Text>
-                            <Text style={{fontWeight:"600", color:"#333"}}>Number of Cleaner: {hospitalityServiceCount}</Text>
-                            <Text style={{fontWeight:"600", color:"#333"}}>Price: {hospitalityServiceTotalAmount}</Text>
+                            <Text  style={{fontWeight:"700"}}>You have booked Cleaner for your event.</Text>
+                            <Text>Number of Cleaner: {hospitalityServiceCount}</Text>
+                            <Text>Price: {hospitalityServiceTotalAmount}</Text>
                         </View>
                     ) : (
                         <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
@@ -310,15 +315,15 @@ const OrderDetails = ({ navigation, route }) => {
                     </View>
                     <View>
                         {orderDetail.order_status === 4 ?
-                            <View style={styles.cancelorderbox}>
-                                <View>
-                                    <Text style={styles.cancelorderboxtext1}>We regret to inform you that your order has been cancelled! We are working hard to make your experience better and hassle free.
-                                    </Text>
-                                </View>
-                                <View>
-                                    <Text style={styles.cancelorderboxtext2} onPress={contactUsRedirection}>Contact us for more help!</Text>
-                                </View>
-                            </View>
+						  
+                            <TouchableHighlight style={styles.ratingbutton} underlayColor="#E56352" onPress={cancelcontactUsRedirection}>
+                             <View style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+										   
+									   
+									  
+                                 <View><Text style={styles.ratingbuttonText}>Initiate Refund</Text></View>
+                             </View>
+                         </TouchableHighlight>
                             :
                             ''
                         }

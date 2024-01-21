@@ -96,7 +96,8 @@ const DecorationCatPage = ({ route, navigation }) => {
     const getItemInclusion = (inclusion) => {
         const htmlString = inclusion[0];
         const withoutDivTags = htmlString.replace(/<\/?div>/g, '');
-        const statements = withoutDivTags.split('<div>');
+        const withoutBrTags = withoutDivTags.replace(/<\/?br>/g, '');
+        const statements = withoutBrTags.split('<div>');
         const bulletedList = statements
             .filter(statement => statement.trim() !== '')
             .map(statement => `- ${statement.trim()}`);
@@ -122,7 +123,7 @@ const DecorationCatPage = ({ route, navigation }) => {
     return (
         <View style={styles.screenContainer}>
             <ScrollView>
-                <CustomHeader title={"Select Category"} navigation={navigation} />
+                <CustomHeader title={"Select Design"} navigation={navigation} />
 
                 <View style={styles.container}>
                     <View style={styles.decContainer}>
@@ -134,7 +135,7 @@ const DecorationCatPage = ({ route, navigation }) => {
                                             ? require('../../assets/Rectanglepurple.png')
                                             : require('../../assets/rectanglewhite.png')
                                     }
-                                    style={{ width: "100%", height: 240, marginTop: 10 }}
+                                    style={{ width: "100%", height: Dimensions.get('window').height*0.32, marginTop: 10 }}
                                     imageStyle={{ borderRadius: 16 }}
                                 >
 
@@ -285,7 +286,7 @@ const styles = StyleSheet.create({
         padding: 5
     },
     decCatimage: {
-        width: 155, // Set to 100% width
+        width: Dimensions.get('window').width*0.43, // Set to 100% width
         height: Dimensions.get('window').height*0.21,
         borderRadius: 10, // Optional: Add border-radius for rounded corners
     },

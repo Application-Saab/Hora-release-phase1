@@ -215,7 +215,7 @@ const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
 	orderCon:{
-    height: Dimensions.get('window').height*0.7,
+    height: Dimensions.get('window').height*0.65,
     backgroundColor:"#fff",
   },		
 												

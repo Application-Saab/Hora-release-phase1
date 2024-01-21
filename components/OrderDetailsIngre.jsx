@@ -20,7 +20,7 @@ const OrderDetailsIngre = ({ OrderDetail}) => {
     fetchOrderIngredients();
   }, []);
   return (
-    <ScrollView style={{ paddingTop: 20, backgroundColor: "#fff", height:480, paddingLeft: 10 , paadingRight:20 , height: Dimensions.get('window').height*0.7}}>
+     <ScrollView style={{ paddingTop: 20, backgroundColor: "#fff", height:Dimensions.get('window').height*0.65, paddingLeft: 10 , paadingRight:20 }}>
       <View>
         <Text style={{ fontWeight: "600", color: "#000", fontSize: 16 }}>Required Ingredient</Text>
         <Text style={{ color: "#969696", fontSize: 11, fontWeight: "500" }}>(Keep these ingredient ready at your location)</Text>
