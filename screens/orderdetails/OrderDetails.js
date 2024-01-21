@@ -153,13 +153,11 @@ const OrderDetails = ({ navigation, route }) => {
     }
     else if (orderType === 1) {
         useEffect(() => {
-            console.log("orderType1 decoration")
+            
             async function fetchDecorationOrderDetails() {
-                console.log("orderurl===" + BASE_URL + GET_DECORATION_DETAILS + '/' + route.params?.orderId)
                 try {
                     const response = await fetch(BASE_URL + GET_DECORATION_DETAILS + '/' + route.params?.orderId);
                     const responseData = await response.json();
-                    console.log("responseData11", responseData.data.items[0].decoration)
                     setOrderDetail(responseData.data._doc)
                     setDecorationItems(responseData.data.items[0].decoration)
                     setDecorationComments(responseData.data._doc.decoration_comments)
@@ -172,14 +170,13 @@ const OrderDetails = ({ navigation, route }) => {
         }, [])
     }
     if (orderType === 3 || orderType === 4 || orderType === 5) {
-        console.log("orderType3")
         useEffect(() => {
             async function fetchOrderDetails() {
                 try {
                     const response = await fetch(BASE_URL + ORDER_DETAILS_ENDPOINT + '/v1/' + route.params?.apiOrderId);
                     const responseData = await response.json();
                     setOrderDetail(responseData.data)
-                    console.log("responseData.data" + JSON.stringify(responseData.data))
+                    
                     setHospitalityServiceCount(responseData.data.no_of_people)
                     setHospitalityServiceTotalAmount(responseData.data.total_amount)
                 }
@@ -249,7 +246,7 @@ const OrderDetails = ({ navigation, route }) => {
                 <View>
                     {orderType === 2 ? (
                         <View style={styles.tabSec}>
-                            {console.log("orderType here===" + orderType)}
+                            
                             <Tabs onSelectTab={handleTabChange} />
                             {selectedTab === 1 ? <OrderDetailsMenu OrderMenu={orderMenu} /> : selectedTab === 2 ? <OrderDetailsAppli OrderAppl={OrderAppl} /> : <OrderDetailsIngre OrderMenu={orderMenu} OrderDetail={orderDetail} />}
                         </View>

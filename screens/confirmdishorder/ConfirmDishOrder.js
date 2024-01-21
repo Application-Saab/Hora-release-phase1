@@ -176,10 +176,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
                 page: '1'
             };
             const token = await AsyncStorage.getItem('token')
-            console.log(token);
 
-							   
-            
             const response = await axios.post(url, requestData, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -211,7 +208,6 @@ const ConfirmDishOrder = ({ navigation, route }) => {
         setI(1);
         setAdd(address.address2)
 
-        console.log(addresses[0].address2)
 
         addresses.forEach(element => {
             if (element.address1 ===  address.address2 || element.address2 === address.address2)
@@ -281,7 +277,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
                     "order_type": true,
                     "items": items
                 }
-                console.log(requestData)
+                
                 const token = await AsyncStorage.getItem('token');
     
                 const response = await axios.post(url, requestData, {
@@ -299,7 +295,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
         } catch (error) {
             console.log('Error Confirming Order:', error.message);
         }
-        console.log(cat);
+        
     };
     
     const checkPaymentStatus = async (merchantTransactionId) => {
@@ -366,7 +362,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
 
     const onContinueClick = async () => {
         
-        console.log("City" + cityStatus)
+        
         if (i === 0)
         {
             setWarningVisible(true);
@@ -380,7 +376,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
         
         const storedUserID = await AsyncStorage.getItem("userID");
         const phoneNumber = await AsyncStorage.getItem('mobileNumber')
-        console.log(storedUserID)
+        
         const randomInteger = Math.floor(getRandomNumber(1,1000000000000)) + Math.floor(getRandomNumber(1,1000000000000)) + Math.floor(getRandomNumber(1,1000000000000));
 
         let merchantTransactionId = randomInteger
@@ -445,7 +441,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
           const city = completeAddress[5]?.long_name || "";
           const state = completeAddress[7]?.long_name || "";
           const pincode = completeAddress[9]?.long_name || "";
-          console.log(locality + city + state + pincode);
+          
           await Promise.all([
             AsyncStorage.setItem("City", city),
             AsyncStorage.setItem("State", state),
@@ -459,7 +455,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
 
       const addAddress = () => {
         bottomSheetRef.current.close();
-        console.log(addresses[0])
+        
         navigation.navigate('ConfirmLocation', { 'data': addresses })
     }
 

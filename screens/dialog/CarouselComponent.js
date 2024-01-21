@@ -6,7 +6,6 @@ const CarouselComponent = ({ data, reviewData, navigation }) => {
 
   
   const handelpage = (item) => {
-    console.log(item.openLink + item.category)
       navigation.navigate(item.openLink, { category: item.category });
     }
   const renderItem = ({ item }) => (

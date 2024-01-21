@@ -50,7 +50,7 @@ const Orderlist = ({navigation}) => {
         try {
           setLoading(true);
           const userId = await AsyncStorage.getItem('userID');
-          console.log(userId);
+          
           const response = await fetch(BASE_URL + ORDERLIST_ENDPOINT, {
             method: 'POST',
             headers: {
@@ -64,14 +64,14 @@ const Orderlist = ({navigation}) => {
           });
           const responseData = await response.json();
 
-          // console.log("responseData.data.order", responseData.data.order)
+          
           if (responseData && responseData.data && responseData.data.order) {
             const sortedOrders = responseData.data.order.sort(
               (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
             );
             setOrderData(sortedOrders);
           } else {
-            console.log('No orders found======');
+            
             setOrderData([]); // Set an empty array if no orders are found
           }
         } catch (error) {
@@ -640,7 +640,7 @@ const Orderlist = ({navigation}) => {
 };
 
 const windowHeight = Dimensions.get('window').height;
-console.log(windowHeight);
+
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,

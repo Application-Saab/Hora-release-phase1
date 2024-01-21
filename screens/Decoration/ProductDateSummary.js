@@ -43,7 +43,7 @@ const ProductDateSummary = ({ route, navigation }) => {
 
     const handleCommentsChange = (text) => {
         setComments(text);
-        console.log(text);
+        
       };
       
     const handleWarningClose = () => {
@@ -208,7 +208,7 @@ const ProductDateSummary = ({ route, navigation }) => {
         setI(1);
         setAdd(address.address2)
 
-        console.log(addresses[0].address2)
+        
 
         addresses.forEach(element => {
             if (element.address1 ===  address.address2 || element.address2 === address.address2)
@@ -221,8 +221,7 @@ const ProductDateSummary = ({ route, navigation }) => {
             }
         });
 
-        console.log(addId);
-        console.log(address.address2)
+       
         setCurrentAddress(address.address2);
         bottomSheetRef.current.close();
     };
@@ -278,7 +277,7 @@ const ProductDateSummary = ({ route, navigation }) => {
         } catch (error) {
             console.log('Error Confirming Order:', error.message);
         }
-        console.log(cat);
+        
     };
     
     const checkPaymentStatus = async (merchantTransactionId) => {
@@ -305,13 +304,13 @@ const ProductDateSummary = ({ route, navigation }) => {
     
                         if (response.data && response.data.message) {
                             const message = response.data.message;
-                            console.log('API response message:', message);
+                            
     
                             if (message === 'PAYMENT_PENDING') {
-                                console.log('Payment is still pending. Polling again...');
+                                
                                 await new Promise(resolve => setTimeout(resolve, pollInterval));
                             } else {
-                                console.log('Payment status:', message);
+                                
                                 return message;
                             }
                         } else {
@@ -324,7 +323,7 @@ const ProductDateSummary = ({ route, navigation }) => {
                 }
     
                 // Stop polling after the specified duration
-                console.log('Polling completed. Returning final result.');
+                
                 return 'PAYMENT_POLLING_TIMEOUT';
             };
     
@@ -355,9 +354,9 @@ const ProductDateSummary = ({ route, navigation }) => {
             
         
         const storedUserID = await AsyncStorage.getItem("userID");
-        console.log(storedUserID);
+        
         const phoneNumber = await AsyncStorage.getItem('mobileNumber')
-        console.log(phoneNumber)
+        
         const randomInteger = Math.floor(getRandomNumber(1,1000000000000)) + Math.floor(getRandomNumber(1,1000000000000)) + Math.floor(getRandomNumber(1,1000000000000));
 
 																	
@@ -386,7 +385,7 @@ const ProductDateSummary = ({ route, navigation }) => {
         merchantTransactionId: merchantTransactionId
         };
 
-        console.log(requestData);
+        
         
     try {
         
@@ -396,7 +395,7 @@ const ProductDateSummary = ({ route, navigation }) => {
           },
         });
   
-        console.log(response);
+        
         let url = response.request.responseURL;
 					  
 
@@ -444,9 +443,6 @@ const ProductDateSummary = ({ route, navigation }) => {
           const state = completeAddress[7]?.long_name || "";
           const pincode = completeAddress[9]?.long_name || "";
 														  
-			   
-
-          console.log(locality + city + state + pincode);
           
           
           await Promise.all([

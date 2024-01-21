@@ -80,7 +80,7 @@ const ConfirmLocation = ({ navigation, route }) => {
   },[])
 
   const focusOnCurrentLocation = () => {
-    console.log(locationPermissionStatus);
+    
     if (locationPermissionStatus === 'granted') {
       getCurrentLocation()
     }
@@ -99,16 +99,16 @@ const ConfirmLocation = ({ navigation, route }) => {
         };
 
         setMapRegion(updatedInitialRegion); // Update the initialRegion directly
-        console.log(mapRegion)
+        
        
         Geocoder.from(latitude, longitude)
           .then((response) => {
             const address = response.results[0].formatted_address;
-            console.log("address" + address);
+            
             setCompleteAddress(response.results[0].address_components);
     
             setCurrentLocation(address);
-            console.log("Current Location" + currentLocation);
+            
           })
           .catch((error) =>
             console.warn('Error fetching location address:', error)
@@ -122,8 +122,8 @@ const ConfirmLocation = ({ navigation, route }) => {
 
   const handleSetLocation = () => {
     bottomSheetRef.current.open();
-    console.log("Inside handle SEtlocation");
-    console.log("a" + currentLocation);
+    
+    
     if (currentLocation) {
       const [prefillAddress1, prefillAddress2, prefillAddress3, prefillAddress4, prefillAddress5, prefillAddress6, prefillAddress7,prefillAddress8] = currentLocation.split(',');
       if (prefillAddress1 != NaN && prefillAddress2 != NaN) {
@@ -145,7 +145,7 @@ const ConfirmLocation = ({ navigation, route }) => {
     if (route.params.data != null) {
       handleSetLocation();
   
-      console.log(data[0])
+      
       let matchedButton;
       // Prefill recipient, houseNumber, and address based on address2
       if (data[0] && data[0].address2) {
@@ -184,9 +184,9 @@ const ConfirmLocation = ({ navigation, route }) => {
 
     AsyncStorage.getItem("userID")
     .then(userID => {
-      console.log(userID);
+      
       userId = userID;
-      console.log(userId);
+      
     })
     .catch(error => {
       console.error('Error retrieving userID:', error);
@@ -210,7 +210,7 @@ const ConfirmLocation = ({ navigation, route }) => {
 
       };
 
-      console.log(requestData);
+      
       
       const token = await AsyncStorage.getItem('token')
 
