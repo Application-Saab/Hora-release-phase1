@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
       paddingTop:2,
       paddingBottom:2,
       paddingRight:2,
-      paddingLeft:8
-      
+      paddingLeft:8,
+      borderWidth:1
     },
     container: {
         flexDirection: 'row',

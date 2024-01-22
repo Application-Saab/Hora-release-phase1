@@ -112,9 +112,9 @@ const DecorationCatPage = ({ route, navigation }) => {
         <View>
             <View style={{ paddingTop: 5, paddingRight: 40, paddingLeft: 10 }}>
                 <Image source={{ uri: `https://horaservices.com/api/uploads/${itemDetail.featured_image}` }} style={{ width: Dimensions.get('window').width, height: 340, aspectRatio: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5 }} />
-                <Text style={{ color: '#1C1C1C', fontSize: 23, fontWeight: '800', marginVertical: 13 }}>{itemDetail.name}</Text>
+                <Text style={{ color: '#1C1C1C', fontSize: 21, fontWeight: '800', marginVertical: 1 }}>{itemDetail.name}</Text>
                 <Image source={require('../../assets/Vector4.png')} style={{ width: 332.5, height: 1 }} />
-                <Text style={{ color: '#736F6F', fontSize: 14, fontWeight: '400', paddingTop: 18 }}>{getItemInclusion(itemDetail.inclusion)}</Text>
+                <Text style={{ color: '#333', fontSize: 13, fontWeight: '400', paddingTop: 18 }}>{getItemInclusion(itemDetail.inclusion)}</Text>
             </View>
         </View>
     );
@@ -157,7 +157,7 @@ const DecorationCatPage = ({ route, navigation }) => {
                                             opacity: 0.9,
                                             height: 28,
                                             marginTop: 0,
-                                            paddingLeft: 3,
+                                            paddingLeft: 5,
                                             marginBottom: 2,
                                             color: selectedProducts.some(product => product._id === item._id)
                                                 ? 'white' : '#9252AA',
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
         padding: 5
     },
     decCatimage: {
-        width: Dimensions.get('window').width*0.43, // Set to 100% width
+        width: Dimensions.get('window').width*0.435, // Set to 100% width
         height: Dimensions.get('window').height*0.21,
         borderRadius: 10, // Optional: Add border-radius for rounded corners
     },

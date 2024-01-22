@@ -113,12 +113,12 @@ const Faq = ({ navigation }) => {
                 </View>
 
             </ScrollView>
-            <View style={styles.shadowContainer}>
+            <View style={styles.shadowContainer} >
                 <View style={styles.container}>
                     <Text style={{ fontSize: 12, color: "#000", textAlign: "center", fontWeight: "600" }}>Still stuck? Help us a call away</Text>
-                    <View style={styles.buttonContainer}>
+                    <View style={styles.buttonContainer} >
                         <TouchableOpacity style={styles.customButton} activeOpacity={1} onPress={handlePage}>
-                            <Text style={styles.buttonText}>Contact Us</Text>
+                            <Text style={styles.buttonText} >Contact Us</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginHorizontal: "auto",
         marginVertical: 0,
+        width:"100%"
     },
     buttonText: {
         color: "white",

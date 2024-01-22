@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ScrollView, StatusBar, View, Text, KeyboardAvoidingView, Platform, TextInput, Image, ImageBackground, TouchableOpacity, TouchableHighlight, BackHandler } from 'react-native';
+import { ScrollView, Dimensions,StatusBar, View, Text, KeyboardAvoidingView, Platform, TextInput, Image, ImageBackground, TouchableOpacity, TouchableHighlight, BackHandler } from 'react-native';
 import styles from './style';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -169,10 +169,13 @@ const Login = ({ navigation, route }) => {
     };
 
 
+   
+	
     return (
-        <ImageBackground source={require('../../assets/loginBackground.png')} style={styles.backgroundImage}>
+		<View>
+        <ImageBackground source={require('../../assets/loginBackground.png')} style={styles.backgroundImage} resizeMode="cover">
             <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
-            <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
+            <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems:"center" , marginTop:"5%" }}>
                 <Image source={require('../../assets/hora.png')} style={styles.image} />
             </View>
             <View style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'center', marginTop: 8, marginHorizontal: 45 }}>
@@ -200,9 +203,9 @@ const Login = ({ navigation, route }) => {
 
 
             {!isPressed || (isPressed && validMobileNumber === false) ? (
-                <View style={{ flexDirection: 'row', marginHorizontal: 31, marginTop: 15 }}>
-
-                    <View style={{ width: 56, paddingHorizontal: 10, backgroundColor: '#E7E7E7', justifyContent: 'center', borderRadius: 8, borderWidth: 1, borderColor: "#D9D9D9" }}>
+                <View style={{ flexDirection: 'row', justifyContent:"center", marginTop: 15 , alignItems:"center"}}>
+                   
+                    <View style={{ width: 56, paddingHorizontal: 10,backgroundColor: '#E7E7E7', justifyContent: 'center', borderRadius: 8, borderWidth: 1, borderColor: "#D9D9D9" , paddingVertical:12 }}>
                         <Text style={{ color: "#929292", fontSize: 16, fontWeight: '700' }}> +91 </Text>
                     </View>
 
@@ -218,6 +221,7 @@ const Login = ({ navigation, route }) => {
                         />
                     </View>
 
+						   
                 </View>) : <View style={styles.otpContainer}>
                 {Array.from({ length: 4 }).map((_, index) => (
                     <TextInput
@@ -280,6 +284,9 @@ const Login = ({ navigation, route }) => {
                 </KeyboardAvoidingView>
                 : null}
         </ImageBackground>
+		</View>
+			   
+	   
 
     );
 };

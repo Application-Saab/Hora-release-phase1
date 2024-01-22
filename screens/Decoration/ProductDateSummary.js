@@ -39,6 +39,7 @@ const ProductDateSummary = ({ route, navigation }) => {
 	 let addressID;
 	 const [cityStatus, setCityStatus] = useState(0);
     const [isWarningVisible, setWarningVisible] = useState(false);
+																				
     const [comments, setComments] = useState('');
 
     const handleCommentsChange = (text) => {
@@ -48,6 +49,8 @@ const ProductDateSummary = ({ route, navigation }) => {
       
     const handleWarningClose = () => {
         setWarningVisible(false);
+										
+
     };
 	const editAddress = (address) => {
         bottomSheetRef.current.close();
@@ -222,6 +225,7 @@ const ProductDateSummary = ({ route, navigation }) => {
         });
 
        
+									 
         setCurrentAddress(address.address2);
         bottomSheetRef.current.close();
     };
@@ -435,8 +439,19 @@ const ProductDateSummary = ({ route, navigation }) => {
 															  
 																
 
+																 
+															 
+															  
+																
+
 																						
 
+							   
+												   
+													 
+														 
+														  
+			   
 
           const locality = completeAddress[4]?.long_name || "";
           const city = completeAddress[5]?.long_name || "";
@@ -462,6 +477,7 @@ const ProductDateSummary = ({ route, navigation }) => {
         bottomSheetRef.current.close();
         navigation.navigate('ConfirmLocation', { 'data': null })
     }
+
 
    
     const checkIsDateValid = () => {
@@ -646,6 +662,8 @@ const ProductDateSummary = ({ route, navigation }) => {
                     <TouchableOpacity onPress={() => addAddress()} style={styles.customButton} activeOpacity={1}>
                         <Text style={styles.buttonText}> + Add Address</Text>
                     </TouchableOpacity>
+							   
+							  
                 </View>
             </RBSheet>
                 </View>
@@ -687,7 +705,7 @@ const ProductDateSummary = ({ route, navigation }) => {
                     editable
                     multiline
                     numberOfLines={5}
-                    maxLength={100}
+                    maxLength={80}
                     style={styles.textArea}
                     placeholder="No extra charges for customizing balloon color or replacing tags (Happy Birthday/Anniversary).
                     Charges will be applied for additional items."
@@ -909,7 +927,7 @@ const styles = StyleSheet.create({
     editText: {
         fontSize: 11,
         fontWeight: '500',
-        marginLeft: 10
+        marginLeft: 10,
     },
     dishItemContainer: {
         flex: 1,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Pressable, Image, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, Pressable, Image, StyleSheet, ImageBackground , Dimensions} from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import Geolocation from '@react-native-community/geolocation';
@@ -84,7 +84,10 @@ const CustomHeader = ({ title, navigation }) => {
   };
 
   return (
+  <>
+    <View>
     
+		  
     <LinearGradient
       colors={['#6730B2', '#EE7464']}
       start={{ x: 0, y: 0 }}
@@ -126,6 +129,13 @@ const CustomHeader = ({ title, navigation }) => {
 
 
     </LinearGradient>
+	</View>
+    
+    </>
+		   
+	
+	   
+  
 
   );
 };

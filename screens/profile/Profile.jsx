@@ -214,10 +214,10 @@ const styles = StyleSheet.create({
     position: "relative"
   },
   profileimage: {
-    width: 100,
-    height: 100,
-    top: -60,
-    left: 105,
+    width: Dimensions.get('window').width * 0.25,
+    height: Dimensions.get('window').width * 0.25,
+    top: "-20%",
+    left: "38%",
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 'auto',
@@ -242,8 +242,8 @@ const styles = StyleSheet.create({
     width: 17,
     height: 17,
     position: 'absolute',
-    right: 20,
-    top: 18,
+    right: "11%",
+    top: "40%",
     zIndex: 111111111111111111
   },
   text: {

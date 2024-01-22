@@ -14,6 +14,7 @@ import {
   TouchableHighlight,
   BackHandler,
 } from 'react-native';
+
 import styles from './styles';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -25,6 +26,7 @@ import {
   API_SUCCESS_CODE,
   GET_MEAL_DISH_ENDPOINT,
 } from '../../utils/ApiConstants';
+
 import OrderWarning from '../dialog/OrderWarning';
 import CustomHeader from '../../components/CustomeHeader';
 import {Directions} from 'react-native-gesture-handler';
@@ -50,8 +52,10 @@ const CreateOrder = ({navigation}) => {
   const [loading, setLoading] = useState(true);
   const [isWarningVisibleForDishCount, setWarningVisibleForDishCount] =
     useState(false);
+
   const [isWarningVisibleForCuisineCount, setWarningVisibleForCuisineCount] =
     useState(false);
+
 	const [isViewAllExpanded, setIsViewAllExpanded] = useState(false);
 																	
 
@@ -233,7 +237,9 @@ const CreateOrder = ({navigation}) => {
           padding: 0,
           justifyContent: 'flex-start',
           marginTop: 7,
+		  position: "relative",
         }}>
+	   
 	   
         <View style={{flexDirection: 'column'}}>
           <ImageBackground
@@ -243,6 +249,10 @@ const CreateOrder = ({navigation}) => {
                 : require('../../assets/rectanglewhite.png')
             }
             style={{width: '100%', height: 138, marginTop: 33}}
+							
+															  
+							
+			  
             imageStyle={{borderRadius: 16}}>
 		   
             <View style={{flexDirection: 'column', paddingHorizontal: 5}}>
@@ -353,14 +363,30 @@ const CreateOrder = ({navigation}) => {
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={{justifyContent: 'center', paddingHorizontal: 17}}>
+            <View
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                alignItems: "center",
+              }}
+            >
+					  
+									 
+						  
+						
+						 
+									 
+				
+			 
               <Image
                 source={
                   item.is_dish === 1
                     ? require('../../assets/Rectanglegreen.png')
                     : require('../../assets/Rectanglered.png')
                 }
-                style={{width: 72, height: 3, marginTop: 9}}
+                style={{ width: windowWidth * 0.2, height: 3, marginTop: 0 }}
               />
             </View>
           </ImageBackground>
@@ -369,7 +395,7 @@ const CreateOrder = ({navigation}) => {
       <RBSheet
         ref={bottomSheetRef}
         closeOnDragDown={[true, closeBottomSheet]}
-        height={650}
+        height={700}
         customStyles={{
           container: styles.bottomSheetContainer,
           wrapper: styles.bottomSheetWrapper,
@@ -398,8 +424,9 @@ const CreateOrder = ({navigation}) => {
             uri: `https://horaservices.com/api/uploads/${dishDetail.image}`,
           }}
           style={{
-            width: Dimensions.get('window').width - 24,
-            height: 250,
+            width: "100%",
+            height: Dimensions.get("window").height * 0.3,
+						
             borderTopLeftRadius: 45,
             borderTopRightRadius: 45,
           }}
@@ -414,10 +441,12 @@ const CreateOrder = ({navigation}) => {
 		 
           {dishDetail.name}
         </Text>
+
         <Image
-          source={require('../../assets/Vector4.png')}
-          style={{width: 332.5, height: 1}}
+          source={require("../../assets/Vector4.png")}
+          style={{ width: Dimensions.get("window").width - 24, height: 1 }}
         />
+
         <View>
           <Text
             style={{
@@ -431,21 +460,23 @@ const CreateOrder = ({navigation}) => {
             {dishDetail.description}
           </Text>
         </View>
+
         <Image
           source={require('../../assets/Vector4.png')}
           style={{width: 332.5, height: 1}}
         />
+
         <View>
           <View
-            style={{
+             style={{
               marginTop: 7,
-              backgroundColor: '#F7F2F9',
-              width: 343,
+              backgroundColor: "#F7F2F9",
+              width: Dimensions.get("window").width - 24,
               borderRadius: 5,
               borderWidth: 1,
-              borderColor: '#9252AA',
-              justifyContent: 'center',
-              alignItems: 'start',
+              borderColor: "#9252AA",
+              justifyContent: "center",
+              alignItems: "start",
               padding: 10,
             }}>
 		   
@@ -459,17 +490,18 @@ const CreateOrder = ({navigation}) => {
             style={{
               padding: 10,
               marginTop: 4,
-              flexDirection: 'column',
-              backgroundColor: '#F7F2F9',
-              width: 343,
+              flexDirection: "column",
+              backgroundColor: "#F7F2F9",
+              width: Dimensions.get("window").width - 24,
               borderWidth: 1,
               borderRadius: 5,
-              borderColor: '#9252AA',
+              borderColor: "#9252AA",
             }}>
 		   
             <Text style={{color: '#9C9B9B', fontSize: 11, fontWeight: '700'}}>
               Special Appliance Required
             </Text>
+
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <Image
                 source={require('../../assets/plus.png')}
@@ -501,6 +533,7 @@ const CreateOrder = ({navigation}) => {
 						 
                           {appliance.name}
                         </Text>
+
                         {index < dishDetail.special_appliance_id.length - 1 && (
                           <Text>, </Text>
                         )}
@@ -516,13 +549,13 @@ const CreateOrder = ({navigation}) => {
           <View
             style={{
               marginTop: 4,
-              flexDirection: 'column',
-              backgroundColor: '#F7F2F9',
+              flexDirection: "column",
+              backgroundColor: "#F7F2F9",
               padding: 10,
-              width: 343,
+              width: Dimensions.get("window").width - 24,
               borderWidth: 1,
               borderRadius: 5,
-              borderColor: '#9252AA',
+              borderColor: "#9252AA",
             }}>
 		   
             <Text style={{color: '#9C9B9B', fontSize: 11, fontWeight: '700'}}>
@@ -584,6 +617,7 @@ const CreateOrder = ({navigation}) => {
           Bill value depends upon Dish selected + Number of people
         </Text>
       </View>
+
       <View style={styles.view2}>
         <Image
           style={styles.image2}
@@ -749,7 +783,7 @@ const CreateOrder = ({navigation}) => {
                                 color: '#9252AA',
                                 fontWeight: '400',
                                 textDecorationLine: 'underline',
-                                fontSize: 11,
+                                fontSize: 12,
                                 marginLeft: 10,
                               }}>
 							 
@@ -759,6 +793,7 @@ const CreateOrder = ({navigation}) => {
 																																																																			  
 
                           {/* <Image style={{ width: 12, height: 12, marginLeft: 8 }} source={require('../../assets/viewAll.png')} activeOpacity={1}></Image> */}
+
 						<Image
                             style={{
                               width: 15,
@@ -869,4 +904,5 @@ const CreateOrder = ({navigation}) => {
     </View>
   );
 };
+
 export default CreateOrder;

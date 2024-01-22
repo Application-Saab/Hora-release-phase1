@@ -275,6 +275,7 @@ const SelectDate = ({ navigation, route }) => {
 
                 </View>
 
+
                 {preparationTextList.length > 0 && (
                     <View style={{ flexDirection: 'column', backgroundColor: '#F9E9FF', borderRadius: 15, paddingHorizontal: 10 }}>
                         <View style={styles.header}>
@@ -544,12 +545,14 @@ const SelectDate = ({ navigation, route }) => {
 
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row'  , justifyContent:"space-between" , paddingHorizontal:"2%"  }}>
+					<View style={{flexDirection:"row"}}>
+															
                         <TouchableOpacity onPress={() => setShowDatePicker(true)} activeOpacity={1}>
 
-                            <View style={{ marginStart: 16, marginEnd: 8, flexDirection: 'column', paddingHorizontal: 17, backgroundColor: 'white', borderColor: isDateValid != null && isDateValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
+                            <View style={{ marginStart: 10, marginEnd: 8, flexDirection: 'column', paddingHorizontal: 17, backgroundColor: 'white', borderColor: isDateValid != null && isDateValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
                                 <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Booking Date</Text>
-                                <View style={{ flexDirection: 'row', marginTop: 1 }}>
+                               <View style={{ flexDirection: 'row', marginTop: 1 , width:Dimensions.get('window').width*0.3}}>
 
                                     <Text style={{ fontSize: 16, fontWeight: 600, color: isDatePressed ? '#383838' : "grey" }}>{selectedDate.toLocaleDateString()}</Text>
 
@@ -566,11 +569,14 @@ const SelectDate = ({ navigation, route }) => {
                                 </View>
                             </View>
                         </TouchableOpacity>
+						</View>
+							   
+					   
                         <View style={{ flexDirection: 'row' }}>
                             <TouchableOpacity onPress={() => setShowTimePicker(true)} activeOpacity={1}>
                                 <View style={{ flexDirection: 'column', paddingHorizontal: 21, backgroundColor: 'white', borderColor: isTimeValid != null && isTimeValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
                                     <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Chef Arrival Time</Text>
-                                    <View style={{ flexDirection: 'row', marginTop: 1 }}>
+                                     <View style={{ flexDirection: 'row', marginTop: 1 , width:Dimensions.get('window').width*0.3}}>
 
                                         <Text style={{ fontSize: 16, fontWeight: 600, color: isTimePressed ? '#383838' : "grey" }}>
                                             {formatTime(selectedTime)}
@@ -599,10 +605,12 @@ const SelectDate = ({ navigation, route }) => {
                         <Image style={styles.verticalSeparator} source={require('../../assets/verticalSeparator.png')}></Image>
                     </View>
 
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 13, justifyContent: 'center', alignItems: 'center', marginLeft: 16 }}>
-                        <Image source={require('../../assets/people.png')} style={{ height: 25, width: 25 }} />
+                   <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 13, alignItems: 'center', marginLeft: 16 }}>
+                       <View style={{justifyContent:"center", alignItems:"center" , flexDirection:"row"}}>
+                       <Image source={require('../../assets/people.png')} style={{ height: 25, width: 25 }} />
                         <Text style={{ marginLeft: 9, fontSize: 12, color: '#3C3C3E', fontWeight: '500', }}>How many people you are hosting?</Text>
-                        <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', marginRight: 9 }}>
+                       </View>
+                        <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-end', marginRight: 9 }}>
                             <TouchableOpacity onPress={decreasePeopleCount} activeOpacity={1}>
                                 <Image source={require('../../assets/ic_minus.png')} style={{ height: 25, width: 25, marginLeft: 5 }} />
                             </TouchableOpacity>
@@ -662,7 +670,9 @@ const SelectDate = ({ navigation, route }) => {
             </ScrollView>
             <View>
                 {getTotalCookingTime() > 0.0 && showCookingTime && (
-                    <View style={{ borderColor: "#F39200", borderWidth: 0.5, borderRadius: 5, backgroundColor: "#FFE3B9", marginHorizontal: 16, flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+                    <View style={{ justifyContent:"space-between", alignItems:"center", flexDirection:"row" ,  borderColor: "#F39200", borderWidth: 0.5, borderRadius: 5, backgroundColor: "#FFE3B9", marginHorizontal: 16, flexDirection: 'row', alignItems: 'center', marginTop: 5  , paddingRight:10 ,marginTop:10}}>
+                        <View style={{ justifyContent:"space-between", alignItems:"center", flexDirection:"row" , borderRadius: 5, backgroundColor: "#FFE3B9", marginRight: 16, flexDirection: 'row', alignItems: 'center', marginTop: 5 , width:"80%"}}>
+																																																																																																												
                         <Image source={require('../../assets/orderIcon.png')} style={{ height: 28, width: 30, marginStart: 5, marginTop: 5, marginBottom: 7 }} />
                         <Text style={{ marginStart: 9, color: '#606060', fontSize: 13, fontWeight: '400' }} >Expected cooking time of your food</Text>
 
@@ -672,9 +682,16 @@ const SelectDate = ({ navigation, route }) => {
                             </Text>
                         </View>
 
-                        <TouchableOpacity style={{ marginStart: 3 }} onPress={toggleCookingTimeVisibility} activeOpacity={1}>
+							   
+							  
+                        </View>
+                        <View>
+                        <TouchableOpacity style={{ marginStart: 7 }} onPress={toggleCookingTimeVisibility} activeOpacity={1}>
                             <Image source={require('../../assets/icCross.png')} style={{ height: 12, width: 12 }} />
                         </TouchableOpacity>
+						</View>
+							   
+					   
                     </View>
 
                 )}

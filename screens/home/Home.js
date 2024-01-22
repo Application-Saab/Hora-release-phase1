@@ -135,7 +135,7 @@ const Home = ({ navigation }) => {
       <View>
         <Image
           source={require('../../assets/celebrate.png')}
-          style={{ height: 496, width: Dimensions.get('window').width, marginTop: 10 }}
+          style={{ height: Dimensions.get('window').height*0.65, resizeMode: 'cover', width: Dimensions.get('window').width, marginTop: "4%" }}
         />
         {/* <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.customButton} activeOpacity={1} onPress={openCreateOrder}>
@@ -215,7 +215,7 @@ const Home = ({ navigation }) => {
         <Image
           source={require('../../assets/whyHora.png')}
           style={{
-            height: 460,
+            height: Dimensions.get('window').height*0.6,
             width: Dimensions.get('window').width,
             marginLeft: 'auto',
             marginRight: 'auto',

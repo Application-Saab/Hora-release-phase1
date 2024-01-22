@@ -95,8 +95,9 @@ const styles = StyleSheet.create({
     
       otpContainer: {
         flexDirection: 'row',
-        marginLeft:65,
         marginTop:20,
+        alignItems:"center",
+        justifyContent:"center"
     },
       otpInput: {
         width: 56,

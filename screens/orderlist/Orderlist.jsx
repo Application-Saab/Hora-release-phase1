@@ -645,7 +645,6 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   screenContainer: {
-    flex: 1,
     flexDirection: 'column',
   },
   continueButton: {

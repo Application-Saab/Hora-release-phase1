@@ -33,7 +33,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
     const [cityStatus, setCityStatus] = useState(0);
     const [isWarningVisible, setWarningVisible] = useState(false);
     const [isWarningVisibleForCity, setWarningVisibleForCity] = useState(false);
-    const [loading, setLoading] = useState(true);
+    
 
     const handleWarningClose = () => {
         setWarningVisible(false);
@@ -70,7 +70,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
     const AddressItem = ({ address, selected, onSelect }) => (
         <TouchableOpacity onPress={onSelect}>
             <View style={[styles.container, selected && styles.selectedContainer]}>
-                <View style={{ flexDirection: 'row', marginTop: 25, alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', marginTop: 25, alignItems: 'center', marginBottom:2 }}>
                     <Text style={[styles.headingText, selected && styles.selectedText]}>Delivers To</Text>
                     <TouchableOpacity onPress={() => editAddress(address)} style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10 }}>
                         <Image source={selected ? require('../../assets/editSelected.png') : require('../../assets/edit.png')} style={{ height: 14, width: 14 }} />
@@ -176,7 +176,10 @@ const ConfirmDishOrder = ({ navigation, route }) => {
                 page: '1'
             };
             const token = await AsyncStorage.getItem('token')
+							   
 
+		  
+			
             const response = await axios.post(url, requestData, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -208,6 +211,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
         setI(1);
         setAdd(address.address2)
 
+										  
 
         addresses.forEach(element => {
             if (element.address1 ===  address.address2 || element.address2 === address.address2)
@@ -241,6 +245,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
         )
 
     }
+
 
     const handleConfirmOrder = async (merchantTransactionId) => {
         Object.values(selectedDishData).map((item) => cat.push(item.cuisineId[0]));
@@ -288,7 +293,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
                 });
     
                 if (response.status === API_SUCCESS_CODE) {
-                    setLoading(false);
+                    
                     navigation.navigate('ConfirmOrder');
                 }
             }
@@ -363,6 +368,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
     const onContinueClick = async () => {
         
         
+										
         if (i === 0)
         {
             setWarningVisible(true);
@@ -567,13 +573,20 @@ const ConfirmDishOrder = ({ navigation, route }) => {
                 <View style={{ justifyContent: 'space-between', marginTop: 5, borderRadius: 6, backgroundColor: '#E8E8E8', borderColor: '#D8D8D8', borderWidth: 1, width: Dimensions.get('window').width, paddingBottom: 10 }}>
                     <View style={{ marginHorizontal: 16, flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
                         <Text style={{ padding: 4, color: '#000', fontSize: 13, fontWeight: '600' }}>Dishes selected</Text>
+
+
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                             {/* <TouchableOpacity onPress={onViewAllClick}>
+												  
                                 <Text style={{ color: '#9252AA', fontWeight: '400', textDecorationLine: 'underline', fontSize: 11, marginLeft: 10 }}>View All</Text>
 
                             </TouchableOpacity>
                             <Image style={{ width: 9, height: 9, marginLeft: 5 }} source={require('../../assets/viewAll.png')}></Image> */}
+							
+						
                         </View>
+
+						
                     </View>
 
                     <View style={{ marginTop: 10, marginHorizontal: 15, flexDirection: 'row', flex: 1 }} >
@@ -793,7 +806,7 @@ const styles = StyleSheet.create({
     editText: {
         fontSize: 11,
         fontWeight: '500',
-        marginLeft: 10
+        marginLeft: 10,
     },
     dishItemContainer: {
         flex: 1,
