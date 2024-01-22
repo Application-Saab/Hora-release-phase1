@@ -123,17 +123,7 @@ const Orderlist = ({navigation}) => {
     }
   };
 
-  function formatTime(inputTimeString) {
-    console.log(inputTimeString);
-    const timeComponents = inputTimeString.split(':');
-    const hours = parseInt(timeComponents[0], 10);
-    const minutes = timeComponents[1];
-    const period = timeComponents[2].split(' ')[1]; // Grab the AM/PM part
   
-    const formattedTime = `${hours}:${minutes} ${period}`;
-  
-    return formattedTime;
-  }
   
   const getOrderStatus = orderStatusValue => {
     if (orderStatusValue === 0) {

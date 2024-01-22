@@ -33,9 +33,7 @@ const OrderDetails = ({ navigation, route }) => {
 																						   
      const orderType = route.params.orderType
     
-    const handleShareMenu = () => {
-        console.log("ShareMenuWithGuest")
-    }
+    
 
     const Tabs = ({ onSelectTab }) => (
         <View style={{ flexDirection: 'row' }}>
@@ -136,7 +134,7 @@ const OrderDetails = ({ navigation, route }) => {
                     const responseData = await response.json();
                    
 
-                    console.log(responseData.data.selecteditems);
+                    
                     setOrderDetail(responseData.data)
                     
                     setOrderMenu(responseData.data.selecteditems)
@@ -189,7 +187,7 @@ const OrderDetails = ({ navigation, route }) => {
         }, [])
     }
     else {
-        console.log("no order type")
+        
     }
 
     const getItemInclusion = (inclusion) => {
@@ -293,7 +291,7 @@ const OrderDetails = ({ navigation, route }) => {
                                         </View>
                                     </View>
                                 ))}
-                                <Text style = {{color:"black", fontWeight:"bold", paddingBottom:10}}>Your comments, if any:</Text>
+                                {decorationComments ? <Text style={{ color: "black", fontWeight: "bold", paddingBottom: 10 }}>Additional Comments:</Text> : ""}
                                 <Text style = {{color:"black", paddingBottom:100}}>{decorationComments}</Text>
                             </View>
                         </View>

@@ -63,7 +63,6 @@ const ConfirmDishOrder = ({ navigation, route }) => {
     const priceForPeople = peopleCount * 49
     let totalPrice = dishPrice + priceForPeople
     if (selectedMealList.length > 7){
-        console.log("more than 650")
         totalPrice += 700
     }
 
@@ -223,8 +222,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
             }
         });
 
-        console.log(addId);
-        console.log(address.address2)
+       
         setCurrentAddress(address.address2);
         bottomSheetRef.current.close();
     };
@@ -327,10 +325,10 @@ const ConfirmDishOrder = ({ navigation, route }) => {
     
                         if (response.data && response.data.message) {
                             const message = response.data.message;
-                            console.log('API response message:', message);
+                            
     
                             if (message === 'PAYMENT_PENDING') {
-                                console.log('Payment is still pending. Polling again...');
+                                
                                 await new Promise(resolve => setTimeout(resolve, pollInterval));
                             } else {
                                 console.log('Payment status:', message);

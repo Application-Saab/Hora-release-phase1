@@ -86,7 +86,6 @@ const CustomHeader = ({ title, navigation }) => {
   return (
   <>
     <View>
-    
 		  
     <LinearGradient
       colors={['#6730B2', '#EE7464']}

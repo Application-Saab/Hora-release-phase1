@@ -1012,7 +1012,7 @@ const HospitalityService = ({navigation}) => {
                               fontWeight: 600,
                               color: isTimePressed ? '#383838' : 'grey',
                             }}>
-                            {selectedTimeWaiter}
+                            {selectedTimeWaiter.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           </Text>
 
                           <Image
@@ -1210,7 +1210,7 @@ const HospitalityService = ({navigation}) => {
                               fontWeight: 600,
                               color: isTimePressed ? '#383838' : 'grey',
                             }}>
-                            {selectedTimeBartender}
+                            {selectedTimeBartender.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           </Text>
 
                           <Image
@@ -1413,7 +1413,8 @@ const HospitalityService = ({navigation}) => {
                               fontWeight: 600,
                               color: isTimePressed ? '#383838' : 'grey',
                             }}>
-                            {selectedTimeCleaner}
+                            {selectedTimeCleaner.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+
                           </Text>
 
                           <Image

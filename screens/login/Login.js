@@ -175,7 +175,7 @@ const Login = ({ navigation, route }) => {
 		<View>
         <ImageBackground source={require('../../assets/loginBackground.png')} style={styles.backgroundImage} resizeMode="cover">
             <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
-            <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems:"center" , marginTop:"5%" }}>
+            <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems:"center" , marginTop:"16%" }}>
                 <Image source={require('../../assets/hora.png')} style={styles.image} />
             </View>
             <View style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'center', marginTop: 8, marginHorizontal: 45 }}>
@@ -223,6 +223,7 @@ const Login = ({ navigation, route }) => {
 
 						   
                 </View>) : <View style={styles.otpContainer}>
+												  
                 {Array.from({ length: 4 }).map((_, index) => (
                     <TextInput
                         key={index}
@@ -273,7 +274,7 @@ const Login = ({ navigation, route }) => {
 
             {!isPressed ?
 
-                <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 30 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'flex-end', marginBottom: "10%" }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                     keyboardVerticalOffset={20}
                 >
 

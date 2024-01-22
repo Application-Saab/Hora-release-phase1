@@ -2,6 +2,7 @@
 import React from 'react';
 import { StatusBar, View, StyleSheet } from 'react-native';
 
+
 const CustomStatusBar = ({ backgroundColor, barStyle }) => {
   return (
     <View style={[styles.statusBarContainer, { backgroundColor }]}>

@@ -248,7 +248,11 @@ const CreateOrder = ({navigation}) => {
                 ? require('../../assets/Rectanglepurple.png')
                 : require('../../assets/rectanglewhite.png')
             }
-            style={{width: '100%', height: 138, marginTop: 33}}
+           style={{
+              width: "100%",
+              height: Dimensions.get("window").height * 0.182,
+              marginTop: 33,
+            }}
 							
 															  
 							
@@ -262,6 +266,7 @@ const CreateOrder = ({navigation}) => {
 			   
 					 
                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
+				 
 				 
                   <Image
                     source={
@@ -462,8 +467,8 @@ const CreateOrder = ({navigation}) => {
         </View>
 
         <Image
-          source={require('../../assets/Vector4.png')}
-          style={{width: 332.5, height: 1}}
+          source={require("../../assets/Vector4.png")}
+          style={{ width: Dimensions.get("window").width - 24, height: 1 }}
         />
 
         <View>
@@ -503,16 +508,13 @@ const CreateOrder = ({navigation}) => {
             </Text>
 
             <View style={{flexDirection: 'row', marginTop: 3}}>
-              <Image
-                source={require('../../assets/plus.png')}
-                style={{width: 25, height: 25}}
-              />
+             
               <Text
                 style={{
                   color: '#4B4B4B',
                   fontSize: 12,
                   fontWeight: '400',
-                  marginLeft: 10,
+                  marginLeft: 6,
                   marginTop: 4,
                 }}>
 			   
@@ -690,6 +692,7 @@ const CreateOrder = ({navigation}) => {
             <View style={{marginRight: 8, width: 40}}>
 				   
               <Text style={{fontWeight: '500', fontSize: 9, color: '#9252AA'}}>
+			   
 			   
                 Non-Veg
               </Text>

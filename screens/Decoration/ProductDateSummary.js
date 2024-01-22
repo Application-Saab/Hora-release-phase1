@@ -224,8 +224,6 @@ const ProductDateSummary = ({ route, navigation }) => {
             }
         });
 
-       
-									 
         setCurrentAddress(address.address2);
         bottomSheetRef.current.close();
     };
@@ -264,7 +262,7 @@ const ProductDateSummary = ({ route, navigation }) => {
                     "items": items,
                     "decoration_comments":comments
                 }
-                console.log(requestData)
+                
                 const token = await AsyncStorage.getItem('token');
     
                 const response = await axios.post(url, requestData, {
@@ -308,13 +306,13 @@ const ProductDateSummary = ({ route, navigation }) => {
     
                         if (response.data && response.data.message) {
                             const message = response.data.message;
-                            
+                            console.log('API response message:', message);
     
                             if (message === 'PAYMENT_PENDING') {
-                                
+                                console.log('Payment is still pending. Polling again...');
                                 await new Promise(resolve => setTimeout(resolve, pollInterval));
                             } else {
-                                
+                                console.log('Payment status:', message);
                                 return message;
                             }
                         } else {
@@ -327,7 +325,7 @@ const ProductDateSummary = ({ route, navigation }) => {
                 }
     
                 // Stop polling after the specified duration
-                
+                console.log('Polling completed. Returning final result.');
                 return 'PAYMENT_POLLING_TIMEOUT';
             };
     
@@ -439,25 +437,17 @@ const ProductDateSummary = ({ route, navigation }) => {
 															  
 																
 
-																 
-															 
-															  
-																
-
 																						
 
-							   
-												   
-													 
-														 
-														  
-			   
 
           const locality = completeAddress[4]?.long_name || "";
           const city = completeAddress[5]?.long_name || "";
           const state = completeAddress[7]?.long_name || "";
           const pincode = completeAddress[9]?.long_name || "";
 														  
+			   
+
+          
           
           
           await Promise.all([
@@ -477,7 +467,6 @@ const ProductDateSummary = ({ route, navigation }) => {
         bottomSheetRef.current.close();
         navigation.navigate('ConfirmLocation', { 'data': null })
     }
-
 
    
     const checkIsDateValid = () => {
@@ -562,11 +551,11 @@ const ProductDateSummary = ({ route, navigation }) => {
                     <Text style={{ color: '#000', fontSize: 10, fontWeight: '500', textAlign: 'center' }}>The decorator requires approximately 40-90 minutes to fulfill the service</Text>
                 </View>
 
-                <View style={{ flexDirection: 'row', marginTop: 10, textAlign: 'center' , paddingLeft:0 }}>
+                <View style={{ flexDirection: 'row', marginTop: 10, textAlign: 'center', paddingHorizontal: 15  , justifyContent:"space-between" ,alignItems:"center"}}>
 
                     <TouchableOpacity onPress={() => setShowDatePicker(true)} activeOpacity={1}>
 
-                        <View style={{ marginStart: 16, marginEnd: 29, flexDirection: 'column', paddingHorizontal: 17, backgroundColor: 'white', borderColor: isDateValid != null && isDateValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
+                        <View style={{ flexDirection: 'column', paddingHorizontal: 17, backgroundColor: 'white', borderColor: isDateValid != null && isDateValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
                             <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Booking Date</Text>
                             <View style={{ flexDirection: 'row', marginTop: 1 }}>
 
@@ -592,7 +581,7 @@ const ProductDateSummary = ({ route, navigation }) => {
                                 <View style={{ flexDirection: 'row', marginTop: 1 }}>
 
                                     <Text style={{ fontSize: 16, fontWeight: 600, color: isTimePressed ? '#383838' : "grey" }}>
-                                        {selectedTime}
+                                        {formatTime(selectedTime)}
                                     </Text>
                                     <Image source={require('../../assets/clock.png')} style={{ height: 19, width: 19, marginLeft: 17 }} />
                                     {showTimePicker && (
@@ -662,8 +651,6 @@ const ProductDateSummary = ({ route, navigation }) => {
                     <TouchableOpacity onPress={() => addAddress()} style={styles.customButton} activeOpacity={1}>
                         <Text style={styles.buttonText}> + Add Address</Text>
                     </TouchableOpacity>
-							   
-							  
                 </View>
             </RBSheet>
                 </View>
@@ -927,7 +914,7 @@ const styles = StyleSheet.create({
     editText: {
         fontSize: 11,
         fontWeight: '500',
-        marginLeft: 10,
+        marginLeft: 10
     },
     dishItemContainer: {
         flex: 1,

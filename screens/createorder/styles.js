@@ -12,15 +12,15 @@ const styles = StyleSheet.create({
     image1: { width: 16, height: 16, marginLeft: 16, marginTop: 5,marginBottom:5},
     view2: {
        flexDirection: 'row',
-       marginEnd:21,
-       marginStart:16 ,
+       marginStart:"3%" ,
+      marginEnd:"3%",
        marginTop:15 ,
         paddingBottom:5 ,
          justifyContent:"space-around",
     borderBottomColor:"#efefef",
 },
     image2: { height: 36, width: 47},
-    image3: { height: 2, width: 80, marginLeft: 20, marginTop:15 },
+    image3: { height: 2, width: Dimensions.get('window').width*0.22, marginTop:13 },
     image4: {height:25,width:25,marginLeft:16},
     image5: {height: 40, width: 70},
     vegNonVegContainer:{

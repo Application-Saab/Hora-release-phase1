@@ -124,7 +124,7 @@ const Home = ({ navigation }) => {
       </View>
       <View style={styles.decContainer}>
         {service.map((item, index) => (
-          <TouchableOpacity onPress={() => openCat(item)} style={{ width: "31%", marginBottom: 6 }}>
+         <TouchableOpacity onPress={() => openCat(item)} style={{ width: Dimensions.get('window').width*0.3, marginBottom: 9 }}>
             <Image source={item.image} style={styles.decCatimage} />
             <Text style={{ fontSize: 11, textAlign: 'center', fontWeight: '600', paddingTop: 5, color: "#000", height: 22 }}>{item.name}</Text>
           </TouchableOpacity>
@@ -132,22 +132,27 @@ const Home = ({ navigation }) => {
       </View>
 
       {/* celebrate section */}
-      <View>
-        <Image
-          source={require('../../assets/celebrate.png')}
-          style={{ height: Dimensions.get('window').height*0.65, resizeMode: 'cover', width: Dimensions.get('window').width, marginTop: "4%" }}
+	
+      <View style={{alignItems:"center", flexDirection:"column" , justifyContent:"center" , flex:1 , marginVertical:"20%"}}>
+      <Image
+          source={require('../../assets/celebrate-icon.png')}
+          style={{ height: "26%", width: "35%"  , marginBottom:17}}
         />
-        {/* <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.customButton} activeOpacity={1} onPress={openCreateOrder}>
-            <Text style={styles.buttonText}> Book Now</Text>
-          </TouchableOpacity>
-        </View> */}
+      <Image
+          source={require('../../assets/celebrate-img.png')}
+          style={{ height: Dimensions.get('window').height*0.44, width: Dimensions.get('window').width }}
+        />
+												 
+																									
+															
+							 
+				   
       </View>
 
 
 
       {/* howdoesitworks */}
-      <View style={{ width: "100%", marginVertical: 30 }}>
+      <View style={{ width: "100%", marginBottom: 30 }}>
         <View>
           <Image
             source={require('../../assets/how-work-icon.png')}
@@ -263,8 +268,10 @@ const styles = StyleSheet.create({
   },
   decCatimage: {
     width: "100%",
-    height: Dimensions.get('window').height*0.13,
+    height: Dimensions.get('window').height*0.152,
     borderRadius: 10,
+    justifyContent:"center",
+    alignItems:"center",
   },
   box: {
     flex: 1,
