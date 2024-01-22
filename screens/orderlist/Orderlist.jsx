@@ -43,15 +43,16 @@ const Orderlist = ({navigation}) => {
   /// order.type is 1 for decoration
   /// order.type is 3 for waiter
   /// order type 4  bar tender
-  /// order type cleaner
-  useEffect(() =>{ console.log("@2222")},[])
+  /// order type 5 cleaner
+  
   useFocusEffect(
     React.useCallback(() => {
       const fetchOrderList = async () => {
-        console.log("111111")
+        
         try {
           setLoading(true);
           const userId = await AsyncStorage.getItem('userID');
+          
           
           const response = await fetch(BASE_URL + ORDERLIST_ENDPOINT, {
             method: 'POST',
@@ -94,7 +95,7 @@ const Orderlist = ({navigation}) => {
 
     message = message + dishes.order_date.slice(0, 10);
 
-    message = message + ' ' + formatTime(dishes.order_time);
+    message = message + ' ' + dishes.order_time;
 
     dishes.selecteditems.forEach((dish, index) => {
       message += '\n' + (index + 1) + '. ' + dish.name;
@@ -123,6 +124,7 @@ const Orderlist = ({navigation}) => {
   };
 
   function formatTime(inputTimeString) {
+    console.log(inputTimeString);
     const timeComponents = inputTimeString.split(':');
     const hours = parseInt(timeComponents[0], 10);
     const minutes = timeComponents[1];
@@ -411,7 +413,7 @@ const Orderlist = ({navigation}) => {
                             fontWeight: '600',
                           }}>
 						 
-                          {formatTime(orderData[item].order_time)}
+                          {orderData[item].order_time}
                         </Text>
                       </View>
                       {orderData[item].type === 2 ? (

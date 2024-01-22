@@ -11,19 +11,7 @@ const OrderDetailsSection = ({ OrderDetail, apiOrderId, orderId, orderType }) =>
         return updateOrderId;
     }
 
-    function formatTime(inputTimeString) {
-        if (inputTimeString){
-            const timeComponents = inputTimeString.split(':');
-            const hours = parseInt(timeComponents[0], 10);
-            const minutes = timeComponents[1];
-            const period = timeComponents[2].split(' ')[1]; // Grab the AM/PM part
-          
-            const formattedTime = `${hours}:${minutes} ${period}`;
-          
-            return formattedTime;
-        }
-        return;
-      }
+    
     
     const getOrderStatus = (orderStatusValue) => {
         if (orderStatusValue === 0) {
@@ -128,7 +116,7 @@ const OrderDetailsSection = ({ OrderDetail, apiOrderId, orderId, orderType }) =>
                     }} />
                 </Text>
 									
-                <Text style={styles.orderheadings}>{formatTime(OrderDetail.order_time)}</Text>
+                <Text style={styles.orderheadings}>{OrderDetail.order_time}</Text>
               
 																																 
 									   

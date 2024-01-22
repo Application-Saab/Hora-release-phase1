@@ -1012,7 +1012,7 @@ const HospitalityService = ({navigation}) => {
                               fontWeight: 600,
                               color: isTimePressed ? '#383838' : 'grey',
                             }}>
-                            {formatTime(selectedTimeWaiter)}
+                            {selectedTimeWaiter}
                           </Text>
 
                           <Image
@@ -1210,7 +1210,7 @@ const HospitalityService = ({navigation}) => {
                               fontWeight: 600,
                               color: isTimePressed ? '#383838' : 'grey',
                             }}>
-                            {formatTime(selectedTimeBartender)}
+                            {selectedTimeBartender}
                           </Text>
 
                           <Image
@@ -1413,7 +1413,7 @@ const HospitalityService = ({navigation}) => {
                               fontWeight: 600,
                               color: isTimePressed ? '#383838' : 'grey',
                             }}>
-                            {formatTime(selectedTimeCleaner)}
+                            {selectedTimeCleaner}
                           </Text>
 
                           <Image

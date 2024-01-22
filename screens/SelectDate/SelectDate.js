@@ -579,7 +579,7 @@ const SelectDate = ({ navigation, route }) => {
                                      <View style={{ flexDirection: 'row', marginTop: 1 , width:Dimensions.get('window').width*0.3}}>
 
                                         <Text style={{ fontSize: 16, fontWeight: 600, color: isTimePressed ? '#383838' : "grey" }}>
-                                            {formatTime(selectedTime)}
+                                            {selectedTime}
                                         </Text>
                                         <Image source={require('../../assets/clock.png')} style={{ height: 19, width: 19, marginLeft: 17 }} />
                                         {showTimePicker && (
