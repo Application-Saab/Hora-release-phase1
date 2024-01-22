@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Pressable, Image, StyleSheet, ImageBackground , Dimensions} from 'react-native';
+import { View, Text, Pressable, Image, StyleSheet, StatusBar , ImageBackground  , Dimensions} from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import Geolocation from '@react-native-community/geolocation';
@@ -7,6 +7,7 @@ import Geocoder from 'react-native-geocoding';
 import { SafeAreaView } from 'react-native';
 import { getCurrentPosition } from 'react-native-geolocation-service';
 import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import CustomStatusBar from './CustomStatusBar';
 const CustomHeader = ({ title, navigation }) => {
 
   const [currentAddress, setCurrentAddress] = useState('');
@@ -84,9 +85,10 @@ const CustomHeader = ({ title, navigation }) => {
   };
 
   return (
-  <>
+    <>
     <View>
-		  
+    <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+
     <LinearGradient
       colors={['#6730B2', '#EE7464']}
       start={{ x: 0, y: 0 }}
@@ -94,7 +96,9 @@ const CustomHeader = ({ title, navigation }) => {
       style={styles.headerContainer}
     >
       {route.name === 'Home' ? (
-        <View style={{ flexDirection: 'row', alignItems: "center"  , justifyContent:"flex-start" , paddingLeft:10 , paddingRight:20 }}>
+        <View style={{ flexDirection: 'row', alignItems: "center"  , justifyContent:"flex-start" , paddingLeft:13 , paddingRight:20, 
+        paddingTop:38 , paddingBottom:10
+        }}>
           <View>
             <Pressable onPress={handleDrawerPress}>
               <Image
@@ -115,7 +119,7 @@ const CustomHeader = ({ title, navigation }) => {
           </View>
         </View>
       ) : (
-        <View style={styles.headerContainer}>
+        <View style={styles.headerContainerInner}>
           <Pressable onPress={handleBackPress}>
             <Image
               source={require('../assets/back_arrow.png')}
@@ -128,12 +132,9 @@ const CustomHeader = ({ title, navigation }) => {
 
 
     </LinearGradient>
-	</View>
+    </View>
     
     </>
-		   
-	
-	   
   
 
   );
@@ -147,7 +148,13 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 57,
+    // height: 57,
+  },
+  headerContainerInner:{
+    flexDirection: 'row',
+    alignItems: 'center',
+     height: 80,
+     paddingTop:35
   },
   headerTitle: {
     fontSize: 15,

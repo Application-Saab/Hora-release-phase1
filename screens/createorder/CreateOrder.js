@@ -592,6 +592,7 @@ const CreateOrder = ({navigation}) => {
   );
 
   const addDish = selectedDishPrice => {
+    console.log(1);
     navigation.navigate('SelectDate', {
       selectedDishDictionary,
       selectedDishPrice,

@@ -581,7 +581,7 @@ const ProductDateSummary = ({ route, navigation }) => {
                                 <View style={{ flexDirection: 'row', marginTop: 1 }}>
 
                                     <Text style={{ fontSize: 16, fontWeight: 600, color: isTimePressed ? '#383838' : "grey" }}>
-                                        {formatTime(selectedTime)}
+                                    {selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                     </Text>
                                     <Image source={require('../../assets/clock.png')} style={{ height: 19, width: 19, marginLeft: 17 }} />
                                     {showTimePicker && (
