@@ -44,9 +44,11 @@ const Orderlist = ({navigation}) => {
   /// order.type is 3 for waiter
   /// order type 4  bar tender
   /// order type cleaner
+  useEffect(() =>{ console.log("@2222")},[])
   useFocusEffect(
     React.useCallback(() => {
       const fetchOrderList = async () => {
+        console.log("111111")
         try {
           setLoading(true);
           const userId = await AsyncStorage.getItem('userID');
