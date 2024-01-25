@@ -85,7 +85,7 @@ android {
         // Creates a signing configuration called "release".
         release {
             // Specifies the path to your keystore file.
-            storeFile file("keystore.jks")
+            storeFile file("C:/Users/FCI/Documents/HORA/Hora/android/app/keystore.jks")
             // Specifies the password for your keystore.
             storePassword "horaandroid"
             // Specifies the identifying name for your key.
