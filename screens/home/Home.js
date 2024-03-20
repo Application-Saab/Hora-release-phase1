@@ -64,7 +64,7 @@ const Home = ({ navigation }) => {
     { id: '1', image: require('../../assets/decoration.png'), name: 'Decoration', openLink: 'DecorationPage', category: "decoration" },
     { id: '2', image: require('../../assets/chefforparty.png'), name: 'Chef for Party', openLink: 'CreateOrder', category: "chef" },
     { id: '3', image: require('../../assets/hospitality-service.png'), name: 'Hospitality Services', openLink: 'HospitalityService', category: "hospitalityService" },
-    { id: '4', image: require('../../assets/fooddeliveryhome.png'), name: 'Food Delivery', openLink: 'FoodDelivery', category: "foodDelivery" },
+    { id: '4', image: require('../../assets/fooddeliveryhome.png'), name: 'Food Delivery', openLink: 'FoodDelivery', category: "fooddelivery" },
     { id: '5', image: require('../../assets/gift.png'), name: 'Gift & Party Supplies', openLink: 'Gifts', category: "gift" },
    { id: '6', image: require('../../assets/entainment.png'), name: 'Entertainment', openLink: 'Entertainment', category: "enterntainment" },
   ]);

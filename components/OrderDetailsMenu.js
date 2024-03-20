@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import { ScrollView } from  'react-native';
 			 
 
-const OrderDetailsMenu = ({ OrderMenu }) => {
+const OrderDetailsMenu = ({ OrderMenu, OrderType }) => {
   var Appetizer = [];
   var Breads = [];
   var Breakfast = [];
@@ -50,10 +50,11 @@ const OrderDetailsMenu = ({ OrderMenu }) => {
   return (
     <ScrollView style={styles.orderCon}>
       <View>
-      <View style={{ marginTop: 9, flexDirection: 'column', padding: 10, width: Dimensions.get('window').width*0.7 , marginLeft:10}}>
+      {OrderType != 6 && OrderType != 7 && OrderType != 8 &&
+      (<View style={{ marginTop: 9, flexDirection: 'column', padding: 10, width: Dimensions.get('window').width*0.7 , marginLeft:10}}>
                         <Text style={{ color: '#9252AA', fontSize: 12, fontWeight: '700' }}>*Advance Preparations required</Text>
                         <Text style={{ color: '#4B4B4B', fontSize: 12, fontWeight: '400' }}>{preparationTextList ? preparationTextList : "NA"}</Text>
-       </View>
+       </View>)}
       </View>
       {Appetizer.length > 0 && (
         <View style={styles.foodItemsContainer}>

@@ -44,6 +44,9 @@ const Orderlist = ({navigation}) => {
   /// order.type is 3 for waiter
   /// order type 4  bar tender
   /// order type 5 cleaner
+  /// order type 6 Single Plate Meal
+  /// order type 7 Live Buffer
+  /// order type 8 Bulk Catering.
   
   useFocusEffect(
     React.useCallback(() => {
@@ -331,7 +334,7 @@ const Orderlist = ({navigation}) => {
                         >
                           {"Cleaner"}
                         </Text>
-                      ) : (
+                      ) : orderData[item].type === 1 ?(
                         <Text
                           style={{
                             paddingLeft: 9,
@@ -341,6 +344,39 @@ const Orderlist = ({navigation}) => {
                           }}
                         >
                           {"Decoration"}
+                        </Text>
+                      ): orderData[item].type === 6 ?(
+                        <Text
+                          style={{
+                            paddingLeft: 9,
+                            color: "rgba(146, 82, 170, 1)",
+                            fontWeight: "700",
+                            fontSize: 11,
+                          }}
+                        >
+                          {"Food Delivery-Single Plate Meal"}
+                        </Text>
+                      ): orderData[item].type === 7 ?(
+                        <Text
+                          style={{
+                            paddingLeft: 9,
+                            color: "rgba(146, 82, 170, 1)",
+                            fontWeight: "700",
+                            fontSize: 11,
+                          }}
+                        >
+                          {"Food Delivery-Live Buffet"}
+                        </Text>
+                      ):(
+                        <Text
+                          style={{
+                            paddingLeft: 9,
+                            color: "rgba(146, 82, 170, 1)",
+                            fontWeight: "700",
+                            fontSize: 11,
+                          }}
+                        >
+                          {"Food Delivery-Bulk Food Delivery"}
                         </Text>
                       )}
                     </View>

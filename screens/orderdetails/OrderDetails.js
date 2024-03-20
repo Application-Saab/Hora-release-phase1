@@ -12,11 +12,14 @@ import { BASE_URL, ORDER_DETAILS_ENDPOINT, ORDER_CANCEL , GET_DECORATION_DETAILS
 // import Share from 'react-native-share';
 
 
-    /// order.type is 2 for chef
-    /// order.type is 1 for decoration
-    /// order.type is 3 for hospitality service
-	/// order type 4  bar tender
-/// order type 5 cleaner
+ /// order.type is 2 for chef
+  /// order.type is 1 for decoration
+  /// order.type is 3 for waiter
+  /// order type 4  bar tender
+  /// order type 5 cleaner
+  /// order type 6 Single Plate Meal
+  /// order type 7 Live Buffer
+  /// order type 8 Bulk Catering.
 const OrderDetails = ({ navigation, route }) => {
     const [orderId, setOrderId] = useState('')
     const [orderDetail, setOrderDetail] = useState({})
@@ -123,7 +126,7 @@ const OrderDetails = ({ navigation, route }) => {
     //     }
     //   };
 
-    if (orderType === 2) {
+    if (orderType === 2 || orderType === 6 || orderType === 7 | orderType === 8) {
         
         
         useEffect(() => {
@@ -246,9 +249,95 @@ const OrderDetails = ({ navigation, route }) => {
                         <View style={styles.tabSec}>
                             
                             <Tabs onSelectTab={handleTabChange} />
-                            {selectedTab === 1 ? <OrderDetailsMenu OrderMenu={orderMenu} /> : selectedTab === 2 ? <OrderDetailsAppli OrderAppl={OrderAppl} /> : <OrderDetailsIngre OrderMenu={orderMenu} OrderDetail={orderDetail} />}
+                            {selectedTab === 1 ? <OrderDetailsMenu OrderMenu={orderMenu}  /> : selectedTab === 2 ? <OrderDetailsAppli OrderAppl={OrderAppl} /> : <OrderDetailsIngre OrderMenu={orderMenu} OrderDetail={orderDetail} />}
                         </View>
-                    ) : orderType === 3 ? (
+                    )
+                    :orderType === 6 ? (
+                        <View style={styles.tabSec}>
+                            {<OrderDetailsMenu OrderMenu={orderMenu} OrderType={orderType}/>}
+                            <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>
+                    
+                        <>
+                            Inclusions:
+                            {"\n"}
+                            ✔️ Food Delivery at Door -Step
+                            {"\n"}
+                            ✔️ Free Delivery
+                            {"\n"}
+                            ✔️ Hygienically Packed boxes
+                            {"\n"}
+                            ✔️ Freshly Cooked Food
+                            {"\n"}
+                            ✔️ Quality Disposable set of Plates & Spoons & forks
+                            {"\n"}
+                            ✔️ Water bottles (small bottles equal to number of people)
+                            {"\n"}
+                        </>
+                        
+                    </Text>
+                        </View>
+                    )
+                    :orderType === 7 ? (
+                        <View style={styles.tabSec}>
+                            {<OrderDetailsMenu OrderMenu={orderMenu} OrderType={orderType}/>}
+                            <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>
+                            <>
+                        Inclusion:
+                        {"\n"}
+                        - Well Groomed Waiters (2 Nos)
+                        {"\n"}
+                        - Bone-china Crockery & Quality disposal for loose items.
+                        {"\n"}
+                        - Transport (to & fro)
+                        {"\n"}
+                        - Dustbin with Garbage bag
+                        {"\n"}
+                        - Head Mask for waiters & chefs
+                        {"\n"}
+                        - Tandoor/Other cooking Utensiles
+                        {"\n"}
+                        - Chafing Dish
+                        {"\n"}
+                        - Cocktail Napkins
+                        {"\n"}
+                        - 2 Chef
+                        {"\n"}
+                        - Water Can (Bisleri)(20 litres)
+                        {"\n"}
+                        - Hand gloves
+                        {"\n"}
+                        Exclusion:
+                        {"\n"}
+                        - Buffet table/kitchen table is in client scope (can be provided at additional cost)
+                    
+                    </>
+                            </Text>
+                        </View>
+                    )
+                    :orderType === 8 ? (
+                        <View style={styles.tabSec}>
+                            {<OrderDetailsMenu OrderMenu={orderMenu} OrderType={orderType}/>}
+                            <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>
+                                    <>
+                                Inclusions:
+                                {"\n"}
+                                ✔️ Food Delivery at Door -Step
+                                {"\n"}
+                                ✔️ Free Delivery
+                                {"\n"}
+                                ✔️ Hygienically Packed boxes
+                                {"\n"}
+                                ✔️ Freshly Cooked Food
+                                {"\n"}
+                                ✔️ Quality Disposable set of Plates & Spoons & forks
+                                {"\n"}
+                                ✔️ Water bottles (small bottles equal to number of people)
+                                {"\n"}
+                            </>
+                            </Text>
+                        </View>
+                    )
+                     : orderType === 3 ? (
                         <View style={{ marginTop:10 ,  justifyContent: 'center', alignItems: 'center'  , marginTop:100}}>
                         <Image source={require('../../assets/waiter.jpeg')} style={{ width: 200, height: 200  , marginBottom:10}} />
                         <Text style={{fontWeight:"700"}}>You have booked Waiter for your event.</Text>
