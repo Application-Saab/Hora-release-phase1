@@ -181,6 +181,41 @@ const SelectDate = ({ navigation, route }) => {
     const RenderIngredients = ({ item }) => {
 
         let quantity = item.qty * peopleCount;
+
+        if (item.count == 4)
+        {
+            quantity = quantity * 0.7
+        }
+        else if (item.count == 5)
+        {
+            quantity = quantity * 0.6
+        }
+        else if (item.count == 6)
+        {
+            quantity = quantity * 0.5
+        }
+        else if (item.count == 7)
+        {
+            quantity = quantity * 0.4
+        }
+        else if (item.count == 8)
+        {
+            quantity = quantity * 0.35
+        }
+        else if (item.count == 9)
+        {
+            quantity = quantity * 0.3
+        }
+        else if (item.count == 10)
+        {
+            quantity = quantity * 0.28
+        }
+        else if (item.count == 11)
+        {
+            quantity = quantity * 0.25
+        }
+
+        quantity = Math.round(quantity)
         let unit = item.unit;
         if (quantity >= 1000) {
             quantity = quantity / 1000;
@@ -348,12 +383,14 @@ const SelectDate = ({ navigation, route }) => {
                             name: ingredient.name,
                             image: ingredient.image,
                             unit: ingredient.unit,
-                            qty: 0
+                            qty: 0,
+                            count: 0
                         };
 
                         
                     }
                     totalIngredients[ingredient._id].qty += parseInt(ingredient.qty);
+                    totalIngredients[ingredient._id].count += 1
                     if (ingredient.unit === 'gram' || ingredient.unit === 'Gram')
                         totalIngredients[ingredient._id].unit = 'g';
                     if (ingredient.unit === 'ml' || ingredient.unit === 'ML')
