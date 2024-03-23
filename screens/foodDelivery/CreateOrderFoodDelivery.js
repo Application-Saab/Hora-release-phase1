@@ -164,10 +164,10 @@ const CreateOrderFoodDelivery = ({navigation}) => {
       setSelectedDishes(updatedSelectedDishes);
       setSelectedCount(updatedSelectedDishes.length);
       if (isSelected) {
-        const updatedPrice = selectedDishPrice - parseInt(dish.dish_rate, 10);
+        const updatedPrice = selectedDishPrice - parseInt(dish.mealArray[0], 10);
         setSelectedDishPrice(updatedPrice);
       } else {
-        const updatedPrice = selectedDishPrice + parseInt(dish.dish_rate, 10);
+        const updatedPrice = selectedDishPrice + parseInt(dish.mealArray[0], 10);
         setSelectedDishPrice(updatedPrice);
       }
       if (updatedSelectedDishDictionary[dish._id]) {
@@ -210,7 +210,14 @@ const CreateOrderFoodDelivery = ({navigation}) => {
         },
       });
       if (response.status == API_SUCCESS_CODE) {
-        setMealList(response.data.data);
+       // Assuming response is your API response
+        const filteredMealList = response.data.data.map(item => ({
+          ...item,
+          dish: item.dish.filter(x => x.cuisineArray.includes(subCategory))
+        }));
+
+        setMealList(filteredMealList);
+
       }
     } catch (error) {
       console.log('Error Fetching Data:', error.message);
@@ -353,7 +360,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
                       : '#9252AA',
                   }}>
 				 
-                  ₹ {item.dish_rate}
+                  ₹ {item.mealArray[0]}
                 </Text>
                 <TouchableOpacity
                   onPress={() =>
@@ -830,6 +837,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
 
                     {expandedCategories.includes(item.mealObject._id) ? (
                       // Show all dishes if this category is expanded
+                      
                       <FlatList
                         data={item.dish}
                         keyExtractor={dish => dish._id}
