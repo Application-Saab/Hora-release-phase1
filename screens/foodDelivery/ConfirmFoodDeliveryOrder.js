@@ -46,7 +46,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
         return {
             name: dish.name,
             image: dish.image,
-            price: Number(dish.dish_rate),
+            price: Number(dish.cuisineArray[0]),
             id: dish._id
         };
     });
@@ -560,7 +560,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
                         <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 16, lineHeight: 20 }}>Advance payment</Text>
-                        <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 16, lineHeight: 20 }}>₹ {Math.round(totalPrice / 5)}</Text>
+                        <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 16, lineHeight: 20 }}>₹ {Math.round(totalPrice * 0.65)}</Text>
                     </View>
                 </View>
 

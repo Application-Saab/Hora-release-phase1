@@ -136,15 +136,6 @@ const CreateOrderFoodDelivery = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         ) : null}
-        {expandedCategories.includes(item[0]) && ( // Conditionally render the cuisines list
-          <FlatList
-            data={cuisines}
-            renderItem={renderItem}
-            keyExtractor={item => item}
-            numColumns={4}
-            contentContainerStyle={styles.cuisineContainer}
-          />
-        )}
       </View>
     );
   };
@@ -164,10 +155,10 @@ const CreateOrderFoodDelivery = ({navigation}) => {
       setSelectedDishes(updatedSelectedDishes);
       setSelectedCount(updatedSelectedDishes.length);
       if (isSelected) {
-        const updatedPrice = selectedDishPrice - parseInt(dish.mealArray[0], 10);
+        const updatedPrice = selectedDishPrice - parseInt(dish.cuisineArray[0], 10);
         setSelectedDishPrice(updatedPrice);
       } else {
-        const updatedPrice = selectedDishPrice + parseInt(dish.mealArray[0], 10);
+        const updatedPrice = selectedDishPrice + parseInt(dish.cuisineArray[0], 10);
         setSelectedDishPrice(updatedPrice);
       }
       if (updatedSelectedDishDictionary[dish._id]) {
@@ -200,8 +191,9 @@ const CreateOrderFoodDelivery = ({navigation}) => {
       setLoading(true);
       const url = BASE_URL + GET_MEAL_DISH_ENDPOINT;
       const is_dish = isNonVegSelected ? 0 : 1;
+      console.log(selectedCuisines);
       const requestData = {
-        cuisineId: selectedCuisines,
+        cuisineId: ["65f1b256aaba27208a89865f"],
         is_dish: is_dish,
       };
       const response = await axios.post(url, requestData, {
@@ -213,7 +205,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
        // Assuming response is your API response
         const filteredMealList = response.data.data.map(item => ({
           ...item,
-          dish: item.dish.filter(x => x.cuisineArray.includes(subCategory))
+          dish: item.dish 
         }));
 
         setMealList(filteredMealList);
@@ -360,7 +352,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
                       : '#9252AA',
                   }}>
 				 
-                  ₹ {item.mealArray[0]}
+                  ₹ {item.cuisineArray[0]}
                 </Text>
                 <TouchableOpacity
                   onPress={() =>
@@ -499,87 +491,13 @@ const CreateOrderFoodDelivery = ({navigation}) => {
             }}>
 		   
             <Text style={{color: '#4F4F4F', fontSize: 13, fontWeight: '400'}}>
-              {dishDetail.per_plate_qty.qty
-                ? `${dishDetail.per_plate_qty.qty} ${dishDetail.per_plate_qty.unit}/ Person`
+              {dishDetail.cuisineArray[1]
+                ? `${dishDetail.cuisineArray[1]} ${dishDetail.cuisineArray[2]}/ Person`
                 : 'NA'}
             </Text>
           </View>
-          <View
-            style={{
-              padding: 10,
-              marginTop: 4,
-              flexDirection: "column",
-              backgroundColor: "#F7F2F9",
-              width: Dimensions.get("window").width - 24,
-              borderWidth: 1,
-              borderRadius: 5,
-              borderColor: "#9252AA",
-            }}>
-		   
-            <Text style={{color: '#9C9B9B', fontSize: 11, fontWeight: '700'}}>
-              Special Appliance Required
-            </Text>
-
-            <View style={{flexDirection: 'row', marginTop: 3}}>
-             
-              <Text
-                style={{
-                  color: '#4B4B4B',
-                  fontSize: 12,
-                  fontWeight: '400',
-                  marginLeft: 6,
-                  marginTop: 4,
-                }}>
-			   
-                {dishDetail.special_appliance_id &&
-                dishDetail.special_appliance_id.length > 0 ? (
-                  <View>
-                    {dishDetail.special_appliance_id.map((appliance, index) => (
-                      <View
-                        key={index}
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-					   
-                        <Text
-                          style={{
-                            color: '#4B4B4B',
-                            fontSize: 12,
-                            fontWeight: '400',
-                          }}>
-						 
-                          {appliance.name}
-                        </Text>
-
-                        {index < dishDetail.special_appliance_id.length - 1 && (
-                          <Text>, </Text>
-                        )}
-                      </View>
-                    ))}
-                  </View>
-                ) : (
-                  'NA'
-                )}
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              marginTop: 4,
-              flexDirection: "column",
-              backgroundColor: "#F7F2F9",
-              padding: 10,
-              width: Dimensions.get("window").width - 24,
-              borderWidth: 1,
-              borderRadius: 5,
-              borderColor: "#9252AA",
-            }}>
-		   
-            <Text style={{color: '#9C9B9B', fontSize: 11, fontWeight: '700'}}>
-              Advance Preparations required
-            </Text>
-            <Text style={{color: '#4B4B4B', fontSize: 12, fontWeight: '400'}}>
-              {dishDetail.preperationtext ? dishDetail.preperationtext : 'NA'}
-            </Text>
-          </View>
+         
+          
         </View>
       </View>
     </View>
@@ -726,38 +644,6 @@ const CreateOrderFoodDelivery = ({navigation}) => {
           </View>
         ) : (
           <View>
-            <View
-              style={{
-                marginLeft: 20,
-                marginRight: 20,
-                justifyContent: 'flex-start',
-                flexGrow: 1,
-              }}>
-			 
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontWeight: '900',
-                  color: 'black',
-                  marginTop: 5,
-                }}>
-			   
-                Select Cuisines
-              </Text>
-              <FlatList
-                data={cuisines}
-                renderItem={renderItem}
-                keyExtractor={item => item}
-                numColumns={4}
-                contentContainerStyle={styles.cuisineContainer}
-              />
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <Image
-                style={styles.verticalSeparator}
-                source={require('../../assets/verticalSeparator.png')}></Image>
-					   
-            </View>
 
             <View style={{paddingHorizontal: 12}}>
               <FlatList
