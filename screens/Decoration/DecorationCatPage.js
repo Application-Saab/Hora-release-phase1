@@ -95,9 +95,9 @@ const DecorationCatPage = ({ route, navigation }) => {
 
     const getItemInclusion = (inclusion) => {
         const htmlString = inclusion[0];
-        const withoutDivTags = htmlString.replace(/<\/?div>/g, '');
-        const withoutBrTags = withoutDivTags.replace(/<\/?br>/g, '');
-        const statements = withoutBrTags.split('<div>');
+        const withoutTags = htmlString.replace(/<[^>]*>/g, ''); // Remove HTML tags
+        const withoutSpecialChars = withoutTags.replace(/&#[^;]*;/g, ' '); // Replace &# sequences with space
+        const statements = withoutSpecialChars.split('<div>');
         const bulletedList = statements
             .filter(statement => statement.trim() !== '')
             .map(statement => `- ${statement.trim()}`);
@@ -110,15 +110,18 @@ const DecorationCatPage = ({ route, navigation }) => {
 
     const RenderBottomSheetContent = () => (
         <View>
-            <View style={{ paddingTop: 5, paddingRight: 40, paddingLeft: 10 }}>
-                <Image source={{ uri: `https://horaservices.com/api/uploads/${itemDetail.featured_image}` }} style={{ width: Dimensions.get('window').width, height: 340, aspectRatio: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5 }} />
-                <Text style={{ color: '#1C1C1C', fontSize: 21, fontWeight: '800', marginVertical: 1 }}>{itemDetail.name}</Text>
-                <Image source={require('../../assets/Vector4.png')} style={{ width: 332.5, height: 1 }} />
-                <Text style={{ color: '#333', fontSize: 13, fontWeight: '400', paddingTop: 18 }}>{getItemInclusion(itemDetail.inclusion)}</Text>
-            </View>
+            <View>
+                <View style={{alignItems:"center" , justifyContent:"center"}}>
+                <Image source={{ uri: `https://horaservices.com/api/uploads/${itemDetail.featured_image}` }} style={{ width: Dimensions.get('window').width, height: 360, aspectRatio: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5 }} />
+                </View>
+                <View style={{paddingLeft:10 , paddingTop:10}}>
+                <Text style={{ color: '#9252AA', fontSize: 20, fontWeight: '500' , textAlign:"left" , marginBottom:4 , justifyContent:"center" , alignItems:"flex-start"}}>{itemDetail.name}</Text>
+                <Image source={require('../../assets/Vector4.png')} style={{ width: 332.5, height: 1  }} />
+                <Text style={{ color: '#333', fontSize: 12, fontWeight: '500', paddingTop: 7  , lineHeight:17 , paddingRight:20}}>{getItemInclusion(itemDetail.inclusion)}</Text>
+                </View>
+                 </View>
         </View>
     );
-
 
     return (
         <View style={styles.screenContainer}>
@@ -241,7 +244,7 @@ const DecorationCatPage = ({ route, navigation }) => {
             <RBSheet
                 ref={bottomSheetRef}
                 closeOnDragDown={[true, closeBottomSheet]}
-                height={650}
+                height={700}
                 customStyles={{
                     container: styles.bottomSheetContainer,
                     wrapper: styles.bottomSheetWrapper,
@@ -323,12 +326,14 @@ const styles = StyleSheet.create({
     bottomSheetContainer: {
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
+        borderWidth:2,
+        borderColor:"#9252AA",
     },
     bottomSheetWrapper: {
         backgroundColor: 'transparent',
     },
     draggableIcon: {
-        backgroundColor: '#000',
+        backgroundColor: '#9252AA',
     },
     bottomSheetItem: {
         alignItems: 'center',

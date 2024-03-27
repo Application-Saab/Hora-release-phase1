@@ -12,9 +12,19 @@ const OrderWarning = ({ visible, onClose, title, amount, message, buttonText}) =
 
         <View style={{justifyContent:'center',alignItems:'center'}}> 
         <Image source={require('../../assets/OrderWarning.png')} style={styles.warningImage} />
+        
         <Text style={{marginTop:17,fontSize:16,fontWeight:'500',color:'black'}}>{title} </Text>
-        <Text style={{fontSize:16,fontWeight:'500',color:'#9252AA'}}>{amount}</Text>
-        <Text style={{marginTop:14,fontSize:12,fontWeight:'400',color:'#707070', padding:20}}>{message}</Text>
+        
+        {amount ? (
+            <Text style={{fontSize:16,fontWeight:'500',color:'#9252AA'}}>{amount}</Text>
+            ) : null}
+
+            {message ? (
+            <Text style={{marginTop:14,fontSize:12,fontWeight:'400',color:'#707070' , paddingHorizontal:20 , textAlign:"center"}}>
+            {message}
+            </Text>
+            ) : null}
+       
         <TouchableOpacity onPress={onClose} style={styles.customButton} underlayColor="transparent" activeOpacity={1}>
             <Text style={styles.buttonText}>{buttonText}</Text>
           </TouchableOpacity>
@@ -59,7 +69,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 20,
     paddingVertical:9,
-    marginTop:26,
+    marginTop:20,
     marginBottom:22,
     paddingHorizontal:62
   },

@@ -86,7 +86,7 @@ const handleLogout = async () => {
       screenOptions={{
         header: ({ route }) => { },
       }}
-      initialRouteName="AuthLoading"
+      initialRouteName="DrawerNavigator"
     > 
       <Stack.Screen name="DrawerNavigator" component={DrawerNavigation} />
       <Stack.Screen name="AuthLoading" component={AuthLoadingScreen} />
@@ -112,9 +112,7 @@ const handleLogout = async () => {
       <Stack.Screen name="Gifts" component={Gifts}  options={{headerShown:true}}/>
       <Stack.Screen name="OrderList" component={Orderlist}  options={{headerShown:true}}/>
 	  <Stack.Screen name="Entertainment" component={Entertainment} options={{headerShown:true}}/>
-																								 
-
-
+																							
     </Stack.Navigator>
     </NavigationContainer>
   );

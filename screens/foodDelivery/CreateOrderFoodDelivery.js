@@ -141,7 +141,8 @@ const CreateOrderFoodDelivery = ({navigation}) => {
   };
 
   const handleIncreaseQuantity = (dish, isSelected) => {
-    if (selectedDishes.length > 11 && !isSelected) {
+    console.log("selectedDishes" + selectedDishes.length)
+    if (selectedDishes.length >= 15 && !isSelected) {
       setWarningVisibleForDishCount(true);
     } else {
       const updatedSelectedDishes = [...selectedDishes];
@@ -235,7 +236,6 @@ const CreateOrderFoodDelivery = ({navigation}) => {
     <TouchableOpacity
       onPress={() => openBottomSheet(item, bottomSheetRef)}
       activeOpacity={1}>
-	 
       <View
         style={{
           width: windowWidth * 0.3,
@@ -258,22 +258,14 @@ const CreateOrderFoodDelivery = ({navigation}) => {
               height: Dimensions.get("window").height * 0.182,
               marginTop: 33,
             }}
-							
-															  
-							
-			  
-            imageStyle={{borderRadius: 16}}>
+						 imageStyle={{borderRadius: 16}}>
 		   
             <View style={{flexDirection: 'column', paddingHorizontal: 5}}>
               <TouchableOpacity
                 onPress={() => openBottomSheet(item, bottomSheetRef)}
                 activeOpacity={1}>
-			   
-					 
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
-				 
-				 
-                  <Image
+			         <View style={{justifyContent: 'center', alignItems: 'center'}}>
+				       <Image
                     source={
                       selectedDishes.includes(item._id) &&
                       item.special_appliance_id.length > 0
@@ -294,22 +286,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
                   />
                 </View>
               </TouchableOpacity>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: '600',
-                    color:
-                      item.special_appliance_id.length > 0 &&
-                      selectedDishes.includes(item._id)
-                        ? 'white'
-                        : 'transparent',
-                  }}>
-				 
-                  Appliance required
-                </Text>
-              </View>
-
+             
               <Text
                 style={{
                   marginHorizontal: 3,
@@ -382,15 +359,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
                 alignItems: "center",
               }}
             >
-					  
-									 
-						  
-						
-						 
-									 
-				
-			 
-              <Image
+					  <Image
                 source={
                   item.is_dish === 1
                     ? require('../../assets/Rectanglegreen.png')
@@ -516,19 +485,28 @@ const CreateOrderFoodDelivery = ({navigation}) => {
         : [...prevExpanded, categoryId],
     );
   };
-  const renderServedItem = ({item}) => (
-    <View style={styles.textContainer}>
-      <Text style={styles.text}>{item}</Text>
-    </View>
-  );
+  
 
   const addDish = selectedDishPrice => {
-    console.log(1);
+    // Extract dish names, quantities, and units
+    const selectedDishQuantities = Object.values(selectedDishDictionary).map(item => {
+      return {
+        name: item.name,
+        image: item.image,
+        price: item.cuisineArray[0] ,
+        quantity: item.cuisineArray[1],
+        unit: item.cuisineArray[2]
+      };
+    });
+
+  
+    // Navigate to the next screen and pass the data
     navigation.navigate('SelectDateFoodDelivery', {
       selectedDishDictionary,
       selectedDishPrice,
       selectedDishes,
-      subCategory
+      subCategory,
+      selectedDishQuantities 
     });
   };
   const handleToggleNonVeg = () => {
@@ -794,7 +772,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
       <View>
         <OrderWarning
           visible={isWarningVisibleForDishCount}
-          title={'Maximum 12 dishes can be prepared at home!!!'}
+          title={'Maximum 15 dishes can be added. Please contact to support for more imformation'}
           buttonText={'OK'}
           onClose={handleWarningClose}
         />

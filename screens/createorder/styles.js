@@ -109,17 +109,18 @@ const styles = StyleSheet.create({
       },
       bottomSheetContainer: {
         backgroundColor: 'white',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        padding: 12,
-        paddingTop:12
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        padding: 2,
+        borderWidth:2,
+        borderColor:"#9252AA",
   
       },
       bottomSheetWrapper: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
       },
       draggableIcon: {
-        backgroundColor: '#000',
+        backgroundColor: '#9252AA',
       },
       buttonText1: {
         color: 'white',

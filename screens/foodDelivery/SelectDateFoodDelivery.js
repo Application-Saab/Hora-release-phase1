@@ -10,15 +10,18 @@ import InfoModal from '../dialog/info';
 import CustomHeader from '../../components/CustomeHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const SelectDateFoodDelivery = ({ navigation, route }) => {
+const SelectDateFoodDelivery = ({
+    navigation, route }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showTimePicker, setShowTimePicker] = useState(false);
-    const [peopleCount, setPeopleCount] = useState(0);
+    const [peopleCount, setPeopleCount] = useState(10);
     const [activeTab, setActiveTab] = useState('left');
     const data = route.params.selectedDishDictionary;
+    const [selectedDishNames, setSelectedDishNames] = useState(route.params.selectedDishNames);
     const [dishPrice, setDishPrice] = useState(route.params.selectedDishPrice);
+    const [selectedDishQuantities, setSelectedDishQuantities] = useState(route.params.selectedDishQuantities);
     const [showAll, setShowAll] = useState(false);
     const [burnerCount, setBurnerCount] = useState(0)
     const [isWarningVisible, setWarningVisible] = useState(false);
@@ -42,36 +45,36 @@ const SelectDateFoodDelivery = ({ navigation, route }) => {
 
     const isAppliancesSelected = selectedTab === 'Appliances';
     const isIngredientsSelected = selectedTab === 'Ingredients';
-	let count = 0;
+    let count = 0;
 
-    useEffect(() =>{
+    useEffect(() => {
         AsyncStorage.getItem("selectedDate").then((sDate) => {
             if (sDate != null) {
-              setSelectedDate(new Date(sDate));
+                setSelectedDate(new Date(sDate));
             }
-          });
-          AsyncStorage.getItem("selectedTime").then((sTime) => {
+        });
+        AsyncStorage.getItem("selectedTime").then((sTime) => {
             if (sTime != null) {
-             
-              setSelectedTime(new Date(sTime));
+
+                setSelectedTime(new Date(sTime));
             }
-         });
-    },[])
+        });
+    }, [])
 
     useEffect(() => {
         const isDateValid = checkIsDateValid();
-            const isTimeValid = checkIsTimeValid();
+        const isTimeValid = checkIsTimeValid();
 
-            if (!isTimeValid) {
-                setErrorText('*Order can be placed only between 8:00 AM to 10:00 PM');
-                return;
-            } 
-            else if (!isDateValid) {
-                setErrorText('Order can be placed at least 24 hours in advance.');
-                return;
-            } else{
-                setErrorText(null);
-            }
+        if (!isTimeValid) {
+            setErrorText('*Order can be placed only between 8:00 AM to 10:00 PM');
+            return;
+        }
+        else if (!isDateValid) {
+            setErrorText('Order can be placed at least 24 hours in advance.');
+            return;
+        } else {
+            setErrorText(null);
+        }
     }, [selectedTime, selectedDate])
 
 
@@ -126,20 +129,6 @@ const SelectDateFoodDelivery = ({ navigation, route }) => {
             AsyncStorage.setItem("selectedDate", date.toString());
             setSelectedDate(date);
             setShowDatePicker(false);
-
-												   
-												   
-
-							   
-																				  
-					   
-			 
-									
-																					  
-					   
-					
-								   
-			 
         }
     };
 
@@ -148,19 +137,6 @@ const SelectDateFoodDelivery = ({ navigation, route }) => {
             AsyncStorage.setItem("selectedTime", time.toString());
             setSelectedTime(time);
             setShowTimePicker(false);
-
-												   
-												   
-
-							   
-																				  
-					   
-									  
-																					  
-					   
-					
-								   
-			 
         }
     };
 
@@ -180,47 +156,6 @@ const SelectDateFoodDelivery = ({ navigation, route }) => {
         );
     };
 
-    const RenderIngredients = ({ item }) => {
-
-        let quantity = item.qty * peopleCount;
-        let unit = item.unit;
-        if (quantity >= 1000) {
-            quantity = quantity / 1000;
-            if (unit === 'g')
-                unit = 'kg'
-            else if (unit === 'ml')
-                unit = 'L'
-        }
-        return (
-            <View style={{ width:"46%",height: 55, paddingEnd: 2, alignItems: 'center', borderRadius: 5, borderColor: '#DADADA', borderWidth: 0.5, flexDirection: 'row', marginRight: 15, marginBottom: 8 }}>
-                <View style={{ marginLeft: 5, width: 40, height: 40, backgroundColor: '#F0F0F0', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 5 }}>
-                    <Image source={{ uri: `https://horaservices.com/api/uploads/${item.image}` }} style={{ width: 31, height: 24 }} />
-                </View>
-
-                <View style={{ flexDirection: 'column', marginLeft: 1, width: 80 }}>
-                    <Text style={{ fontSize: 10, fontWeight: '500', color: '#414141' }}>{item.name}</Text>
-
-                    <Text style={{ fontSize: 14, fontWeight: '700', color: '#9252AA' }}>{quantity + ' ' + unit}</Text>
-                </View>
-            </View>
-        );
-    };
-
-    const renderPreparationText = ({ items
-    }) => {
-        if (showAll) {
-            return items.map((item, index) => (
-                <Text key={index} style={styles.item}>{`${index + 1}. ${item}`}</Text>
-            ));
-        } else {
-            return items
-                .filter(item => item.length >= 2)
-                .slice(0, 2)
-                .map((item, index) => (
-                    <Text key={index} style={styles.item}>{`${index + 1}. ${item}`}</Text>
-                ));
-        }
-    };
 
 
 
@@ -228,115 +163,175 @@ const SelectDateFoodDelivery = ({ navigation, route }) => {
         setShowAll(!showAll);
     };
 
-    const LeftTabContent = ({ burnerCount, ApplianceList }) => {
+    const RenderDishqunatity = ({ item }) => {
+        const itemCount = Object.values(data).length
+        let quantity = item.quantity * peopleCount;
+
+        if (itemCount <= 5) {
+            quantity = quantity
+        }
+        else if (itemCount == 6) {
+            quantity = quantity * (1 - 0.15)
+        }
+        else if (itemCount == 7) {
+            console.log("quantity before" + quantity)
+            quantity = quantity * (1 - 0.15)
+            console.log("quantity after" + quantity)
+        }
+        else if (itemCount == 8) {
+            quantity = quantity * (1 - 0.25)
+        }
+        else if (itemCount == 8) {
+            quantity = quantity * (1 - 0.30)
+        }
+        else if (itemCount == 9) {
+            quantity = quantity * (1 - 0.35)
+        }
+        else if (itemCount == 10) {
+            quantity = quantity * (1 - 0.35)
+        }
+        else if (itemCount == 11) {
+            quantity = quantity * (1 - 0.40)
+        }
+        else if (itemCount == 11) {
+            quantity = quantity * (1 - 0.40)
+        }
+        else if (itemCount == 12) {
+            quantity = quantity * (1 - 0.50)
+        }
+        else if (itemCount == 13) {
+            quantity = quantity * (1 - 0.53)
+        }
+        else if (itemCount == 15) {
+            quantity = quantity * (1 - 0.55)
+        }
+
+        quantity = Math.round(quantity)
+        let unit = item.unit;
+        if (quantity >= 1000) {
+            quantity = quantity / 1000;
+            if (unit === 'Gram')
+                unit = 'KG'
+            else if (unit === 'ml')
+                unit = 'L'
+        }
         return (
-            <View style={{ paddingHorizontal: 15, flexDirection: 'column', marginLeft: 16, marginEnd: 20, borderWidth: 1, elevation: 1, backgroundColor: 'white', borderBottomRightRadius: 15, borderBottomLeftRadius: 15, borderColor: 'white' }}>
-                <View style={{ flexDirection: 'column' }}>
-                    <Text style={{ color: '#000000', fontSize: 13, fontWeight: '600', marginTop: 20 }}>Required Burners</Text>
-                    <Text style={{ color: '#969696', fontSize: 11, fontWeight: '500', marginTop: 6 }}>Number of burners depend upon the number of dishes chosen</Text>
-                    <Text style={{ color: '#969696', fontSize: 11, fontWeight: '500', marginTop: 6 }}>(Burners would be used at your location)</Text>
-
+            <View style={{ width: "46%", height: 55, paddingEnd: 2, alignItems: 'center', borderRadius: 5, borderColor: '#DADADA', borderWidth: 0.5, flexDirection: 'row', marginRight: 15, marginBottom: 8 }}>
+                <View style={{ marginLeft: 5, width: 40, height: 40, backgroundColor: '#F0F0F0', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 5 }}>
+                    <Image source={{ uri: `https://horaservices.com/api/uploads/${item.image}` }} style={{ width: 31, height: 24 }} />
                 </View>
 
-                <View style={{ width: 90, height: 54, flexDirection: 'column', borderColor: "#DADADA", borderWidth: 0.5, borderRadius: 5, marginTop: 19 }}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Image style={styles.burner} source={require('../../assets/burner.png')} />
-                        <Text style={{ marginStart: 12, marginVertical: 6, fontSize: 26, color: "#9252AA" }}>{burnerCount}</Text>
-
-                    </View>
-
+                <View style={{ flexDirection: 'column', marginLeft: 1, width: 80 }}>
+                    <Text style={{ fontSize: 10, fontWeight: '500', color: '#414141' }}>{item.name}</Text>
+                    <Text style={{ fontSize: 14, fontWeight: '700', color: '#9252AA' }}>{quantity + ' ' + unit}</Text>
                 </View>
-                {ApplianceList.length > 0 && (
+            </View>
+        );
+    };
 
-                    <View style={{ flexDirection: 'column', marginTop: 11 }}>
+    const renderTabContent = (selectedDishQuantities) => {
+        if (activeTab === 'left') {
 
-                        <View style={{ flexDirection: 'column' }}>
-                            <Text style={{ color: '#000000', fontSize: 13, fontWeight: '600' }}>Requires Special Appliances</Text>
-                            <Text style={{ color: '#969696', fontSize: 11, fontWeight: '500', marginTop: 7 }}>(Keep these appliances ready at your location)</Text>
+            return <LeftTabContent />;
+        } else if (activeTab === 'right') {
 
-                        </View>
+            return <RightTabContent selectedDishQuantities={selectedDishQuantities} />;
+        }
+    };
 
-                    </View>
-                )}
-
-                {ApplianceList.length > 0 && (
-                    <View style={{ flexDirection: 'row', marginTop: 11 }}>
-                        <Image style={styles.verticalSeparator} source={require('../../assets/verticalSeparator.png')}></Image>
-                    </View>
-                )}
-
-
-                <View style={{ flexDirection: 'column', marginTop: 8 }}>
-                    <FlatList
-                        data={ApplianceList}
-                        keyExtractor={item => item.id}
-                        renderItem={({ item }) => <RenderAppliances item={item} />}
-                        numColumns={3}
-
-                    />
-
+    const LeftTabContent = () => {
+        return (
+            <View style={{ justifyContent: 'space-between', marginTop: 17, paddingTop: 5, paddingBottom: 9, paddingLeft: 16, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2, fontSize: 14 }}>
+                <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 18, marginTop: 5 }}>Inclusions:</Text>
+                <View >
+                    <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5 }}>
+                        {subCategory === "SinglePlateMeal" && (
+                            <>
+                                ✔️ Food Delivery at Door-step
+                                {"\n"}
+                                ✔️ Free Delivery
+                                {"\n"}
+                                ✔️ Hygienically Packed boxes
+                                {"\n"}
+                                ✔️ Freshly Cooked Food
+                                {"\n"}
+                            </>
+                        )}
+                    </Text>
                 </View>
+                <View>
+                    <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5 }}>
+                        {subCategory === "LiveBuffet" && (
+                            <>
+                                - Well Groomed Waiters (2 Nos)
+                                {"\n"}
+                                - Bone-china Crockery & Quality disposal for loose items.
+                                {"\n"}
+                                - Transport (to & fro)
+                                {"\n"}
+                                - Dustbin with Garbage bag
+                                {"\n"}
+                                - Head Mask for waiters & chefs
+                                {"\n"}
+                                - Tandoor/Other cooking Utensiles
+                                {"\n"}
+                                - Chafing Dish
+                                {"\n"}
+                                - Cocktail Napkins
+                                {"\n"}
+                                - 2 Chef
+                                {"\n"}
+                                - Water Can (Bisleri)(20 litres)
+                                {"\n"}
+                                - Hand gloves
+                                {"\n"}
+                                Exclusion:
+                                {"\n"}
+                                - Buffet table/kitchen table is in client scope (can be provided at additional cost)
 
-
-                {preparationTextList.length > 0 && (
-                    <View style={{ flexDirection: 'column', backgroundColor: '#F9E9FF', borderRadius: 15, paddingHorizontal: 10 }}>
-                        <View style={styles.header}>
-                            <Text style={{ color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Readiness Required*</Text>
-                            <TouchableOpacity onPress={toggleShowAll} activeOpacity={1}>
-                                <Text style={styles.showAllText}>{showAll ? 'Show Less' : 'Show All'}</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{ flexDirection: 'column' }}>
-                            {renderPreparationText(preparationTextList)}
-                        </View>
-                    </View>
-                )}
+                            </>
+                        )}
+                    </Text>
+                </View>
+                <View>
+                    <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5 }}>
+                        {subCategory === "BulkFoodDelivery" && (
+                            <>
+                                ✔️ Food Delivery at Door -Step
+                                {"\n"}
+                                ✔️ Free Delivery
+                                {"\n"}
+                                ✔️ Hygienically Packed boxes
+                                {"\n"}
+                                ✔️ Freshly Cooked Food
+                                {"\n"}
+                                ✔️ Quality Disposable set of Plates & Spoons & forks
+                                {"\n"}
+                                ✔️ Water bottles (small bottles equal to number of people)
+                                {"\n"}
+                            </>
+                        )}
+                    </Text>
+                </View>
 
             </View>
         );
     };
 
-    const RightTabContent = ({ ingredientList }) => {
+    const RightTabContent = ({ selectedDishQuantities }) => {
+        console.log(">>>>>>>>>>>>>>" + JSON.stringify(selectedDishQuantities))
         return (
-            <ScrollView>
-                 <View style={{ paddingHorizontal: 15, flexDirection: 'column', marginLeft: 16, marginEnd: 20, borderWidth: 1, elevation: 1, backgroundColor: 'white', borderBottomRightRadius: 15, borderBottomLeftRadius: 15, borderColor: 'white', paddingBottom: 10 }}>
-                    <View style={{ flexDirection: 'column' }}>
-                        <Text style={{ color: '#000000', fontSize: 13, fontWeight: '600', marginTop: 20 }}>Required Ingredient</Text>
-                        <Text style={{ color: '#969696', fontSize: 11, fontWeight: '500', marginTop: 6 }}>(Keep these ingredient ready at your location)</Text>
-
-                    </View>
-
-                   <ScrollView style={{ flexDirection: 'column', marginTop: 15 }}>
-                        <FlatList
-                            data={ingredientList}
-                            keyExtractor={item => item.id}
-                            renderItem={({ item }) => <RenderIngredients item={item} />}
-                            numColumns={2}
-
-                        />
-
-                    </ScrollView>
-
-                    {preparationTextList.length > 0 && (
-                        <View style={{ flexDirection: 'column', backgroundColor: '#F9E9FF', borderRadius: 15, paddingHorizontal: 10 }}>
-                            <View style={styles.header}>
-                                <Text style={{ color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Readiness Required*</Text>
-                                <TouchableOpacity onPress={toggleShowAll} activeOpacity={1}>
-                                    <Text style={styles.showAllText}>{showAll ? 'Show Less' : 'Show All'}</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={{ flexDirection: 'column' }}>
-                                {renderPreparationText(preparationTextList)}
-                            </View>
-                        </View>
-                    )}
-
-
-                </View>
+            <ScrollView style={{ marginTop: 17, paddingTop: 5, paddingBottom: 9, paddingLeft: 16, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2, fontSize: 14 }}>
+                <FlatList
+                    data={selectedDishQuantities}
+                    keyExtractor={item => item.name}
+                    renderItem={({ item }) => <RenderDishqunatity item={item} />}
+                    numColumns={2}
+                />
             </ScrollView>
-
         );
     };
+
 
     const getTotalIngredients = () => {
         const totalIngredients = {};
@@ -353,7 +348,7 @@ const SelectDateFoodDelivery = ({ navigation, route }) => {
                             qty: 0
                         };
 
-                        
+
                     }
                     totalIngredients[ingredient._id].qty += parseInt(ingredient.qty);
                     if (ingredient.unit === 'gram' || ingredient.unit === 'Gram')
@@ -363,30 +358,29 @@ const SelectDateFoodDelivery = ({ navigation, route }) => {
                 });
             }
 
-		// 	if (count === 0){
-        // Object.values(totalIngredients).map(item => {
-            
-        //         item.qty = item.qty * peopleCount;
-        //         count = 1
-            
-        // })}
+            // 	if (count === 0){
+            // Object.values(totalIngredients).map(item => {
+
+            //         item.qty = item.qty * peopleCount;
+            //         count = 1
+
+            // })}
         }
 
-      
+
         return Object.values(totalIngredients);
     };
 
 
     const onContinueClick = () => {
-        if (dishPrice < 400) {
+        if (dishPrice*peopleCount < 2500) {
             setWarningVisible(true);
         }
         else {
-
             navigation.navigate("ConfirmFoodDeliveryOrder", {
                 "selectedDate": selectedDate, "selectedTime": selectedTime, "peopleCount": peopleCount,
                 "burnerCount": burnerCount,
-                "selectedDishes": data, "items":route.params.selectedDishes, subCategory
+                "selectedDishes": data, "items": route.params.selectedDishes, subCategory
 
             })
         }
@@ -408,13 +402,11 @@ const SelectDateFoodDelivery = ({ navigation, route }) => {
 
     const increasePeopleCount = () => {
         setPeopleCount(peopleCount + 1)
-        setDishPrice(dishPrice + 49)
     }
 
     const decreasePeopleCount = () => {
-        if (peopleCount != 0) {
+        if (peopleCount != 10) {
             setPeopleCount(peopleCount - 1)
-            setDishPrice(dishPrice - 49)
         }
     }
 
@@ -455,24 +447,23 @@ const SelectDateFoodDelivery = ({ navigation, route }) => {
 
             </View>
 
-            <ScrollView>
 
-                <View style={{ justifyContent: 'space-between', marginTop: 17, paddingTop: 7, paddingBottom: 9, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2 }}>
-                    <View style={{ justifyContent: 'flex-end', flex: 1, flexDirection: 'row', marginEnd: 9 }}>
-                        <TouchableOpacity onPress={toggleModal}>
 
-                            <Image source={require('../../assets/info.png')} style={{ height: 16, width: 16 }} />
+            <View style={{ justifyContent: 'space-between', marginTop: 1, paddingTop: 2, paddingBottom: 9, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2 }}>
+                <View style={{ justifyContent: 'flex-end', flex: 1, flexDirection: 'row', marginEnd: 9 }}>
+                    <TouchableOpacity onPress={toggleModal}>
+                        <Image source={require('../../assets/info.png')} style={{ height: 16, width: 16 }} />
 
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ flexDirection: 'row'  , justifyContent:"space-between" , paddingHorizontal:"2%"  }}>
-					<View style={{flexDirection:"row"}}>
-															
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: "space-between", paddingHorizontal: "2%" }}>
+                    <View style={{ flexDirection: "row" }}>
+
                         <TouchableOpacity onPress={() => setShowDatePicker(true)} activeOpacity={1}>
 
                             <View style={{ marginStart: 10, marginEnd: 8, flexDirection: 'column', paddingHorizontal: 17, backgroundColor: 'white', borderColor: isDateValid != null && isDateValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
                                 <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Booking Date</Text>
-                               <View style={{ flexDirection: 'row', marginTop: 1 , width:Dimensions.get('window').width*0.3}}>
+                                <View style={{ flexDirection: 'row', marginTop: 1, width: Dimensions.get('window').width * 0.3 }}>
 
                                     <Text style={{ fontSize: 16, fontWeight: 600, color: isDatePressed ? '#383838' : "grey" }}>{selectedDate.toLocaleDateString()}</Text>
 
@@ -489,148 +480,115 @@ const SelectDateFoodDelivery = ({ navigation, route }) => {
                                 </View>
                             </View>
                         </TouchableOpacity>
-						</View>
-							   
-					   
-                        <View style={{ flexDirection: 'row' }}>
-                            <TouchableOpacity onPress={() => setShowTimePicker(true)} activeOpacity={1}>
-                                <View style={{ flexDirection: 'column', paddingHorizontal: 21, backgroundColor: 'white', borderColor: isTimeValid != null && isTimeValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
-                                    <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Chef Arrival Time</Text>
-                                     <View style={{ flexDirection: 'row', marginTop: 1 , width:Dimensions.get('window').width*0.3}}>
+                    </View>
 
-                                        <Text style={{ fontSize: 16, fontWeight: 600, color: isTimePressed ? '#383838' : "grey" }}>
+
+                    <View style={{ flexDirection: 'row' }}>
+                        <TouchableOpacity onPress={() => setShowTimePicker(true)} activeOpacity={1}>
+                            <View style={{ flexDirection: 'column', paddingHorizontal: 21, backgroundColor: 'white', borderColor: isTimeValid != null && isTimeValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
+                                <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Chef Arrival Time</Text>
+                                <View style={{ flexDirection: 'row', marginTop: 1, width: Dimensions.get('window').width * 0.3 }}>
+
+                                    <Text style={{ fontSize: 16, fontWeight: 600, color: isTimePressed ? '#383838' : "grey" }}>
                                         {selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                        </Text>
-                                        <Image source={require('../../assets/clock.png')} style={{ height: 19, width: 19, marginLeft: 17 }} />
-                                        {showTimePicker && (
-                                            <DateTimePicker
-                                                value={selectedTime}
-                                                mode="time"
-                                                display="default"
-                                                onChange={handleTimeChange}
-                                            />
-                                        )}
-                                    </View>
-
+                                    </Text>
+                                    <Image source={require('../../assets/clock.png')} style={{ height: 19, width: 19, marginLeft: 17 }} />
+                                    {showTimePicker && (
+                                        <DateTimePicker
+                                            value={selectedTime}
+                                            mode="time"
+                                            display="default"
+                                            onChange={handleTimeChange}
+                                        />
+                                    )}
                                 </View>
-                            </TouchableOpacity>
-                        </View>
+
+                            </View>
+                        </TouchableOpacity>
                     </View>
-                    {errorText != null && (
-                        <View style={{ marginStart: 21 }}>
-                            <Text style={{ fontSize: 9, fontWeight: '400', color: '#FF2F2F', marginTop: 4 }}>{errorText}</Text>
-                        </View>
-                    )}
-                    <View style={{ flexDirection: 'row', marginTop: 11, marginLeft: 20, marginRight: 1 }}>
-                        <Image style={styles.verticalSeparator} source={require('../../assets/verticalSeparator.png')}></Image>
-                    </View>
-
-                   <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 13, alignItems: 'center', marginLeft: 16 }}>
-                       <View style={{justifyContent:"center", alignItems:"center" , flexDirection:"row"}}>
-                       <Image source={require('../../assets/people.png')} style={{ height: 25, width: 25 }} />
-                        <Text style={{ marginLeft: 9, fontSize: 12, color: '#3C3C3E', fontWeight: '500', }}>How many people you are hosting?</Text>
-                       </View>
-                        <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-end', marginRight: 9 }}>
-                            <TouchableOpacity onPress={decreasePeopleCount} activeOpacity={1}>
-                                <Image source={require('../../assets/ic_minus.png')} style={{ height: 25, width: 25, marginLeft: 5 }} />
-                            </TouchableOpacity>
-                            <Text style={{ marginLeft: 5, lineHeight: 23, fontSize: 18, marginTop: 2, width: 22, textAlign: 'center', color: 'black' }}>{peopleCount}</Text>
-                            <TouchableOpacity onPress={increasePeopleCount} activeOpacity={1}>
-                                <Image source={require('../../assets/plus.png')} style={{ height: 25, width: 25, marginLeft: 5 }} />
-                            </TouchableOpacity>
-
-
-                        </View>
-                    </View>
-
-                    <View style={{ alignItems: 'center', flexDirection: 'row', paddingVertical: 5, borderRadius: 10, marginLeft: 13, marginRight: 6, paddingLeft: 9, marginTop: 15, borderRadius: 10, backgroundColor: '#F9E9FF' }}>
-                        <Image source={require('../../assets/info.png')} style={{ height: 16, width: 16 }} />
-                        <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>₹ 49/person would be added to bill value in addition to dish price</Text>
-
-                    </View>
-
-
                 </View>
-               
+                {errorText != null && (
+                    <View style={{ marginStart: 21 }}>
+                        <Text style={{ fontSize: 9, fontWeight: '400', color: '#FF2F2F', marginTop: 4 }}>{errorText}</Text>
+                    </View>
+                )}
+                <View style={{ flexDirection: 'row', marginTop: 11, marginLeft: 20, marginRight: 1 }}>
+                    <Image style={styles.verticalSeparator} source={require('../../assets/verticalSeparator.png')}></Image>
+                </View>
+
+                <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', marginTop: 10, alignItems: 'center', marginLeft: 16, paddingBottom: 10 }}>
+                    <View style={{ justifyContent: "center", alignItems: "center", flexDirection: "row" }}>
+                        <Image source={require('../../assets/people.png')} style={{ height: 20, width: 20 }} />
+                        <Text style={{ marginLeft: 9, fontSize: 12, color: '#3C3C3E', fontWeight: '500', }}>How many people you are hosting?</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-end', marginRight: 9, alignItems: "center" }}>
+                        <TouchableOpacity onPress={decreasePeopleCount} activeOpacity={1}>
+                            <Image source={require('../../assets/ic_minus.png')} style={{ height: 20, width: 20, marginLeft: 5 }} />
+                        </TouchableOpacity>
+                        <TextInput
+                            style={{
+                                marginLeft: 5,
+                                paddingVertical: 5, // Adjust the padding to your preference
+                                paddingHorizontal: 10,
+                                fontSize: 16,
+                                width: 40,
+                                textAlign: 'center',
+                                textAlignVertical: 'center', // Center the text vertically
+                                color: 'black',
+                                borderWidth: 1,
+                                borderColor: 'gray',
+                                borderRadius: 5
+                            }}
+                            value={String(peopleCount)}
+                            onChangeText={(e) => {
+                                const parsedValue = parseInt(e);
+                                if (!isNaN(parsedValue)) {
+                                    setPeopleCount(parsedValue);
+                                    //setDishPrice(dishPrice*peopleCount)
+                                } else {
+                                    // Handle the case when input is empty
+                                    // For example, you can set peopleCount to 0 or maintain its current value
+                                    setPeopleCount(0);
+                                    //setDishPrice(dishPrice*peopleCount) // Or
+                                    // setPeopleCount(peopleCount);
+                                }
+                            }}
+                            keyboardType="numeric"
+                        />
+
+                        <TouchableOpacity onPress={increasePeopleCount} activeOpacity={1}>
+                            <Image source={require('../../assets/plus.png')} style={{ height: 20, width: 20, marginLeft: 5 }} />
+                        </TouchableOpacity>
+
+
+                    </View>
+                </View>
+
+
+
+            </View>
+
+            <View style={{ flexDirection: 'row', marginTop: 20, marginHorizontal: 16 }}>
+                <TouchableOpacity style={{
+                    backgroundColor: activeTab === 'left'
+                        ? "#D9D9D9"
+                        : 'white', borderTopRightRadius: 10, borderTopLeftRadius: 15, paddingVertical: 8, paddingStart: 50, paddingRight: 50
+                }} onPress={() => setActiveTab('left')} activeOpacity={1}>
+                    <Text style={activeTab === 'left' ? styles.activeTab : styles.inactiveTab}>Inclusions</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{
+                    backgroundColor: activeTab === 'right'
+                        ? "#D9D9D9"
+                        : 'white', borderTopRightRadius: 10, borderTopLeftRadius: 15, paddingVertical: 8, paddingStart: 50, paddingRight: 50
+                }} onPress={() => setActiveTab('right')} activeOpacity={1}>
+                    <Text style={activeTab === 'right' ? styles.activeTab : styles.inactiveTab}>Dish Quantity</Text>
+                </TouchableOpacity>
+            </View>
+            {renderTabContent(selectedDishQuantities)}
+            <ScrollView>
+
+
             </ScrollView>
-            <View>
-                <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>
-                    {subCategory === "SinglePlateMeal" && (
-                    <>
-                        {"\n"}
-                        Inclusions:
-                        {"\n"}
-                        ✔️ Food Delivery at Door-step
-                        {"\n"}
-                        ✔️ Free Delivery
-                        {"\n"}
-                        ✔️ Hygienically Packed boxes
-                        {"\n"}
-                        ✔️ Freshly Cooked Food
-                        {"\n"}
-                    </>
-                    )}
-                </Text>
-            </View>
-            <View>
-                <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>
-                    {subCategory === "LiveBuffet" && (
-                    <>
-                        Inclusion:
-                        {"\n"}
-                        - Well Groomed Waiters (2 Nos)
-                        {"\n"}
-                        - Bone-china Crockery & Quality disposal for loose items.
-                        {"\n"}
-                        - Transport (to & fro)
-                        {"\n"}
-                        - Dustbin with Garbage bag
-                        {"\n"}
-                        - Head Mask for waiters & chefs
-                        {"\n"}
-                        - Tandoor/Other cooking Utensiles
-                        {"\n"}
-                        - Chafing Dish
-                        {"\n"}
-                        - Cocktail Napkins
-                        {"\n"}
-                        - 2 Chef
-                        {"\n"}
-                        - Water Can (Bisleri)(20 litres)
-                        {"\n"}
-                        - Hand gloves
-                        {"\n"}
-                        Exclusion:
-                        {"\n"}
-                        - Buffet table/kitchen table is in client scope (can be provided at additional cost)
-                    
-                    </>
-                    )}
-                </Text>
-            </View>
-            <View>
-                <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>
-                    {subCategory === "BulkFoodDelivery" && (
-                    <>
-                        Inclusions:
-                        {"\n"}
-                        ✔️ Food Delivery at Door -Step
-                        {"\n"}
-                        ✔️ Free Delivery
-                        {"\n"}
-                        ✔️ Hygienically Packed boxes
-                        {"\n"}
-                        ✔️ Freshly Cooked Food
-                        {"\n"}
-                        ✔️ Quality Disposable set of Plates & Spoons & forks
-                        {"\n"}
-                        ✔️ Water bottles (small bottles equal to number of people)
-                        {"\n"}
-                    </>
-                    )}
-                </Text>
-            </View>
-            
 
             <View style={{ paddingHorizontal: 16, justifyContent: 'space-between' }}>
 
@@ -662,24 +620,24 @@ const SelectDateFoodDelivery = ({ navigation, route }) => {
                                 { color: isOrderValid ? 'white' : '#343333' },
                             ]}
                         >
-                            {Object.values(data).length} Items | ₹ {dishPrice}
+                            {Object.values(data).length} Items | ₹ {dishPrice*peopleCount}
                         </Text>
 
                     </View>
                 </TouchableHighlight>
 
                 <OrderWarning visible={isWarningVisible} title={"Total Order Amount is less than"} buttonText={"+ Add More"}
-                    message={"Total Order amount can not be less than ₹400, Add more to continue"}
-                    amount={" ₹400"}
+                    message={"Total Order amount can not be less than ₹2500, Add more to continue"}
+                    amount={" ₹2500"}
                     onClose={handleWarningClose} />
 
                 <InfoModal isVisible={isModalVisible} onClose={toggleModal}>
-                    <View >
-
+                    <View>
                         <Text style={{ marginTop: 15, marginStart: 22, color: "#9252AA", fontWeight: '500', fontSize: 10 }}>Important</Text>
                         <Text style={{ marginTop: 7, marginStart: 17, fontWeight: '400', color: "rgba(11, 11, 11, 0.74);", fontSize: 10, lineHeight: 15 }}>1. Order can be placed at least 24 hours in advance.</Text>
-                        <Text style={{ marginTop: 7, marginStart: 17, fontWeight: '400', color: "rgba(11, 11, 11, 0.74);", fontSize: 10, lineHeight: 15 }}>2. Chef arrival team is between 7 AM to 10 PM</Text>
-                        <Text style={{ marginTop: 7, marginStart: 17, fontWeight: '400', color: "rgba(11, 11, 11, 0.74);", fontSize: 10, lineHeight: 15 }}>3. If the count of host is more than 50, contact support</Text>
+                        <Text style={{ marginTop: 7, marginStart: 17, fontWeight: '400', color: "rgba(11, 11, 11, 0.74);", fontSize: 10, lineHeight: 15 }}>2. If the count of host is more than 50, contact support</Text>
+                        <Text style={{ marginTop: 7, marginStart: 17, fontWeight: '400', color: "rgba(11, 11, 11, 0.74);", fontSize: 10, lineHeight: 15 }}>3. Deliveries may occur within a window of 30 minutes, either before or after the selected time.</Text>
+
                     </View>
                 </InfoModal>
 
