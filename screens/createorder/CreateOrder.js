@@ -31,6 +31,7 @@ import OrderWarning from '../dialog/OrderWarning';
 import CustomHeader from '../../components/CustomeHeader';
 import { Directions } from 'react-native-gesture-handler';
 import Loader from '../../components/Loader';
+
 const CreateOrder = ({ navigation }) => {
   const [selected, setSelected] = useState('veg');
   const [cuisines, setCuisines] = useState([]);

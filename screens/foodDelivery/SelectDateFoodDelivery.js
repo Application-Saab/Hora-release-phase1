@@ -33,6 +33,7 @@ const SelectDateFoodDelivery = ({
     const [showCookingTime, setShowCookingTime] = useState(true);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedTab, setSelectedTab] = useState('Appliances');
+   
     const subCategory = route.params.subCategory;
     const today = new Date();
     const minimumDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
@@ -42,10 +43,26 @@ const SelectDateFoodDelivery = ({
     const toggleSelectedTab = (tabName) => {
         setSelectedTab(tabName);
     };
-
     const isAppliancesSelected = selectedTab === 'Appliances';
     const isIngredientsSelected = selectedTab === 'Ingredients';
     let count = 0;
+
+
+    const [selectedOption, setSelectedOption] = useState('foodDelivery');
+
+    const handleSelectOption = (option) => {
+        setSelectedOption(option);
+    };
+
+    const handleAdd = () => {
+        if (selectedOption === 'foodDelivery') {
+            console.log('Add Food Delivery');
+            // Add food delivery logic here
+        } else if (selectedOption === 'liveCatering') {
+            console.log('Add Live Catering');
+            // Add live catering logic here
+        }
+    };
 
     useEffect(() => {
         AsyncStorage.getItem("selectedDate").then((sDate) => {
@@ -241,80 +258,57 @@ const SelectDateFoodDelivery = ({
 
     const LeftTabContent = () => {
         return (
-            <View style={{ justifyContent: 'space-between', marginTop: 17, paddingTop: 5, paddingBottom: 9, paddingLeft: 16, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2, fontSize: 14 }}>
-                <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 18, marginTop: 5 }}>Inclusions:</Text>
-                <View >
-                    <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5 }}>
-                        {subCategory === "SinglePlateMeal" && (
-                            <>
-                                ✔️ Food Delivery at Door-step
-                                {"\n"}
-                                ✔️ Free Delivery
-                                {"\n"}
-                                ✔️ Hygienically Packed boxes
-                                {"\n"}
-                                ✔️ Freshly Cooked Food
-                                {"\n"}
-                            </>
-                        )}
-                    </Text>
-                </View>
-                <View>
-                    <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5 }}>
-                        {subCategory === "LiveBuffet" && (
-                            <>
-                                - Well Groomed Waiters (2 Nos)
-                                {"\n"}
-                                - Bone-china Crockery & Quality disposal for loose items.
-                                {"\n"}
-                                - Transport (to & fro)
-                                {"\n"}
-                                - Dustbin with Garbage bag
-                                {"\n"}
-                                - Head Mask for waiters & chefs
-                                {"\n"}
-                                - Tandoor/Other cooking Utensiles
-                                {"\n"}
-                                - Chafing Dish
-                                {"\n"}
-                                - Cocktail Napkins
-                                {"\n"}
-                                - 2 Chef
-                                {"\n"}
-                                - Water Can (Bisleri)(20 litres)
-                                {"\n"}
-                                - Hand gloves
-                                {"\n"}
-                                Exclusion:
-                                {"\n"}
-                                - Buffet table/kitchen table is in client scope (can be provided at additional cost)
-
-                            </>
-                        )}
-                    </Text>
-                </View>
-                <View>
-                    <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5 }}>
-                        {subCategory === "BulkFoodDelivery" && (
-                            <>
-                                ✔️ Food Delivery at Door -Step
-                                {"\n"}
-                                ✔️ Free Delivery
-                                {"\n"}
-                                ✔️ Hygienically Packed boxes
-                                {"\n"}
-                                ✔️ Freshly Cooked Food
-                                {"\n"}
-                                ✔️ Quality Disposable set of Plates & Spoons & forks
-                                {"\n"}
-                                ✔️ Water bottles (small bottles equal to number of people)
-                                {"\n"}
-                            </>
-                        )}
-                    </Text>
-                </View>
-
+            <View style={{ justifyContent: 'space-between', marginTop: 6, paddingTop: 5, paddingBottom: 9, paddingLeft: 10, backgroundColor: '#FFFFFF', marginLeft: 15, marginRight: 15, borderRadius: 10, fontSize: 14 }}>
+            <View>
+                <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5 }}>
+                    {selectedOption === "foodDelivery" && (
+                        <>
+                            {"\n"}
+                            ✔️  Food Delivery at Door-step
+                            {"\n"}
+                            ✔️  Free Delivery
+                            {"\n"}
+                            ✔️  Hygienically Packed boxes
+                            {"\n"}
+                            ✔️  Freshly Cooked Food
+                            {"\n"}
+                        </>
+                    )}
+                </Text>
             </View>
+            <View>
+                <Text style={{ color: '#9252AA', fontWeight: '600', marginLeft: 5 }}>
+                    {selectedOption === "liveCatering" && (
+                        <>
+                            ✔️  Well Groomed Waiters (2 Nos)
+                            {"\n"}
+                            ✔️  Bone-china Crockery & Quality disposal for loose items.
+                            {"\n"}
+                            ✔️  Transport (to & fro)
+                            {"\n"}
+                            ✔️  Dustbin with Garbage bag
+                            {"\n"}
+                            ✔️  Head Mask for waiters & chefs
+                            {"\n"}
+                            ✔️  Tandoor/Other cooking Utensiles
+                            {"\n"}
+                            ✔️  Chafing Dish
+                            {"\n"}
+                            ✔️  Cocktail Napkins
+                            {"\n"}
+                            ✔️  2 Chef
+                            {"\n"}
+                            ✔️  Water Can (Bisleri)(20 litres)
+                            {"\n"}
+                            ✔️  Hand gloves
+                            {"\n"}
+                            ✔️  Exclusion: Buffet table/kitchen table is in client scope (can be provided at additional cost)
+                            {"\n"}
+                        </>
+                    )}
+                </Text>
+            </View>
+        </View>
         );
     };
 
@@ -423,6 +417,7 @@ const SelectDateFoodDelivery = ({
     return (
         <View style={styles.screenContainer}>
             <CustomHeader title={"Create Order"} navigation={navigation} />
+          
             <View style={styles.view1}>
                 <Image style={styles.image1} source={require('../../assets/info.png')} />
                 <Text style={styles.text1}>Bill value depends upon Dish selected + Number of people</Text>
@@ -448,19 +443,16 @@ const SelectDateFoodDelivery = ({
             </View>
 
 
-
-            <View style={{ justifyContent: 'space-between', marginTop: 1, paddingTop: 2, paddingBottom: 9, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2 }}>
-                <View style={{ justifyContent: 'flex-end', flex: 1, flexDirection: 'row', marginEnd: 9 }}>
+            <ScrollView>
+            <View style={{ justifyContent: 'space-between', marginTop: 1, paddingTop: 2, paddingBottom: 9, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2  , marginTop:20}}>
+                <View style={{ justifyContent: 'flex-end', flex: 1, flexDirection: 'row', marginEnd: 9 , marginTop:7}}>
                     <TouchableOpacity onPress={toggleModal}>
                         <Image source={require('../../assets/info.png')} style={{ height: 16, width: 16 }} />
-
                     </TouchableOpacity>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: "space-between", paddingHorizontal: "2%" }}>
+                <View style={{ flexDirection: 'row', justifyContent: "space-between", paddingLeft: "1%" , marginTop:-50, paddingRight:"4%"}}>
                     <View style={{ flexDirection: "row" }}>
-
                         <TouchableOpacity onPress={() => setShowDatePicker(true)} activeOpacity={1}>
-
                             <View style={{ marginStart: 10, marginEnd: 8, flexDirection: 'column', paddingHorizontal: 17, backgroundColor: 'white', borderColor: isDateValid != null && isDateValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
                                 <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Booking Date</Text>
                                 <View style={{ flexDirection: 'row', marginTop: 1, width: Dimensions.get('window').width * 0.3 }}>
@@ -515,7 +507,6 @@ const SelectDateFoodDelivery = ({
                 <View style={{ flexDirection: 'row', marginTop: 11, marginLeft: 20, marginRight: 1 }}>
                     <Image style={styles.verticalSeparator} source={require('../../assets/verticalSeparator.png')}></Image>
                 </View>
-
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', marginTop: 10, alignItems: 'center', marginLeft: 16, paddingBottom: 10 }}>
                     <View style={{ justifyContent: "center", alignItems: "center", flexDirection: "row" }}>
                         <Image source={require('../../assets/people.png')} style={{ height: 20, width: 20 }} />
@@ -528,7 +519,7 @@ const SelectDateFoodDelivery = ({
                         <TextInput
                             style={{
                                 marginLeft: 5,
-                                paddingVertical: 5, // Adjust the padding to your preference
+                                paddingVertical: 3, // Adjust the padding to your preference
                                 paddingHorizontal: 10,
                                 fontSize: 16,
                                 width: 40,
@@ -563,30 +554,79 @@ const SelectDateFoodDelivery = ({
 
                     </View>
                 </View>
-
-
-
             </View>
 
+            <View style={{ justifyContent: 'space-between', marginTop: 1, paddingVertical: 12, paddingHorizontal: 12, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, marginTop:16 , borderRadius: 10, elevation: 2 }}>
+            {/* <Text style={{fontWeight:"600",  color: '#3C3C3E' , fontSize:16 , marginBottom:12}}>{'Select Occation'}</Text> */}
+            <View style={{ flexDirection: 'row', alignItems: 'center' , justifyContent:"space-between" }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => handleSelectOption('foodDelivery')}>
+                    <View style={{
+                        width: 16,
+                        height: 16,
+                        borderRadius: 12,
+                        borderWidth: 1,
+                        borderColor: '#9252AA',
+                        backgroundColor: selectedOption === 'foodDelivery' ? '#9252AA' : 'transparent',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: 10,
+                    }}>
+                        {selectedOption === 'foodDelivery' && <View style={{ width: 8, height: 8, backgroundColor: '#fff', borderRadius: 6 }} />}
+                    </View>
+                </TouchableOpacity>
+                <Text style={{ fontSize: 14 , color:"#9252AA" , fontWeight:"600"}}>Food Delivery</Text>
+            </View>
+            {/* <TouchableOpacity onPress={handleAdd} style={{ backgroundColor: '#9252AA', paddingVertical: 0 , paddingHorizontal:5}}>
+                <Text style={{ color: '#fff', fontSize: 18, textAlign: 'center' }}>Add</Text>
+            </TouchableOpacity> */}
+            </View>
+            
+            <View style={{flexDirection:"row" , alignItems:"center" , justifyContent:"space-between" , marginTop:6}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => handleSelectOption('liveCatering')}>
+                    <View style={{
+                        width: 16,
+                        height: 16,
+                        borderRadius: 12,
+                        borderWidth: 1,
+                        borderColor: '#9252AA',
+                        backgroundColor: selectedOption === 'liveCatering' ? '#9252AA' : 'transparent',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: 10,
+                    }}>
+                        {selectedOption === 'liveCatering' && <View style={{ width: 8, height: 8, backgroundColor: '#fff', borderRadius: 6 }} />}
+                    </View>
+                </TouchableOpacity>
+                <Text style={{ fontSize: 14 , color:"#9252AA" , fontWeight:"600"}}>Live Catering</Text>
+            </View>
+            {/* <TouchableOpacity onPress={handleAdd} style={{ backgroundColor: '#9252AA', paddingVertical: 0 , paddingHorizontal:5}}>
+                <Text style={{ color: '#fff', fontSize: 18, textAlign: 'center' }}>Add</Text>
+            </TouchableOpacity> */}
+            </View>
+          
+          
+        </View>
+           
+          
             <View style={{ flexDirection: 'row', marginTop: 20, marginHorizontal: 16 }}>
                 <TouchableOpacity style={{
                     backgroundColor: activeTab === 'left'
                         ? "#D9D9D9"
-                        : 'white', borderTopRightRadius: 10, borderTopLeftRadius: 15, paddingVertical: 8, paddingStart: 50, paddingRight: 50
+                        : 'white', borderTopRightRadius: 10, borderTopLeftRadius: 15, paddingVertical: 8, paddingStart: 48, paddingRight: 48
                 }} onPress={() => setActiveTab('left')} activeOpacity={1}>
                     <Text style={activeTab === 'left' ? styles.activeTab : styles.inactiveTab}>Inclusions</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{
                     backgroundColor: activeTab === 'right'
                         ? "#D9D9D9"
-                        : 'white', borderTopRightRadius: 10, borderTopLeftRadius: 15, paddingVertical: 8, paddingStart: 50, paddingRight: 50
+                        : 'white', borderTopRightRadius: 10, borderTopLeftRadius: 15, paddingVertical: 8, paddingStart: 48, paddingRight: 48
                 }} onPress={() => setActiveTab('right')} activeOpacity={1}>
                     <Text style={activeTab === 'right' ? styles.activeTab : styles.inactiveTab}>Dish Quantity</Text>
                 </TouchableOpacity>
             </View>
             {renderTabContent(selectedDishQuantities)}
-            <ScrollView>
-
 
             </ScrollView>
 

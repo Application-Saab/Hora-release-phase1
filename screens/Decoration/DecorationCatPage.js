@@ -1,12 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Pressable, Dimensions, ImageBackground, TouchableOpacity, TouchableHighlight } from 'react-native';
 import CustomHeader from '../../components/CustomeHeader';
+import { Picker } from '@react-native-picker/picker';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { BASE_URL, GET_DECORATION_CAT_ID, GET_DECORATION_CAT_ITEM } from '../../utils/ApiConstants';
 import axios from 'axios';
+import Loader from '../../components/Loader';
+
 const DecorationCatPage = ({ route, navigation }) => {
     const { subCategory } = route.params;
     const bottomSheetRef = useRef(null);
+    const filterRef = useRef(null); // Ref for filter container
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [selectedProductPrice, setSelectedProductPrice] = useState(0)
     const [selectedCount, setSelectedCount] = useState(0);
@@ -15,7 +19,8 @@ const DecorationCatPage = ({ route, navigation }) => {
     const [itemDetail, setItemDetail] = useState(null)
     const [catId, setCatId] = useState("")
     const [catalogueData, setCatalogueData] = useState([])
-
+    const [loading, setLoading] = useState(true);
+    const [priceRange, setPriceRange] = useState("all");
     const handleIncreaseQuantity = (item) => {
         const isItemAlreadySelected = selectedProducts.some(
             (product) => product._id === item._id
@@ -62,35 +67,39 @@ const DecorationCatPage = ({ route, navigation }) => {
 
 
     const getSubCatId = async () => {
+        setLoading(true);
         try {
             const response = await axios.get(BASE_URL + GET_DECORATION_CAT_ID + subCategory);
             const categoryId = response.data.data._id;
             setCatId(categoryId);
-
         } catch (error) {
             console.log("Error:", error.message);
         }
     };
 
-
     const getSubCatItems = async () => {
+        setLoading(true); // Show loader
         try {
             const response = await axios.get(BASE_URL + GET_DECORATION_CAT_ITEM + catId);
             setCatalogueData(response.data.data);
-
-
+            setLoading(false);
         } catch (error) {
             console.log("Error:", error.message);
+        } finally {
+            setLoading(false); // Hide loader after receiving the API response or in case of error
         }
     };
 
     useEffect(() => {
         getSubCatId();
-    }, [])
+    }, []);
 
     useEffect(() => {
-        getSubCatItems();
-    }, [catId])
+        if (catId) {
+            getSubCatItems();
+        }
+    }, [catId]);
+
 
 
     const getItemInclusion = (inclusion) => {
@@ -111,96 +120,146 @@ const DecorationCatPage = ({ route, navigation }) => {
     const RenderBottomSheetContent = () => (
         <View>
             <View>
-                <View style={{alignItems:"center" , justifyContent:"center"}}>
-                <Image source={{ uri: `https://horaservices.com/api/uploads/${itemDetail.featured_image}` }} style={{ width: Dimensions.get('window').width, height: 360, aspectRatio: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5 }} />
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
+                    <Image source={{ uri: `https://horaservices.com/api/uploads/${itemDetail.featured_image}` }} style={{ width: Dimensions.get('window').width, height: 360, aspectRatio: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5 }} />
                 </View>
-                <View style={{paddingLeft:10 , paddingTop:10}}>
-                <Text style={{ color: '#9252AA', fontSize: 20, fontWeight: '500' , textAlign:"left" , marginBottom:4 , justifyContent:"center" , alignItems:"flex-start"}}>{itemDetail.name}</Text>
-                <Image source={require('../../assets/Vector4.png')} style={{ width: 332.5, height: 1  }} />
-                <Text style={{ color: '#333', fontSize: 12, fontWeight: '500', paddingTop: 7  , lineHeight:17 , paddingRight:20}}>{getItemInclusion(itemDetail.inclusion)}</Text>
+                <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+                    <Text style={{ color: '#9252AA', fontSize: 16, fontWeight: '500', textAlign: "left", marginBottom: 4, justifyContent: "center", alignItems: "flex-start" }}>{itemDetail.name}</Text>
+                    <Image source={require('../../assets/Vector4.png')} style={{ width: 332.5, height: 1 }} />
+                    <Text style={{ color: '#333', fontSize: 12, fontWeight: '500', paddingTop: 7, lineHeight: 17, paddingRight: 20 }}>{getItemInclusion(itemDetail.inclusion)}</Text>
                 </View>
-                 </View>
+            </View>
         </View>
     );
+
+
+
+
+    const filterCatalogueByPriceRange = (data, range) => {
+        if (range === "all") {
+            return data; // Return all products if "all" is selected
+        }
+        const [min, max] = range.split('-').map(Number);
+        return data.filter(item => {
+            const price = parseInt(item.price);
+            return price >= min && price < max;
+        });
+    };
+
+
 
     return (
         <View style={styles.screenContainer}>
             <ScrollView>
                 <CustomHeader title={"Select Design"} navigation={navigation} />
-
-                <View style={styles.container}>
-                    <View style={styles.decContainer}>
-                        {catalogueData.map((item) => (
-                            <View style={{ width: Dimensions.get('window').width * 0.46 }}>
-                                <ImageBackground
-                                    source={
-                                        selectedProducts.some((product) => product._id === item._id)
-                                            ? require('../../assets/Rectanglepurple.png')
-                                            : require('../../assets/rectanglewhite.png')
-                                    }
-                                    style={{ width: "100%", height: Dimensions.get('window').height*0.32, marginTop: 10 }}
-                                    imageStyle={{ borderRadius: 16 }}
-                                >
-
-                                    <TouchableOpacity
-                                        onPress={() => openBottomSheet(item, bottomSheetRef)} activeOpacity={1}
-                                        key={item._id}
-                                        style={styles.decImageContainer}
-                                    >
-                                        <Image source={{ uri: `https://horaservices.com/api/uploads/${item.featured_image}` }} style={styles.decCatimage} />
-
-                                    </TouchableOpacity>
-                                    <Text
-                                        style={{
-                                            marginHorizontal: 3,
-                                            textAlign: 'left',
-                                            fontWeight: '600',
-                                            fontSize: 11,
-                                            color: 'transparent',
-                                            opacity: 0.9,
-                                            height: 28,
-                                            marginTop: 0,
-                                            paddingLeft: 5,
-                                            marginBottom: 2,
-                                            color: selectedProducts.some(product => product._id === item._id)
-                                                ? 'white' : '#9252AA',
-                                        }}
-                                    >
-                                        {item.name}
-                                    </Text>
-
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 2, paddingLeft: 4, paddingRight: 10, justifyContent: 'space-between' }}>
-                                        <Text style={{
-                                            color: '#9252AA',
-                                            fontWeight: '700',
-                                            fontSize: 17,
-                                            opacity: 0.9,
-                                            color: selectedProducts.some(product => product._id === item._id)
-                                                ? 'white' : '#9252AA',
-                                        }}> ₹ {item.price}</Text>
-
-
-                                        <TouchableOpacity onPress={() => handleIncreaseQuantity(item)}>
-                                            <Image
-                                                source={
-                                                    selectedProducts.some((product) => product._id === item._id)
-                                                        ? require("../../assets/minus.png")
-                                                        : require("../../assets/plus.png")
-                                                }
-                                                style={{ width: 21, height: 21 }}
-                                            />
-                                        </TouchableOpacity>
-                                    </View>
-
-                                </ImageBackground>
-                            </View>
-
-
-                        ))}
-                    </View>
+                <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.filterContainer}
+                >  
+                <View>
+                <TouchableOpacity onPress={() => setPriceRange("all")} style={[styles.filterOption, priceRange === "all" && styles.selectedFilterOption]}>
+                        <Text style={[styles.filterOptionText, priceRange === "all" && { color: 'white' }]}>All</Text>
+                    </TouchableOpacity>
                 </View>
+             
+                <View>
+                <TouchableOpacity onPress={() => setPriceRange("0-2000")} style={[styles.filterOption, priceRange === "0-2000" && styles.selectedFilterOption]}>
+                        <Text style={[styles.filterOptionText, priceRange === "0-2000" && { color: 'white' }]}>Under ₹ 2000</Text>
+                    </TouchableOpacity>
+                </View>
+                  
+                  <View>
+                  <TouchableOpacity onPress={() => setPriceRange("2000-5000")} style={[styles.filterOption, priceRange === "2000-5000" && styles.selectedFilterOption]}>
+                        <Text style={[styles.filterOptionText, priceRange === "2000-5000" && { color: 'white' }]}>₹ 2000 - ₹ 5000</Text>
+                    </TouchableOpacity>
+                
+                  </View>
+
+                  <View>
+                  <TouchableOpacity onPress={() => setPriceRange("5000-50000")} style={[styles.filterOption, priceRange === "5000-50000" && styles.selectedFilterOption]}>
+                        <Text style={[styles.filterOptionText, priceRange === "5000-50000" && { color: 'white' }]}>Above ₹ 5000</Text>
+                    </TouchableOpacity>
+                  </View>
+                    
+                </ScrollView>
+                {loading ? (
+                    <View style={styles.loaderContainer}>
+                        <Loader loading={loading} />
+                    </View>
+                ) : (
+                    <View style={styles.container}>
+                        <View style={styles.decContainer}>
+                            {filterCatalogueByPriceRange(catalogueData, priceRange).map((item) => (
+                                <View style={{ width: Dimensions.get('window').width * 0.46 }}>
+                                    <ImageBackground
+                                        source={
+                                            selectedProducts.some((product) => product._id === item._id)
+                                                ? require('../../assets/Rectanglepurple.png')
+                                                : require('../../assets/rectanglewhite.png')
+                                        }
+                                        style={{ width: "100%", height: Dimensions.get('window').height * 0.32, marginTop: 10 }}
+                                        imageStyle={{ borderRadius: 16 }}
+                                    >
+
+                                        <TouchableOpacity
+                                            onPress={() => openBottomSheet(item, bottomSheetRef)} activeOpacity={1}
+                                            key={item._id}
+                                            style={styles.decImageContainer}
+                                        >
+                                            <Image source={{ uri: `https://horaservices.com/api/uploads/${item.featured_image}` }} style={styles.decCatimage} />
+
+                                        </TouchableOpacity>
+                                        <Text
+                                            style={{
+                                                marginHorizontal: 3,
+                                                textAlign: 'left',
+                                                fontWeight: '600',
+                                                fontSize: 11,
+                                                color: 'transparent',
+                                                opacity: 0.9,
+                                                height: 28,
+                                                marginTop: 0,
+                                                paddingLeft: 5,
+                                                marginBottom: 2,
+                                                color: selectedProducts.some(product => product._id === item._id)
+                                                    ? 'white' : '#9252AA',
+                                            }}
+                                        >
+                                            {item.name}
+                                        </Text>
+
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 2, paddingLeft: 4, paddingRight: 10, justifyContent: 'space-between' }}>
+                                            <Text style={{
+                                                color: selectedProducts.some(product => product._id === item._id)
+                                                    ? 'white' : '#9252AA',
+                                                fontWeight: '700',
+                                                fontSize: 17,
+                                                opacity: 0.9,
+                                            }}> ₹ {item.price}</Text>
 
 
+                                            <TouchableOpacity onPress={() => handleIncreaseQuantity(item)}>
+                                                <Image
+                                                    source={
+                                                        selectedProducts.some((product) => product._id === item._id)
+                                                            ? require("../../assets/minus.png")
+                                                            : require("../../assets/plus.png")
+                                                    }
+                                                    style={{ width: 21, height: 21 }}
+                                                />
+                                            </TouchableOpacity>
+                                        </View>
+
+                                    </ImageBackground>
+                                </View>
+
+
+                            ))}
+                        </View>
+                    </View>
+
+                )}
 
 
             </ScrollView>
@@ -289,8 +348,8 @@ const styles = StyleSheet.create({
         padding: 5
     },
     decCatimage: {
-        width: Dimensions.get('window').width*0.435, // Set to 100% width
-        height: Dimensions.get('window').height*0.21,
+        width: Dimensions.get('window').width * 0.435, // Set to 100% width
+        height: Dimensions.get('window').height * 0.21,
         borderRadius: 10, // Optional: Add border-radius for rounded corners
     },
     decImageText: {
@@ -326,8 +385,8 @@ const styles = StyleSheet.create({
     bottomSheetContainer: {
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        borderWidth:2,
-        borderColor:"#9252AA",
+        borderWidth: 2,
+        borderColor: "#9252AA",
     },
     bottomSheetWrapper: {
         backgroundColor: 'transparent',
@@ -376,7 +435,44 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 16,
         fontWeight: '400',
-    }
+    },
+
+    pickerContainer: {
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: '#9252AA', // Red border color
+        paddingHorizontal: 10,
+        marginTop: 20,
+        width: '98%', // Adjust width according to your design
+        backgroundColor: "#E0E0E0",
+    },
+    picker: {
+        width: '100%',
+        color: '#9252AA', // Grey text color
+    },
+    filterContainer: {
+        flexDirection: 'row',
+       // paddingVertical: 10,
+       paddingTop:10,
+        paddingHorizontal: 20,
+        alignItems: 'center', // Center items vertically
+        overflow: 'scroll', // Allow horizontal scrolling if needed
+    },
+    filterOption: {
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 20,
+        marginRight: 10,
+        backgroundColor: '#E0E0E0',
+       // minWidth: 100, // Set minimum width for each filter option
+    },
+    selectedFilterOption: {
+        backgroundColor: '#9252AA',
+    },
+    filterOptionText: {
+        color: '#9252AA',
+    },
+
 });
 
 export default DecorationCatPage;
