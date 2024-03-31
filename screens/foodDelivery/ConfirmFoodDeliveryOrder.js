@@ -19,6 +19,8 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     const selectedDate = route.params.selectedDate
     const selectedTime = route.params.selectedTime
     const subCategory = route.params.subCategory
+    const selectedDeliveryOption= route.params.selectedDeliveryOption
+
     const selectedDishData = route.params.selectedDishes
     const [addresses, setAddresses] = useState([]);
     const [completeAddress, setCompleteAddress] = useState([]);
@@ -246,8 +248,10 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     // Assuming selectedMealList, peopleCount, and dishCount are defined earlier
 
     const dishPrice = selectedMealList.reduce((total, dish) => total + dish.price, 0);
-    const totalPrice = dishPrice * peopleCount;
-
+    totalPrice = dishPrice * peopleCount;
+    {
+        selectedDeliveryOption === 'liveCatering' && (totalPrice += 6500)
+    }
     const discountPercentage = calculateDiscountPercentage(peopleCount, dishCount);
     const discountedPrice = (totalPrice * (1 - discountPercentage / 100)).toFixed(0);
 
@@ -448,7 +452,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
     const renderDishItem = ({ item }) => {
         return (
-            <View style={{ flexDirection: 'row', marginRight: 5, width: 150, borderRadius: 8, borderColor: '#B8B8B8', borderWidth: 1, backgroundColor: '#FFF', paddingBottom: 5 }}>
+            <View style={{ flexDirection: 'row', marginRight: 5, width: 140, borderRadius: 8, borderColor: '#B8B8B8', borderWidth: 1, backgroundColor: '#FFF', paddingBottom: 5 }}>
                 <Image source={{ uri: `https://horaservices.com/api/uploads/${item.image}` }}
                     style={{ width: 41, height: 42, borderRadius: 20, marginBottom: 9, marginTop: 9, marginStart: 9 }} />
                 <View style={{ flexDirection: 'column', alignContent: 'flex-end', paddingRight: 7 }}>
@@ -736,7 +740,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                                 <Text style={{ color: '#9252AA', fontSize: 13, fontWeight: '600' }}>{selectedDate.toDateString()}</Text>
                             </View>
                             <View style={{ marginHorizontal: 16, flexDirection: 'column', width: 120, paddingBottom: 3, paddingTop: 7, paddingLeft: 13, borderRadius: 6, borderColor: '#E6E6E6', borderWidth: 1, marginTop: 6 }}>
-                                <Text style={{ color: '#A3A3A3', fontSize: 9, fontWeight: '400' }}>Chef Arrival time</Text>
+                                <Text style={{ color: '#A3A3A3', fontSize: 9, fontWeight: '400' }}>Food Delivery Time</Text>
                                 <Text style={{ color: '#9252AA', fontSize: 13, fontWeight: '600' }}>{selectedTime.toLocaleTimeString()}</Text>
                             </View>
                         </View>
@@ -773,29 +777,31 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                         ) : null}
 
                         <Image style={{ width: 290, height: 1, marginTop: 5, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')}></Image>
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3, backgroundColor: includeDisposable ? '#efefef' : '#fff', paddingTop: 10, paddingHorizontal: 5, alignItems:"baseline" }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'top', justifyContent:"top" }}>
-                                <TouchableOpacity onPress={() => setIncludeDisposable(!includeDisposable)}>
-                                    <View style={{ width: 18, height: 18, borderWidth: 1, borderColor: includeDisposable ? '#008631' : '#008631', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 4 }}>
-                                        {includeDisposable && <Image source={require('../../assets/check.png')} style={{ width: 14, height: 14 }} />}
-                                    </View>
-                                </TouchableOpacity>
-                                <View style={{ justifyContent: "flex-start", flexDirection: "column" , alignItems:"flex-start"}}>
-                                    <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 12, lineHeight: 20 }}>Disposable plates + water bottle:</Text>
-                                    <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 12, lineHeight: 20 }}> ₹ 20/Person</Text>
-
-                                </View>
-                            </View>
-
-                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                                <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 14, lineHeight: 20, textAlign: 'right' }}>₹ {includeDisposable ? 20 * peopleCount : 0}</Text>
-                            </View>
-                        </View>
-
-                        <Image style={{ width: 290, height: 1, marginTop: 10, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')} />
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
+                        
+                        {selectedDeliveryOption === 'foodDelivery' ? 
+                           <View>
+                           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3, backgroundColor: includeDisposable ? '#efefef' : '#fff', paddingTop: 10, paddingHorizontal: 5, alignItems:"top" }}>
+                               <View style={{ flexDirection: 'row', alignItems: 'baseline', justifyContent:"top" }}>
+                                   <TouchableOpacity onPress={() => setIncludeDisposable(!includeDisposable)}>
+                                       <View style={{ width: 18, height: 18, borderWidth: 1, borderColor: includeDisposable ? '#008631' : '#008631', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 4 }}>
+                                           {includeDisposable && <Image source={require('../../assets/check.png')} style={{ width: 14, height: 14 }} />}
+                                       </View>
+                                   </TouchableOpacity>
+                                   <View style={{ justifyContent: "flex-start", flexDirection: "column" , alignItems:"flex-start" }}>
+                                       <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 12, lineHeight: 20 }}>Disposable plates + water bottle:</Text>
+                                       <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 12, lineHeight: 20 }}> ₹ 20/Person</Text>
+                                   </View>
+                               </View>
+                       
+                               <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+                                   <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 14, lineHeight: 20, textAlign: 'right' }}>₹ {includeDisposable ? 20 * peopleCount : 0}</Text>
+                               </View>
+                           </View>
+                           <Image style={{ width: 290, height: 1, marginTop: 10, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')} />
+                       </View>
+                       
+                        : null}
+                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
                             <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20 }}>Packing Cost</Text>
                             <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20 }}>₹ {packingCost}</Text>
                         </View>
@@ -820,23 +826,9 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                     </View>
 
                 </View>
-      <View style={{ justifyContent: 'space-between', marginTop: 5, borderRadius: 6, backgroundColor: '#E8E8E8', borderColor: '#D8D8D8', borderWidth: 1, width: Dimensions.get('window').width - 40, paddingBottom: 10 , marginLeft:19 }}>
+      <View style={{ justifyContent: 'space-between', marginTop: 7, borderRadius: 6, backgroundColor: '#E8E8E8', borderColor: '#D8D8D8', borderWidth: 1, width: Dimensions.get('window').width - 40, paddingBottom: 10 , marginLeft:19 }}>
                     <View style={{ marginHorizontal: 16, flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
                         <Text style={{ padding: 4, color: '#000', fontSize: 13, fontWeight: '600' }}>Dishes selected</Text>
-
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                            {/* <TouchableOpacity onPress={onViewAllClick}>
-												  
-                                <Text style={{ color: '#9252AA', fontWeight: '400', textDecorationLine: 'underline', fontSize: 11, marginLeft: 10 }}>View All</Text>
-
-                            </TouchableOpacity>
-                            <Image style={{ width: 9, height: 9, marginLeft: 5 }} source={require('../../assets/viewAll.png')}></Image> */}
-
-
-                        </View>
-
-
                     </View>
 
                     <View style={{ marginTop: 10, marginHorizontal: 15, flexDirection: 'row', flex: 1 }} >

@@ -255,7 +255,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
             }
            style={{
               width: "100%",
-              height: Dimensions.get("window").height * 0.17,
+              height: Dimensions.get("window").height * 0.18,
               marginTop: 33,
             }}
 						 imageStyle={{borderRadius: 16}}>

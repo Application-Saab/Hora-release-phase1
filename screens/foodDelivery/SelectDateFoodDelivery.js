@@ -325,47 +325,6 @@ const SelectDateFoodDelivery = ({
             </ScrollView>
         );
     };
-
-
-    const getTotalIngredients = () => {
-        const totalIngredients = {};
-        for (const dishId in data) {
-            const dish = data[dishId];
-            if (dish.ingredientUsed) {
-                dish.ingredientUsed.forEach((ingredient) => {
-                    if (!totalIngredients[ingredient._id]) {
-                        totalIngredients[ingredient._id] = {
-                            _id: ingredient._id,
-                            name: ingredient.name,
-                            image: ingredient.image,
-                            unit: ingredient.unit,
-                            qty: 0
-                        };
-
-
-                    }
-                    totalIngredients[ingredient._id].qty += parseInt(ingredient.qty);
-                    if (ingredient.unit === 'gram' || ingredient.unit === 'Gram')
-                        totalIngredients[ingredient._id].unit = 'g';
-                    if (ingredient.unit === 'ml' || ingredient.unit === 'ML')
-                        totalIngredients[ingredient._id].unit = 'ml';
-                });
-            }
-
-            // 	if (count === 0){
-            // Object.values(totalIngredients).map(item => {
-
-            //         item.qty = item.qty * peopleCount;
-            //         count = 1
-
-            // })}
-        }
-
-
-        return Object.values(totalIngredients);
-    };
-
-
     const onContinueClick = () => {
         if (dishPrice*peopleCount < 2500) {
             setWarningVisible(true);
@@ -373,7 +332,7 @@ const SelectDateFoodDelivery = ({
         else {
             navigation.navigate("ConfirmFoodDeliveryOrder", {
                 "selectedDate": selectedDate, "selectedTime": selectedTime, "peopleCount": peopleCount,
-                "burnerCount": burnerCount,
+                "selectedDeliveryOption": selectedOption,
                 "selectedDishes": data, "items": route.params.selectedDishes, subCategory
 
             })
@@ -387,27 +346,18 @@ const SelectDateFoodDelivery = ({
         hours = hours ? hours : 12; // Handle midnight (12 AM)
         return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
     }
-
-
     const handleWarningClose = () => {
         setWarningVisible(false);
     };
 
-
     const increasePeopleCount = () => {
         setPeopleCount(peopleCount + 1)
     }
-
     const decreasePeopleCount = () => {
         if (peopleCount != 10) {
             setPeopleCount(peopleCount - 1)
         }
     }
-
-    const toggleCookingTimeVisibility = () => {
-        setShowCookingTime(!showCookingTime);
-    };
-
     const navigateToSelectDish = () => {
         navigation.navigate("CreateOrderFoodDelivery")
     }
@@ -441,8 +391,6 @@ const SelectDateFoodDelivery = ({
                 </View>
 
             </View>
-
-
             <ScrollView>
             <View style={{ justifyContent: 'space-between', marginTop: 1, paddingTop: 2, paddingBottom: 9, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2  , marginTop:20}}>
                 <View style={{ justifyContent: 'flex-end', flex: 1, flexDirection: 'row', marginEnd: 9 , marginTop:7}}>
@@ -478,7 +426,7 @@ const SelectDateFoodDelivery = ({
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity onPress={() => setShowTimePicker(true)} activeOpacity={1}>
                             <View style={{ flexDirection: 'column', paddingHorizontal: 21, backgroundColor: 'white', borderColor: isTimeValid != null && isTimeValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
-                                <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Chef Arrival Time</Text>
+                                <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Food Delivery Time</Text>
                                 <View style={{ flexDirection: 'row', marginTop: 1, width: Dimensions.get('window').width * 0.3 }}>
 
                                     <Text style={{ fontSize: 16, fontWeight: 600, color: isTimePressed ? '#383838' : "grey" }}>
@@ -535,13 +483,8 @@ const SelectDateFoodDelivery = ({
                                 const parsedValue = parseInt(e);
                                 if (!isNaN(parsedValue)) {
                                     setPeopleCount(parsedValue);
-                                    //setDishPrice(dishPrice*peopleCount)
                                 } else {
-                                    // Handle the case when input is empty
-                                    // For example, you can set peopleCount to 0 or maintain its current value
-                                    setPeopleCount(0);
-                                    //setDishPrice(dishPrice*peopleCount) // Or
-                                    // setPeopleCount(peopleCount);
+                                      setPeopleCount(0);
                                 }
                             }}
                             keyboardType="numeric"
@@ -557,7 +500,6 @@ const SelectDateFoodDelivery = ({
             </View>
 
             <View style={{ justifyContent: 'space-between', marginTop: 1, paddingVertical: 12, paddingHorizontal: 12, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, marginTop:16 , borderRadius: 10, elevation: 2 }}>
-            {/* <Text style={{fontWeight:"600",  color: '#3C3C3E' , fontSize:16 , marginBottom:12}}>{'Select Occation'}</Text> */}
             <View style={{ flexDirection: 'row', alignItems: 'center' , justifyContent:"space-between" }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity onPress={() => handleSelectOption('foodDelivery')}>
@@ -577,9 +519,6 @@ const SelectDateFoodDelivery = ({
                 </TouchableOpacity>
                 <Text style={{ fontSize: 14 , color:"#9252AA" , fontWeight:"600"}}>Food Delivery</Text>
             </View>
-            {/* <TouchableOpacity onPress={handleAdd} style={{ backgroundColor: '#9252AA', paddingVertical: 0 , paddingHorizontal:5}}>
-                <Text style={{ color: '#fff', fontSize: 18, textAlign: 'center' }}>Add</Text>
-            </TouchableOpacity> */}
             </View>
             
             <View style={{flexDirection:"row" , alignItems:"center" , justifyContent:"space-between" , marginTop:6}}>
@@ -601,9 +540,6 @@ const SelectDateFoodDelivery = ({
                 </TouchableOpacity>
                 <Text style={{ fontSize: 14 , color:"#9252AA" , fontWeight:"600"}}>Live Catering</Text>
             </View>
-            {/* <TouchableOpacity onPress={handleAdd} style={{ backgroundColor: '#9252AA', paddingVertical: 0 , paddingHorizontal:5}}>
-                <Text style={{ color: '#fff', fontSize: 18, textAlign: 'center' }}>Add</Text>
-            </TouchableOpacity> */}
             </View>
           
           

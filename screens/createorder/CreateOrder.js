@@ -33,6 +33,8 @@ import { Directions } from 'react-native-gesture-handler';
 import Loader from '../../components/Loader';
 
 const CreateOrder = ({ navigation }) => {
+  const viewbottomSheetRef = useRef(null);
+  const bottomSheetRef = useRef(null);
   const [selected, setSelected] = useState('veg');
   const [cuisines, setCuisines] = useState([]);
   const [selectedCuisines, setSelectedCuisines] = useState([]);
@@ -42,10 +44,8 @@ const CreateOrder = ({ navigation }) => {
   const [dishDetail, setDishDetail] = useState(null);
   const [selectedCount, setSelectedCount] = useState(0);
   const [selectedDishes, setSelectedDishes] = useState([]);
-  const bottomSheetRef = useRef(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isViewAllSheetOpen, setIsViewAllSheetOpen] = useState(false);
-
   const [selectedDishPrice, setSelectedDishPrice] = useState(0);
   const [selectedDishDictionary, setSelectedDishDictionary] = useState({});
   const windowWidth = Dimensions.get('window').width;
@@ -54,7 +54,7 @@ const CreateOrder = ({ navigation }) => {
   const [isDishSelected, setIsDishSelected] = useState(false);
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [loading, setLoading] = useState(true);
-  const viewAllBottomSheetRef = useRef(null);
+
   const [isWarningVisibleForDishCount, setWarningVisibleForDishCount] =
     useState(false);
 
@@ -407,8 +407,8 @@ const CreateOrder = ({ navigation }) => {
 
         <RenderBottomSheetContent />
       </RBSheet>
-      <RBSheet
-        ref={viewAllBottomSheetRef}
+      {/* <RBSheet
+        ref={viewbottomSheetRef}
         closeOnDragDown={[true, closeviewAllBottomSheet]}
         height={650}
         customStyles={{
@@ -419,7 +419,7 @@ const CreateOrder = ({ navigation }) => {
       >
         <RenderViewlAllBottomSheetContent />
 
-      </RBSheet>
+      </RBSheet> */}
 
     </TouchableOpacity>
   );
@@ -605,36 +605,23 @@ const CreateOrder = ({ navigation }) => {
     bottomSheetRef.current.open();
   };
 
-  const openViewAllBottomSheet = (category, viewAllBottomSheetRef) => {
-    setSelectedCategory(category);
-    setIsViewAllSheetOpen(true);
-    if (viewAllBottomSheetRef.current) {
-      viewAllBottomSheetRef.current.open();
-
-    }
-  };
-
-  const closeviewAllBottomSheet = () => {
-    setSelectedCategory(null);
-    setIsViewAllSheetOpen(false);
-    viewAllBottomSheetRef.current.close();
-  };
-
-
-  // const handleViewAll = categoryId => {
-  // setIsViewAllExpanded(!isViewAllExpanded);
-
-  //   setExpandedCategories(prevExpanded =>
-  //     prevExpanded.includes(categoryId)
-  //       ? prevExpanded.filter(id => id !== categoryId)
-  //       : [...prevExpanded, categoryId],
-  //   );
+  // const openViewAllBottomSheet = (category) => {
+  //   alert("category11" + category )
+  //   setSelectedCategory(category); // Update selected category
+  //   //setIsViewAllSheetOpen(true);
+  //  // if (viewAllBottomSheetRef.current) {
+  //     alert("category22" + category )
+  //     viewbottomSheetRef.current.open(); // Open the bottom sheet
+  //  // }
   // };
-  const renderServedItem = ({ item }) => (
-    <View style={styles.textContainer}>
-      <Text style={styles.text}>{item}</Text>
-    </View>
-  );
+
+  // const closeviewAllBottomSheet = () => {
+  //   alert("category23" )
+  //   setSelectedCategory(null);
+  //  // setIsViewAllSheetOpen(false);
+  //   viewbottomSheetRef.current.close();
+  // };
+ 
 
   const addDish = selectedDishPrice => {
     console.log(1);
@@ -811,12 +798,11 @@ const CreateOrder = ({ navigation }) => {
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', backgroundColor: "#9252AA", paddingHorizontal: 8, paddingVertical: 2, borderRadius: 10, marginTop: -2 }}>
 
 
-                          <TouchableOpacity
-                            onPress={() => openViewAllBottomSheet(item.mealObject._id, viewAllBottomSheetRef)}
-                            activeOpacity={1}>
-                            <Text style={{ color: '#fff', fontWeight: '400', textDecorationLine: 'none', fontSize: 12 }}>View All</Text>
-
-                          </TouchableOpacity>
+                        <TouchableOpacity
+  onPress={() => openViewAllBottomSheet(item.mealObject._id)}
+  activeOpacity={1}>
+  <Text style={{ color: '#fff', fontWeight: '400', textDecorationLine: 'none', fontSize: 12 }}>View All</Text>
+</TouchableOpacity>
 
 
                           {/* <Image style={{ width: 12, height: 12, marginLeft: 8 }} source={require('../../assets/viewAll.png')} activeOpacity={1}></Image> */}
