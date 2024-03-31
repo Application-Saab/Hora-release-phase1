@@ -184,6 +184,7 @@ const SelectDateFoodDelivery = ({
         const itemCount = Object.values(data).length
         let quantity = item.quantity * peopleCount;
 
+        if (item.id[0]==="63f1b6b7ed240f7a09f7e2de" || item.id[0]==="63f1b39a4082ee76673a0a9f" || item.id[0]==="63edc4757e1b370928b149b3"){
         if (itemCount <= 5) {
             quantity = quantity
         }
@@ -222,7 +223,7 @@ const SelectDateFoodDelivery = ({
         else if (itemCount == 15) {
             quantity = quantity * (1 - 0.55)
         }
-
+    }
         quantity = Math.round(quantity)
         let unit = item.unit;
         if (quantity >= 1000) {

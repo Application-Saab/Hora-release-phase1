@@ -52,7 +52,8 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
             name: dish.name,
             image: dish.image,
             price: Number(dish.cuisineArray[0]),
-            id: dish._id
+            id: dish._id,
+            mealId: dish.mealId
         };
     });
 
@@ -66,8 +67,14 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
         navigation.navigate('ConfirmLocation', { 'data': address })
     }
 
-    const dishCount = selectedMealList.length;
+    console.log(selectedMealList)
+    const dishCount = selectedMealList.filter(x => x.mealId =="63f1b6b7ed240f7a09f7e2de" || x.mealId=="63f1b39a4082ee76673a0a9f" || x.mealId=="63edc4757e1b370928b149b3").length;
+
+    
+    
+
     function calculateDiscountPercentage(peopleCount, dishCount) {
+        console.log("dish" + dishCount)
         if (dishCount <= 5) {
             if (peopleCount >= 0 && peopleCount <= 10) {
                 return 0;

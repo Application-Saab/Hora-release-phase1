@@ -495,7 +495,8 @@ const CreateOrderFoodDelivery = ({navigation}) => {
         image: item.image,
         price: item.cuisineArray[0] ,
         quantity: item.cuisineArray[1],
-        unit: item.cuisineArray[2]
+        unit: item.cuisineArray[2],
+        id:item.mealId
       };
     });
 
