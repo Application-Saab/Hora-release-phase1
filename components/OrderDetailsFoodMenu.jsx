@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import { ScrollView } from  'react-native';
+import App from '../App';
 			 
 
-const OrderDetailsMenu = ({ OrderMenu, OrderType, PeopleCount }) => {
+const OrderDetailsFoodMenu = ({ OrderMenu, OrderType, NoOfPeople }) => {
+  console.log(NoOfPeople)
   var Appetizer = [];
   var Breads = [];
   var Breakfast = [];
@@ -14,43 +16,110 @@ const OrderDetailsMenu = ({ OrderMenu, OrderType, PeopleCount }) => {
   var SoupBeverages = [];
   var preparationTextList = []
 
+  var itemCount = 0;
 
+
+  const RenderDishQunatity = ({ item }) => {
+    let quantity = item.foodQty * NoOfPeople;
+    console.log(NoOfPeople)
+    if (itemCount <= 5) {
+        quantity = quantity;
+    } else if (itemCount == 6) {
+        quantity = quantity * (1 - 0.15);
+    } else if (itemCount == 7) {
+        console.log("quantity before" + quantity);
+        quantity = quantity * (1 - 0.15);
+        console.log("quantity after" + quantity);
+    } else if (itemCount == 8) {
+        quantity = quantity * (1 - 0.25);
+    } else if (itemCount == 9) {
+        quantity = quantity * (1 - 0.30);
+    } else if (itemCount == 10) {
+        quantity = quantity * (1 - 0.35);
+    } else if (itemCount == 11) {
+        quantity = quantity * (1 - 0.40);
+    } else if (itemCount == 12) {
+        quantity = quantity * (1 - 0.50);
+    } else if (itemCount == 13) {
+        quantity = quantity * (1 - 0.53);
+    } else if (itemCount == 15) {
+        quantity = quantity * (1 - 0.55);
+    }
+
+    quantity = Math.round(quantity);
+    let unit = item.foodUnit;
+
+    if (quantity >= 1000) {
+        quantity = quantity / 1000;
+        if (unit === 'Gram') unit = 'KG';
+        else if (unit === 'ml') unit = 'L';
+    }
+
+    return { quantity, unit }; // Return the calculated quantity and unit
+};
 
 
   OrderMenu.forEach((item) => {
     if (item.mealId[0].name === 'Appetizer') {
-      Appetizer.push({ name: item.name, image: item.image, price: item.price });
-      preparationTextList.push(item.preperationtext);
+      Appetizer.push({ name: item.name, image: item.image, price: item.price, foodQty: item.cuisineArray[1], foodUnit: item.cuisineArray[2] });
+        
+      itemCount = itemCount + 1;
     }
     else if (item.mealId[0].name === 'Breads, Rice and Raita') {
-      Breads.push({ name: item.name, image: item.image, price: item.price  });
-      preparationTextList.push(item.preperationtext)
+      Breads.push({ name: item.name, image: item.image, price: item.price, foodQty: item.cuisineArray[1], foodUnit: item.cuisineArray[2] });
+     
+      itemCount = itemCount + 1;
     }
     else if (item.mealId[0].name === 'Breakfast') {
-      Breakfast.push({ name: item.name, image: item.image, price: item.price  });
-      preparationTextList.push(item.preperationtext)
+      Breakfast.push({ name: item.name, image: item.image, price: item.price, foodQty: item.cuisineArray[1], foodUnit: item.cuisineArray[2] });
+     
     }
     else if (item.mealId[0].name === 'Dessert') {
-      Dessert.push({ name: item.name, image: item.image, price: item.price  });
-      preparationTextList.push(item.preperationtext)
+      Dessert.push({ name: item.name, image: item.image, price: item.price , foodQty: item.cuisineArray[1], foodUnit: item.cuisineArray[2]});
+      
     }
     else if (item.mealId[0].name === 'Main course') {
-      Maincourse.push({ name: item.name, image: item.image, price: item.price  });
-      preparationTextList.push(item.preperationtext)
+      Maincourse.push({ name: item.name, image: item.image, price: item.price , foodQty: item.cuisineArray[1], foodUnit: item.cuisineArray[2]});
+     
+      itemCount = itemCount + 1;
     }
     else if (item.mealId[0].name === 'Mocktails') {
-      Mocktails.push({ name: item.name, image: item.image, price: item.price  });
-      preparationTextList.push(item.preperationtext)
+      Mocktails.push({ name: item.name, image: item.image, price: item.price , foodQty: item.cuisineArray[1], foodUnit: item.cuisineArray[2]});
+      
     }
     else if (item.mealId[0].name === 'Salad & Papad') {
-      SaladPapad.push({ name: item.name, image: item.image, price: item.price  });
-      preparationTextList.push(item.preperationtext)
+      SaladPapad.push({ name: item.name, image: item.image, price: item.price, foodQty: item.cuisineArray[1], foodUnit: item.cuisineArray[2] });
+      
     }
     else if (item.mealId[0].name === 'Soups & Beverages') {
-      SoupBeverages.push({ name: item.name, image: item.image, price: item.price  });
-      preparationTextList.push(item.preperationtext)
+      SoupBeverages.push({ name: item.name, image: item.image, price: item.price, foodQty: item.cuisineArray[1], foodUnit: item.cuisineArray[2] });
+     
     }
   });
+
+  Breads.forEach(x => {
+    const { quantity, unit } = RenderDishQunatity({ item: x });
+    // Now you can use the `quantity` and `unit` variables here
+    x.foodQty = quantity;
+    x.foodUnit = unit;
+});
+
+Maincourse.forEach(x => {
+  const { quantity, unit } = RenderDishQunatity({ item: x });
+  // Now you can use the `quantity` and `unit` variables here
+  x.foodQty = quantity;
+  x.foodUnit = unit;
+});
+
+Appetizer.forEach(x => {
+  const { quantity, unit } = RenderDishQunatity({ item: x });
+  // Now you can use the `quantity` and `unit` variables here
+  x.foodQty = quantity;
+  x.foodUnit = unit;
+});
+
+  
+
   return (
     <ScrollView style={styles.orderCon}>
       <View>
@@ -73,7 +142,8 @@ const OrderDetailsMenu = ({ OrderMenu, OrderType, PeopleCount }) => {
                 </View>
                 <View style={styles.foodItemDetails}>
                 <Text style={styles.foodItemName}>{item.name}</Text>
-                <Text style={styles.foodItemName}>{item.preperationtext}</Text>
+                <Text style={styles.foodItemName}>{item.foodQty}</Text>
+                <Text style={styles.foodItemName}>{item.foodUnit}</Text>
                 </View>
               </View>
             ))}
@@ -94,6 +164,8 @@ const OrderDetailsMenu = ({ OrderMenu, OrderType, PeopleCount }) => {
                 </View>
                 <View style={styles.foodItemDetails}>
                 <Text style={styles.foodItemName}>{item.name}</Text>
+                <Text style={styles.foodItemName}>{item.foodQty}</Text>
+                <Text style={styles.foodItemName}>{item.foodUnit}</Text>
                 </View>
               </View>
             ))}
@@ -114,7 +186,8 @@ const OrderDetailsMenu = ({ OrderMenu, OrderType, PeopleCount }) => {
             </View>
             <View style={styles.foodItemDetails}>
             <Text style={styles.foodItemName}>{item.name}</Text>
-
+            <Text style={styles.foodItemName}>{item.foodQty}</Text>
+                <Text style={styles.foodItemName}>{item.foodUnit}</Text>
             </View>
           </View>
         ))}
@@ -135,7 +208,8 @@ const OrderDetailsMenu = ({ OrderMenu, OrderType, PeopleCount }) => {
             </View>
             <View style={styles.foodItemDetails}>
             <Text style={styles.foodItemName}>{item.name}</Text>
-
+            <Text style={styles.foodItemName}>{item.foodQty}</Text>
+                <Text style={styles.foodItemName}>{item.foodUnit}</Text>
             </View>
           </View>
         ))}
@@ -156,7 +230,8 @@ const OrderDetailsMenu = ({ OrderMenu, OrderType, PeopleCount }) => {
             </View>
             <View style={styles.foodItemDetails}>
             <Text style={styles.foodItemName}>{item.name}</Text>
-
+            <Text style={styles.foodItemName}>{item.foodQty}</Text>
+                <Text style={styles.foodItemName}>{item.foodUnit}</Text>
             </View>
           </View>
         ))}
@@ -177,7 +252,8 @@ const OrderDetailsMenu = ({ OrderMenu, OrderType, PeopleCount }) => {
             </View>
             <View style={styles.foodItemDetails}>
             <Text style={styles.foodItemName}>{item.name}</Text>
-
+            <Text style={styles.foodItemName}>{item.foodQty}</Text>
+                <Text style={styles.foodItemName}>{item.foodUnit}</Text>
             </View>
           </View>
         ))}
@@ -198,7 +274,8 @@ const OrderDetailsMenu = ({ OrderMenu, OrderType, PeopleCount }) => {
             </View>
             <View style={styles.foodItemDetails}>
             <Text style={styles.foodItemName}>{item.name}</Text>
-
+            <Text style={styles.foodItemName}>{item.foodQty}</Text>
+                <Text style={styles.foodItemName}>{item.foodUnit}</Text>
             </View>
           </View>
         ))}
@@ -219,6 +296,8 @@ const OrderDetailsMenu = ({ OrderMenu, OrderType, PeopleCount }) => {
             </View>
             <View style={styles.foodItemDetails}>
             <Text style={styles.foodItemName}>{ item.name}</Text>
+            <Text style={styles.foodItemName}>{item.foodQty}</Text>
+                <Text style={styles.foodItemName}>{item.foodUnit}</Text>
             </View>
           </View>
         ))}
@@ -296,4 +375,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OrderDetailsMenu;
+export default OrderDetailsFoodMenu;

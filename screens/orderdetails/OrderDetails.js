@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import OrderDetailsSection from '../../components/orderDetailsSection';
 import { ScrollView, TextInput, TouchableOpacity ,TouchableHighlight, ImageBackground, KeyboardAvoidingView } from 'react-native';
 import OrderDetailsMenu from '../../components/OrderDetailsMenu';
+import OrderDetailsFoodMenu from '../../components/OrderDetailsFoodMenu';
 import OrderDetailsIngre from '../../components/OrderDetailsIngre';
 import CustomHeader from '../../components/CustomeHeader';
 import OrderDetailsAppli from '../../components/OrderDetailsAppli';
@@ -257,7 +258,7 @@ const OrderDetails = ({ navigation, route }) => {
                     )
                     :orderType === 6 ? (
                         <View style={styles.tabSec}>
-                            {<OrderDetailsMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount}/>}
+                            {<OrderDetailsFoodMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount}/>}
                             <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>
                     
                         <>
@@ -282,7 +283,7 @@ const OrderDetails = ({ navigation, route }) => {
                     )
                     :orderType === 7 ? (
                         <View style={styles.tabSec}>
-                            {<OrderDetailsMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount}/>}
+                            {<OrderDetailsFoodMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount}/>}
                             <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>
                             <>
                         Inclusion:
