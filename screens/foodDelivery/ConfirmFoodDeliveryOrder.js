@@ -52,7 +52,8 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
             name: dish.name,
             image: dish.image,
             price: Number(dish.cuisineArray[0]),
-            id: dish._id
+            id: dish._id,
+            mealId: dish.mealId
         };
     });
 
@@ -66,8 +67,14 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
         navigation.navigate('ConfirmLocation', { 'data': address })
     }
 
-    const dishCount = selectedMealList.length;
+    console.log(selectedMealList)
+    const dishCount = selectedMealList.filter(x => x.mealId =="63f1b6b7ed240f7a09f7e2de" || x.mealId=="63f1b39a4082ee76673a0a9f" || x.mealId=="63edc4757e1b370928b149b3").length;
+
+    
+    
+
     function calculateDiscountPercentage(peopleCount, dishCount) {
+        console.log("dish" + dishCount)
         if (dishCount <= 5) {
             if (peopleCount >= 0 && peopleCount <= 10) {
                 return 0;
@@ -351,20 +358,18 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     );
 
     useEffect(() => {
+        console.log(subCategory)
         Geocoder.init('AIzaSyBmHupwMPDVmKEryBTT9LlIeQITS3olFeY');
         getCurrentLocation();
         Object.values(selectedDishData).map((item) => cat.push(item.cuisineId[0]));
     }, []);
 
     useEffect(() => {
-        if (subCategory === "SinglePlateMeal") {
+        if (subCategory === "foodDelivery") {
             setType(6)
         }
-        else if (subCategory === "LiveBuffet") {
+        else if (subCategory === "liveCatering") {
             setType(7)
-        }
-        else if (subCategory === "BulkFoodDelivery") {
-            setType(8)
         }
         console.log("Type " + type);
     })
@@ -480,6 +485,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
             if (message === 'PAYMENT_SUCCESS') {
                 const url = BASE_URL + CONFIRM_ORDER_ENDPOINT;
+                const totalPrice = calculateFinalTotal();
                 const requestData = {
                     "toId": "",
                     "order_time": selectedTime.toLocaleTimeString(),
@@ -600,10 +606,12 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
             const randomInteger = Math.floor(getRandomNumber(1, 1000000000000)) + Math.floor(getRandomNumber(1, 1000000000000)) + Math.floor(getRandomNumber(1, 1000000000000));
 
+            const advance = calculateAdvancePayment();
+
             let merchantTransactionId = randomInteger
             const requestData = {
                 user_id: storedUserID,
-                price: Math.round(totalPrice / 5),
+                price: advance,
                 phone: phoneNumber,
                 name: '',
                 merchantTransactionId: merchantTransactionId
@@ -619,7 +627,9 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
                 let url = response.request.responseURL;
 
+                console.log(calculateFinalTotal())
                 handleConfirmOrder(merchantTransactionId);
+
                 Linking.openURL(url)
                     .then((supported) => {
                         if (!supported) {
