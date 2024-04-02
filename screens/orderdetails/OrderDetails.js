@@ -31,6 +31,7 @@ const OrderDetails = ({ navigation, route }) => {
     const [hospitalityServiceCount , setHospitalityServiceCount] = useState(0);
     const [hospitalityServiceTotalAmount , setHospitalityServiceTotalAmount] = useState(0);
     const [decorationComments, setDecorationComments] = useState('');
+    const [peopleCount, setPeopleCount] = useState(0);
 															   
 																			   
 																						   
@@ -83,6 +84,7 @@ const OrderDetails = ({ navigation, route }) => {
         setSelectedTab(tabNumber);
     };
 
+
     const contactUsRedirection = () => {
         Linking.openURL(`whatsapp://send?phone=+918982321487&text=I've canceled my order, kindly assist with the refund process. Thanks!`);
     }
@@ -126,7 +128,7 @@ const OrderDetails = ({ navigation, route }) => {
     //     }
     //   };
 
-    if (orderType === 2 || orderType === 6 || orderType === 7 | orderType === 8) {
+    if (orderType === 2 || orderType === 6 || orderType === 7) {
         
         
         useEffect(() => {
@@ -140,6 +142,7 @@ const OrderDetails = ({ navigation, route }) => {
                     
                     setOrderDetail(responseData.data)
                     
+                    setPeopleCount(responseData.data.no_of_people)
                     setOrderMenu(responseData.data.selecteditems)
                     setOrderAppl(responseData.data.orderApplianceIds)
                     setOrderIngredients(responseData.data.ingredientUsed)
@@ -254,7 +257,7 @@ const OrderDetails = ({ navigation, route }) => {
                     )
                     :orderType === 6 ? (
                         <View style={styles.tabSec}>
-                            {<OrderDetailsMenu OrderMenu={orderMenu} OrderType={orderType}/>}
+                            {<OrderDetailsMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount}/>}
                             <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>
                     
                         <>
@@ -279,7 +282,7 @@ const OrderDetails = ({ navigation, route }) => {
                     )
                     :orderType === 7 ? (
                         <View style={styles.tabSec}>
-                            {<OrderDetailsMenu OrderMenu={orderMenu} OrderType={orderType}/>}
+                            {<OrderDetailsMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount}/>}
                             <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>
                             <>
                         Inclusion:
@@ -314,30 +317,8 @@ const OrderDetails = ({ navigation, route }) => {
                             </Text>
                         </View>
                     )
-                    :orderType === 8 ? (
-                        <View style={styles.tabSec}>
-                            {<OrderDetailsMenu OrderMenu={orderMenu} OrderType={orderType}/>}
-                            <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>
-                                    <>
-                                Inclusions:
-                                {"\n"}
-                                ✔️ Food Delivery at Door -Step
-                                {"\n"}
-                                ✔️ Free Delivery
-                                {"\n"}
-                                ✔️ Hygienically Packed boxes
-                                {"\n"}
-                                ✔️ Freshly Cooked Food
-                                {"\n"}
-                                ✔️ Quality Disposable set of Plates & Spoons & forks
-                                {"\n"}
-                                ✔️ Water bottles (small bottles equal to number of people)
-                                {"\n"}
-                            </>
-                            </Text>
-                        </View>
-                    )
-                     : orderType === 3 ? (
+                    :
+                     orderType === 3 ? (
                         <View style={{ marginTop:10 ,  justifyContent: 'center', alignItems: 'center'  , marginTop:100}}>
                         <Image source={require('../../assets/waiter.jpeg')} style={{ width: 200, height: 200  , marginBottom:10}} />
                         <Text style={{fontWeight:"700"}}>You have booked Waiter for your event.</Text>

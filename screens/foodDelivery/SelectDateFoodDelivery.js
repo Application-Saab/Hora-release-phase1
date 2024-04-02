@@ -182,7 +182,8 @@ const SelectDateFoodDelivery = ({
     };
 
     const RenderDishqunatity = ({ item }) => {
-        const itemCount = Object.values(data).length
+        const itemCount = Object.values(data).filter(x => x.mealId[0] === "63f1b6b7ed240f7a09f7e2de" || x.mealId[0] === "63f1b39a4082ee76673a0a9f" || x.mealId[0] === "63edc4757e1b370928b149b3").length
+
         let quantity = item.quantity * peopleCount;
 
         if (item.id[0]==="63f1b6b7ed240f7a09f7e2de" || item.id[0]==="63f1b39a4082ee76673a0a9f" || item.id[0]==="63edc4757e1b370928b149b3"){
