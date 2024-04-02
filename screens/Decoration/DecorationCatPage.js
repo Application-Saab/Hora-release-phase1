@@ -6,6 +6,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import { BASE_URL, GET_DECORATION_CAT_ID, GET_DECORATION_CAT_ITEM } from '../../utils/ApiConstants';
 import axios from 'axios';
 import Loader from '../../components/Loader';
+import FastImage from 'react-native-fast-image';
 
 const DecorationCatPage = ({ route, navigation }) => {
     const { subCategory } = route.params;
@@ -119,17 +120,31 @@ const DecorationCatPage = ({ route, navigation }) => {
 
     const RenderBottomSheetContent = () => (
         <View>
-            <View>
-                <View style={{ alignItems: "center", justifyContent: "center" }}>
-                    <Image source={{ uri: `https://horaservices.com/api/uploads/${itemDetail.featured_image}` }} style={{ width: Dimensions.get('window').width, height: 360, aspectRatio: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5 }} />
-                </View>
-                <View style={{ paddingLeft: 10, paddingTop: 10 }}>
-                    <Text style={{ color: '#9252AA', fontSize: 16, fontWeight: '500', textAlign: "left", marginBottom: 4, justifyContent: "center", alignItems: "flex-start" }}>{itemDetail.name}</Text>
-                    <Image source={require('../../assets/Vector4.png')} style={{ width: 332.5, height: 1 }} />
-                    <Text style={{ color: '#333', fontSize: 12, fontWeight: '500', paddingTop: 7, lineHeight: 17, paddingRight: 20 }}>{getItemInclusion(itemDetail.inclusion)}</Text>
-                </View>
+        <View>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+                <FastImage
+                    source={{ uri: `https://horaservices.com/api/uploads/${itemDetail.featured_image}` }}
+                    style={{
+                        width: Dimensions.get('window').width,
+                        height: 360,
+                        aspectRatio: 1,
+                        borderTopLeftRadius: 5,
+                        borderTopRightRadius: 5
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                />
+            </View>
+            <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+                <Text style={{ color: '#9252AA', fontSize: 16, fontWeight: '500', textAlign: "left", marginBottom: 4 }}>
+                    {itemDetail.name}
+                </Text>
+                <View style={{ width: 332.5, height: 1, backgroundColor: '#D3D3D3', marginBottom: 7 }} />
+                <Text style={{ color: '#333', fontSize: 12, fontWeight: '500', lineHeight: 17, paddingRight: 20 }}>
+                    {getItemInclusion(itemDetail.inclusion)}
+                </Text>
             </View>
         </View>
+    </View>
     );
 
 
@@ -202,14 +217,18 @@ const DecorationCatPage = ({ route, navigation }) => {
                                         imageStyle={{ borderRadius: 16 }}
                                     >
 
-                                        <TouchableOpacity
-                                            onPress={() => openBottomSheet(item, bottomSheetRef)} activeOpacity={1}
-                                            key={item._id}
-                                            style={styles.decImageContainer}
-                                        >
-                                            <Image source={{ uri: `https://horaservices.com/api/uploads/${item.featured_image}` }} style={styles.decCatimage} />
-
-                                        </TouchableOpacity>
+<TouchableOpacity
+    onPress={() => openBottomSheet(item, bottomSheetRef)}
+    activeOpacity={1}
+    key={item._id}
+    style={styles.decImageContainer}
+>
+    <FastImage
+        source={{ uri: `https://horaservices.com/api/uploads/${item.featured_image}` }}
+        style={styles.decCatimage}
+        resizeMode={FastImage.resizeMode.cover} // Adjust resizeMode as needed
+    />
+</TouchableOpacity>
                                         <Text
                                             style={{
                                                 marginHorizontal: 3,

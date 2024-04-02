@@ -249,9 +249,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
     const dishPrice = selectedMealList.reduce((total, dish) => total + dish.price, 0);
     totalPrice = dishPrice * peopleCount;
-    {
-        selectedDeliveryOption === 'liveCatering' && (totalPrice += 6500)
-    }
+    
     const discountPercentage = calculateDiscountPercentage(peopleCount, dishCount);
     const discountedPrice = (totalPrice * (1 - discountPercentage / 100)).toFixed(0);
 
@@ -457,7 +455,6 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                     style={{ width: 41, height: 42, borderRadius: 20, marginBottom: 9, marginTop: 9, marginStart: 9 }} />
                 <View style={{ flexDirection: 'column', alignContent: 'flex-end', paddingRight: 7 }}>
                     <Text style={{ alignItems: 'flex-end', width: "70%", marginLeft: 7, color: '#414141', fontSize: 11, fontWeight: '500', opacity: 0.9, marginTop: 10 }}>{item.name}</Text>
-                    <Text style={{ width: 45, marginTop: 2, color: '#9252AA', fontSize: 11, fontWeight: '700', textAlign: 'center' }}>₹ {item.price}</Text>
                 </View>
 
 

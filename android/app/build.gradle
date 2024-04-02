@@ -85,7 +85,7 @@ android {
         // Creates a signing configuration called "release".
         release {
             // Specifies the path to your keystore file.
-            storeFile file("C:/Users/FCI/Documents/HORA/Hora/android/app/keystore.jks")
+            storeFile file("C:/Users/harsha.meerchandani/Documents/Hora-release-phase2-final/android/app/keystore.jks")
             // Specifies the password for your keystore.
             storePassword "horaandroid"
             // Specifies the identifying name for your key.
@@ -98,15 +98,12 @@ android {
         debug {
             signingConfig signingConfigs.debug
         }
-         buildTypes {
         release {
             debuggable false
             signingConfig signingConfigs.release
-//            signingConfigs signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
     }
 }
 
@@ -125,15 +122,16 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-      implementation(project(':react-native-onesignal')){
-      exclude group: 'com.google.android.gms'
-  }
+    implementation(project(':react-native-onesignal')){
+        exclude group: 'com.google.android.gms'
+    }
 
-  implementation(project(':react-native-maps')){
-      exclude group: 'com.google.android.gms'
-  }
-  implementation 'com.google.android.gms:play-services-base:18.0.1'
-  implementation 'com.google.android.gms:play-services-location:19.0.1'
-  implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation(project(':react-native-maps')){
+        exclude group: 'com.google.android.gms'
+    }
+    implementation 'com.google.android.gms:play-services-base:18.0.1'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
 }
+
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

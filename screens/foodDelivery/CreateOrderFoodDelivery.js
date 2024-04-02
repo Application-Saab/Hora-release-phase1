@@ -374,7 +374,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
       <RBSheet
         ref={bottomSheetRef}
         closeOnDragDown={[true, closeBottomSheet]}
-        height={700}
+        height={480}
         customStyles={{
           container: styles.bottomSheetContainer,
           wrapper: styles.bottomSheetWrapper,
@@ -445,7 +445,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
           style={{ width: Dimensions.get("window").width - 24, height: 1 }}
         />
 
-        <View>
+        {/* <View>
           <View
              style={{
               marginTop: 7,
@@ -467,7 +467,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
           </View>
          
           
-        </View>
+        </View> */}
       </View>
     </View>
   );

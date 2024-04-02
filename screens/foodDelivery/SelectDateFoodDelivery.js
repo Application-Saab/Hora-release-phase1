@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Dimensions, ImageBackground, FlatList, ScrollView, StatusBar, View, Text, TextInput, Image, TouchableOpacity, TouchableHighlight, BackHandler } from 'react-native';
+import { Dimensions, ImageBackground, FlatList, ScrollView, StatusBar, Linking , View, Text, TextInput, Image, TouchableOpacity, TouchableHighlight, BackHandler } from 'react-native';
 import styles from './stylesSelectDate';
 import axios from 'axios';
 import CustomStatusBar from '../../components/CustomStatusBar';
@@ -63,6 +63,10 @@ const SelectDateFoodDelivery = ({
             // Add live catering logic here
         }
     };
+
+    const contactUsRedirection = () => {
+        Linking.openURL('whatsapp://send?phone=+918982321487&text=Hello%20I%20have%20some%20queries%20for%20food%20delivey%20and%20live%20Catering%20service');
+    }
 
     useEffect(() => {
         AsyncStorage.getItem("selectedDate").then((sDate) => {
@@ -157,25 +161,6 @@ const SelectDateFoodDelivery = ({
         }
     };
 
-
-
-    const RenderAppliances = ({ item }) => {
-        return (
-            <View style={{ height: 51, paddingEnd: 2, alignItems: 'center', borderRadius: 5, borderColor: '#DADADA', borderWidth: 0.5, flexDirection: 'row', marginRight: 6, marginBottom: 8 }}>
-                <View style={{ marginLeft: 5, width: 40, height: 40, backgroundColor: '#F0F0F0', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 5 }}>
-                    <Image source={{ uri: `https://horaservices.com/api/uploads/${item.image}` }} style={{ width: 33, height: 34 }} />
-                </View>
-
-                <View style={{ flexDirection: 'column', marginLeft: 1, width: 43 }}>
-                    <Text style={{ fontSize: 12, fontWeight: '500', color: '#414141', lineHeight: 15 }} numberOfLines={2}>{item.name}</Text>
-                </View>
-            </View>
-        );
-    };
-
-
-
-
     const toggleShowAll = () => {
         setShowAll(!showAll);
     };
@@ -258,7 +243,7 @@ const SelectDateFoodDelivery = ({
 
     const LeftTabContent = () => {
         return (
-            <View style={{ justifyContent: 'space-between', marginTop: 6, paddingTop: 5, paddingBottom: 9, paddingLeft: 10, backgroundColor: '#FFFFFF', marginLeft: 15, marginRight: 15, borderRadius: 10, fontSize: 14 }}>
+            <View style={{ justifyContent: 'space-between', marginTop: 6, paddingTop: 5, paddingBottom: 10, paddingLeft: 10, backgroundColor: '#FFFFFF', marginLeft: 15, marginRight: 15, borderRadius: 10, fontSize: 14 }}>
             <View>
                 <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5 }}>
                     {selectedOption === "foodDelivery" && (
@@ -271,7 +256,6 @@ const SelectDateFoodDelivery = ({
                             ✔️  Hygienically Packed boxes
                             {"\n"}
                             ✔️  Freshly Cooked Food
-                            {"\n"}
                         </>
                     )}
                 </Text>
@@ -303,7 +287,6 @@ const SelectDateFoodDelivery = ({
                             ✔️  Hand gloves
                             {"\n"}
                             ✔️  Exclusion: Buffet table/kitchen table is in client scope (can be provided at additional cost)
-                            {"\n"}
                         </>
                     )}
                 </Text>
@@ -313,16 +296,22 @@ const SelectDateFoodDelivery = ({
     };
 
     const RightTabContent = ({ selectedDishQuantities }) => {
-        console.log(">>>>>>>>>>>>>>" + JSON.stringify(selectedDishQuantities))
         return (
-            <ScrollView style={{ marginTop: 17, paddingTop: 5, paddingBottom: 9, paddingLeft: 16, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2, fontSize: 14 }}>
-                <FlatList
-                    data={selectedDishQuantities}
-                    keyExtractor={item => item.name}
-                    renderItem={({ item }) => <RenderDishqunatity item={item} />}
-                    numColumns={2}
-                />
-            </ScrollView>
+            <View style={{marginTop: 8 , paddingTop: 8, paddingBottom: 9, paddingLeft: 16, backgroundColor: '#FFFFFF', marginLeft: 15, marginRight: 16, borderRadius: 10, height: 195, elevation: 2}}>
+                 <ScrollView>
+            <FlatList
+                data={selectedDishQuantities}
+                keyExtractor={item => item.name}
+                renderItem={({ item }) => <RenderDishqunatity item={item} />}
+                numColumns={2}
+            />
+              </ScrollView>
+            <View style={{ paddingLeft: 3, paddingTop: 5 }}>
+                <Text style={{ color: '#9252AA'  ,fontSize:11 , fontWeight:"600"}}>Complementary: Green Salad, Mint Chutney, and Achar</Text>
+            </View>
+      
+            </View>
+           
         );
     };
     const onContinueClick = () => {
@@ -392,7 +381,7 @@ const SelectDateFoodDelivery = ({
 
             </View>
             <ScrollView>
-            <View style={{ justifyContent: 'space-between', marginTop: 1, paddingTop: 2, paddingBottom: 9, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2  , marginTop:20}}>
+            <View style={{ justifyContent: 'space-between', marginTop: 1, paddingTop: 2, paddingBottom: 9, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2  , marginTop:6}}>
                 <View style={{ justifyContent: 'flex-end', flex: 1, flexDirection: 'row', marginEnd: 9 , marginTop:7}}>
                     <TouchableOpacity onPress={toggleModal}>
                         <Image source={require('../../assets/info.png')} style={{ height: 16, width: 16 }} />
@@ -564,6 +553,15 @@ const SelectDateFoodDelivery = ({
             </View>
             {renderTabContent(selectedDishQuantities)}
 
+
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingTop: 12 }}>
+                        <Text style={{ fontSize: 14, fontWeight: 500, color: '#333' }}>Need more info?</Text>
+                        <TouchableOpacity onPress={contactUsRedirection} activeOpacity={1}>
+                            <View style={{ marginLeft: 5, backgroundColor: '#E8E8E8', borderRadius: 18, borderWidth: 1, borderColor: '#9252AA', justifyContent: 'center', alignItems: 'center', width: 96, height: 28 }}>
+                                <Text style={{ color: '#9252AA', fontSize: 13, fontWeight: '500' }}>Contact Us</Text>
+                            </View>
+                        </TouchableOpacity>
+            </View>
             </ScrollView>
 
             <View style={{ paddingHorizontal: 16, justifyContent: 'space-between' }}>
@@ -596,7 +594,7 @@ const SelectDateFoodDelivery = ({
                                 { color: isOrderValid ? 'white' : '#343333' },
                             ]}
                         >
-                            {Object.values(data).length} Items | ₹ {dishPrice*peopleCount}
+        {Object.values(data).length} Items | ₹ {selectedOption === 'liveCatering' ? dishPrice * peopleCount + 6500 : dishPrice * peopleCount}
                         </Text>
 
                     </View>
