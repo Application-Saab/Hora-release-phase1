@@ -360,20 +360,18 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     );
 
     useEffect(() => {
+        console.log(subCategory)
         Geocoder.init('AIzaSyBmHupwMPDVmKEryBTT9LlIeQITS3olFeY');
         getCurrentLocation();
         Object.values(selectedDishData).map((item) => cat.push(item.cuisineId[0]));
     }, []);
 
     useEffect(() => {
-        if (subCategory === "SinglePlateMeal") {
+        if (subCategory === "foodDelivery") {
             setType(6)
         }
-        else if (subCategory === "LiveBuffet") {
+        else if (subCategory === "liveCatering") {
             setType(7)
-        }
-        else if (subCategory === "BulkFoodDelivery") {
-            setType(8)
         }
         console.log("Type " + type);
     })
@@ -490,6 +488,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
             if (message === 'PAYMENT_SUCCESS') {
                 const url = BASE_URL + CONFIRM_ORDER_ENDPOINT;
+                const totalPrice = calculateFinalTotal();
                 const requestData = {
                     "toId": "",
                     "order_time": selectedTime.toLocaleTimeString(),
@@ -610,10 +609,12 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
             const randomInteger = Math.floor(getRandomNumber(1, 1000000000000)) + Math.floor(getRandomNumber(1, 1000000000000)) + Math.floor(getRandomNumber(1, 1000000000000));
 
+            const advance = calculateAdvancePayment();
+
             let merchantTransactionId = randomInteger
             const requestData = {
                 user_id: storedUserID,
-                price: Math.round(totalPrice / 5),
+                price: advance,
                 phone: phoneNumber,
                 name: '',
                 merchantTransactionId: merchantTransactionId
@@ -629,7 +630,9 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
                 let url = response.request.responseURL;
 
+                console.log(calculateFinalTotal())
                 handleConfirmOrder(merchantTransactionId);
+
                 Linking.openURL(url)
                     .then((supported) => {
                         if (!supported) {

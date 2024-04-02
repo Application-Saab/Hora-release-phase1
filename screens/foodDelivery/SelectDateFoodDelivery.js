@@ -34,7 +34,7 @@ const SelectDateFoodDelivery = ({
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedTab, setSelectedTab] = useState('Appliances');
    
-    const subCategory = route.params.subCategory;
+    const [subCategory, setSubCategory] = useState('foodDelivery');
     const today = new Date();
     const minimumDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
 
@@ -52,6 +52,7 @@ const SelectDateFoodDelivery = ({
 
     const handleSelectOption = (option) => {
         setSelectedOption(option);
+        setSubCategory(option);
     };
 
     const handleAdd = () => {
