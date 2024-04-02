@@ -259,8 +259,8 @@ const OrderDetails = ({ navigation, route }) => {
                     :orderType === 6 ? (
                         <View style={styles.tabSec}>
                             {<OrderDetailsFoodMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount}/>}
-                            <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>
-                    
+                         <View style={{ backgroundColor:"#fff" , marginTop:7}}>   
+                        <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 12 }}>
                         <>
                             Inclusions:
                             {"\n"}
@@ -277,14 +277,15 @@ const OrderDetails = ({ navigation, route }) => {
                             ✔️ Water bottles (small bottles equal to number of people)
                             {"\n"}
                         </>
-                        
-                    </Text>
+                       </Text>
+                       </View>
                         </View>
                     )
                     :orderType === 7 ? (
                         <View style={styles.tabSec}>
                             {<OrderDetailsFoodMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount}/>}
-                            <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 9 }}>
+                            <View style={{ backgroundColor:"#fff"   , marginTop:7}}> 
+                            <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 12 }}>
                             <>
                         Inclusion:
                         {"\n"}
@@ -316,6 +317,7 @@ const OrderDetails = ({ navigation, route }) => {
                     
                     </>
                             </Text>
+                            </View>
                         </View>
                     )
                     :

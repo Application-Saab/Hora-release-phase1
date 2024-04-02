@@ -61,7 +61,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
     useState(false);
 
 	const [isViewAllExpanded, setIsViewAllExpanded] = useState(false);
-  const subCategory = route.params.subCategory;
+ 
 																	
 
   const handleWarningClose = () => {
@@ -506,7 +506,6 @@ const CreateOrderFoodDelivery = ({navigation}) => {
       selectedDishDictionary,
       selectedDishPrice,
       selectedDishes,
-      subCategory,
       selectedDishQuantities 
     });
   };
