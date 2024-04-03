@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Dimensions, ImageBackground, FlatList, ScrollView, StatusBar, Linking , View, Text, TextInput, Image, TouchableOpacity, TouchableHighlight, BackHandler } from 'react-native';
+import { Dimensions, ImageBackground, FlatList, ScrollView, StatusBar, Linking, View, Text, TextInput, Image, TouchableOpacity, TouchableHighlight, BackHandler } from 'react-native';
 import styles from './stylesSelectDate';
 import axios from 'axios';
 import CustomStatusBar from '../../components/CustomStatusBar';
@@ -33,7 +33,7 @@ const SelectDateFoodDelivery = ({
     const [showCookingTime, setShowCookingTime] = useState(true);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedTab, setSelectedTab] = useState('Appliances');
-   
+
     const [subCategory, setSubCategory] = useState('foodDelivery');
     const today = new Date();
     const minimumDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
@@ -43,11 +43,6 @@ const SelectDateFoodDelivery = ({
     const toggleSelectedTab = (tabName) => {
         setSelectedTab(tabName);
     };
-    const isAppliancesSelected = selectedTab === 'Appliances';
-    const isIngredientsSelected = selectedTab === 'Ingredients';
-    let count = 0;
-
-
     const [selectedOption, setSelectedOption] = useState('foodDelivery');
 
     const handleSelectOption = (option) => {
@@ -171,46 +166,46 @@ const SelectDateFoodDelivery = ({
 
         let quantity = item.quantity * peopleCount;
 
-        if (item.id[0]==="63f1b6b7ed240f7a09f7e2de" || item.id[0]==="63f1b39a4082ee76673a0a9f" || item.id[0]==="63edc4757e1b370928b149b3"){
-        if (itemCount <= 5) {
-            quantity = quantity
+        if (item.id[0] === "63f1b6b7ed240f7a09f7e2de" || item.id[0] === "63f1b39a4082ee76673a0a9f" || item.id[0] === "63edc4757e1b370928b149b3") {
+            if (itemCount <= 5) {
+                quantity = quantity
+            }
+            else if (itemCount == 6) {
+                quantity = quantity * (1 - 0.15)
+            }
+            else if (itemCount == 7) {
+                console.log("quantity before" + quantity)
+                quantity = quantity * (1 - 0.15)
+                console.log("quantity after" + quantity)
+            }
+            else if (itemCount == 8) {
+                quantity = quantity * (1 - 0.25)
+            }
+            else if (itemCount == 8) {
+                quantity = quantity * (1 - 0.30)
+            }
+            else if (itemCount == 9) {
+                quantity = quantity * (1 - 0.35)
+            }
+            else if (itemCount == 10) {
+                quantity = quantity * (1 - 0.35)
+            }
+            else if (itemCount == 11) {
+                quantity = quantity * (1 - 0.40)
+            }
+            else if (itemCount == 11) {
+                quantity = quantity * (1 - 0.40)
+            }
+            else if (itemCount == 12) {
+                quantity = quantity * (1 - 0.50)
+            }
+            else if (itemCount == 13) {
+                quantity = quantity * (1 - 0.53)
+            }
+            else if (itemCount == 15) {
+                quantity = quantity * (1 - 0.55)
+            }
         }
-        else if (itemCount == 6) {
-            quantity = quantity * (1 - 0.15)
-        }
-        else if (itemCount == 7) {
-            console.log("quantity before" + quantity)
-            quantity = quantity * (1 - 0.15)
-            console.log("quantity after" + quantity)
-        }
-        else if (itemCount == 8) {
-            quantity = quantity * (1 - 0.25)
-        }
-        else if (itemCount == 8) {
-            quantity = quantity * (1 - 0.30)
-        }
-        else if (itemCount == 9) {
-            quantity = quantity * (1 - 0.35)
-        }
-        else if (itemCount == 10) {
-            quantity = quantity * (1 - 0.35)
-        }
-        else if (itemCount == 11) {
-            quantity = quantity * (1 - 0.40)
-        }
-        else if (itemCount == 11) {
-            quantity = quantity * (1 - 0.40)
-        }
-        else if (itemCount == 12) {
-            quantity = quantity * (1 - 0.50)
-        }
-        else if (itemCount == 13) {
-            quantity = quantity * (1 - 0.53)
-        }
-        else if (itemCount == 15) {
-            quantity = quantity * (1 - 0.55)
-        }
-    }
         quantity = Math.round(quantity)
         let unit = item.unit;
         if (quantity >= 1000) {
@@ -247,87 +242,87 @@ const SelectDateFoodDelivery = ({
     const LeftTabContent = () => {
         return (
             <View style={{ justifyContent: 'space-between', marginTop: 6, paddingTop: 5, paddingBottom: 10, paddingLeft: 10, backgroundColor: '#FFFFFF', marginLeft: 15, marginRight: 15, borderRadius: 10, fontSize: 14 }}>
-            <View>
-                <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5 }}>
-                    {selectedOption === "foodDelivery" && (
-                        <>
-                            {"\n"}
-                            ✔️  Food Delivery at Door-step
-                            {"\n"}
-                            ✔️  Free Delivery
-                            {"\n"}
-                            ✔️  Hygienically Packed boxes
-                            {"\n"}
-                            ✔️  Freshly Cooked Food
-                        </>
-                    )}
-                </Text>
+                <View>
+                    <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5 }}>
+                        {selectedOption === "foodDelivery" && (
+                            <>
+                                {"\n"}
+                                ✔️  Food Delivery at Door-step
+                                {"\n"}
+                                ✔️  Free Delivery
+                                {"\n"}
+                                ✔️  Hygienically Packed boxes
+                                {"\n"}
+                                ✔️  Freshly Cooked Food
+                            </>
+                        )}
+                    </Text>
+                </View>
+                <View>
+                    <Text style={{ color: '#9252AA', fontWeight: '600', marginLeft: 5 }}>
+                        {selectedOption === "liveCatering" && (
+                            <>
+                                ✔️  Well Groomed Waiters (2 Nos)
+                                {"\n"}
+                                ✔️  Bone-china Crockery & Quality disposal for loose items.
+                                {"\n"}
+                                ✔️  Transport (to & fro)
+                                {"\n"}
+                                ✔️  Dustbin with Garbage bag
+                                {"\n"}
+                                ✔️  Head Mask for waiters & chefs
+                                {"\n"}
+                                ✔️  Tandoor/Other cooking Utensiles
+                                {"\n"}
+                                ✔️  Chafing Dish
+                                {"\n"}
+                                ✔️  Cocktail Napkins
+                                {"\n"}
+                                ✔️  2 Chef
+                                {"\n"}
+                                ✔️  Water Can (Bisleri)(20 litres)
+                                {"\n"}
+                                ✔️  Hand gloves
+                                {"\n"}
+                                ✔️  Exclusion: Buffet table/kitchen table is in client scope (can be provided at additional cost)
+                            </>
+                        )}
+                    </Text>
+                </View>
             </View>
-            <View>
-                <Text style={{ color: '#9252AA', fontWeight: '600', marginLeft: 5 }}>
-                    {selectedOption === "liveCatering" && (
-                        <>
-                            ✔️  Well Groomed Waiters (2 Nos)
-                            {"\n"}
-                            ✔️  Bone-china Crockery & Quality disposal for loose items.
-                            {"\n"}
-                            ✔️  Transport (to & fro)
-                            {"\n"}
-                            ✔️  Dustbin with Garbage bag
-                            {"\n"}
-                            ✔️  Head Mask for waiters & chefs
-                            {"\n"}
-                            ✔️  Tandoor/Other cooking Utensiles
-                            {"\n"}
-                            ✔️  Chafing Dish
-                            {"\n"}
-                            ✔️  Cocktail Napkins
-                            {"\n"}
-                            ✔️  2 Chef
-                            {"\n"}
-                            ✔️  Water Can (Bisleri)(20 litres)
-                            {"\n"}
-                            ✔️  Hand gloves
-                            {"\n"}
-                            ✔️  Exclusion: Buffet table/kitchen table is in client scope (can be provided at additional cost)
-                        </>
-                    )}
-                </Text>
-            </View>
-        </View>
         );
     };
 
     const RightTabContent = ({ selectedDishQuantities }) => {
         return (
-            <View style={{marginTop: 8 , paddingTop: 8, paddingBottom: 9, paddingLeft: 16, backgroundColor: '#FFFFFF', marginLeft: 15, marginRight: 16, borderRadius: 10, height: 195, elevation: 2}}>
-                 <ScrollView>
-            <FlatList
-                data={selectedDishQuantities}
-                keyExtractor={item => item.name}
-                renderItem={({ item }) => <RenderDishqunatity item={item} />}
-                numColumns={2}
-            />
-              </ScrollView>
-            <View style={{ paddingLeft: 3, paddingTop: 5 }}>
-                <Text style={{ color: '#9252AA'  ,fontSize:11 , fontWeight:"600"}}>Complementary: Green Salad, Mint Chutney, and Achar</Text>
+            <View style={{ marginTop: 8, paddingTop: 8, paddingBottom: 9, paddingLeft: 16, backgroundColor: '#FFFFFF', marginLeft: 15, marginRight: 16, borderRadius: 10, elevation: 2 }}>
+                <ScrollView style={{ flex: 1 }}>
+                    <FlatList
+                        data={selectedDishQuantities}
+                        keyExtractor={item => item.name}
+                        renderItem={({ item }) => <RenderDishqunatity item={item} />}
+                        numColumns={2}
+                        contentContainerStyle={{ paddingBottom: 2 }} // Adjust paddingBottom as needed
+                    />
+                </ScrollView>
+                <View style={{ paddingLeft: 3, paddingTop: 5 }}>
+                    <Text style={{ color: '#9252AA', fontSize: 11, fontWeight: "600" }}>Complementary: Green Salad, Mint Chutney, and Achar</Text>
+                </View>
             </View>
-      
-            </View>
-           
+
         );
     };
     const onContinueClick = () => {
-        if (dishPrice*peopleCount < 2500) {
+        const totalOrderAmount = selectedOption === 'liveCatering' ? dishPrice * peopleCount + 6500 : dishPrice * peopleCount;
+        if (totalOrderAmount < 2500) {
             setWarningVisible(true);
-        }
-        else {
+        } else {
             navigation.navigate("ConfirmFoodDeliveryOrder", {
                 "selectedDate": selectedDate, "selectedTime": selectedTime, "peopleCount": peopleCount,
                 "selectedDeliveryOption": selectedOption,
-                "selectedDishes": data, "items": route.params.selectedDishes, subCategory
-
-            })
+                "selectedDishes": data, "items": route.params.selectedDishes, subCategory,
+                "selectedDishQuantities": selectedDishQuantities
+            });
         }
     }
     function formatTime(date) {
@@ -359,7 +354,7 @@ const SelectDateFoodDelivery = ({
     return (
         <View style={styles.screenContainer}>
             <CustomHeader title={"Create Order"} navigation={navigation} />
-          
+
             <View style={styles.view1}>
                 <Image style={styles.image1} source={require('../../assets/info.png')} />
                 <Text style={styles.text1}>Bill value depends upon Dish selected + Number of people</Text>
@@ -384,187 +379,187 @@ const SelectDateFoodDelivery = ({
 
             </View>
             <ScrollView>
-            <View style={{ justifyContent: 'space-between', marginTop: 1, paddingTop: 2, paddingBottom: 9, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2  , marginTop:6}}>
-                <View style={{ justifyContent: 'flex-end', flex: 1, flexDirection: 'row', marginEnd: 9 , marginTop:7}}>
-                    <TouchableOpacity onPress={toggleModal}>
-                        <Image source={require('../../assets/info.png')} style={{ height: 16, width: 16 }} />
+                <View style={{ justifyContent: 'space-between', marginTop: 1, paddingTop: 2, paddingBottom: 9, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2, marginTop: 6 }}>
+                    <View style={{ justifyContent: 'flex-end', flex: 1, flexDirection: 'row', marginEnd: 9, marginTop: 7 }}>
+                        <TouchableOpacity onPress={toggleModal}>
+                            <Image source={require('../../assets/info.png')} style={{ height: 16, width: 16 }} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: "space-between", paddingLeft: "1%", marginTop: -50, paddingRight: "4%" }}>
+                        <View style={{ flexDirection: "row" }}>
+                            <TouchableOpacity onPress={() => setShowDatePicker(true)} activeOpacity={1}>
+                                <View style={{ marginStart: 10, marginEnd: 8, flexDirection: 'column', paddingHorizontal: 17, backgroundColor: 'white', borderColor: isDateValid != null && isDateValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
+                                    <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Booking Date</Text>
+                                    <View style={{ flexDirection: 'row', marginTop: 1, width: Dimensions.get('window').width * 0.3 }}>
+
+                                        <Text style={{ fontSize: 16, fontWeight: 600, color: isDatePressed ? '#383838' : "grey" }}>{selectedDate.toLocaleDateString()}</Text>
+
+                                        <Image source={require('../../assets/ic_calendar.png')} style={{ height: 19, width: 19, marginLeft: 17 }} />
+                                        {showDatePicker && (
+                                            <DateTimePicker
+                                                value={selectedDate}
+                                                mode="date"
+                                                display="default"
+                                                minimumDate={minimumDate}
+                                                onChange={handleDateChange}
+                                            />
+                                        )}
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+
+
+                        <View style={{ flexDirection: 'row' }}>
+                            <TouchableOpacity onPress={() => setShowTimePicker(true)} activeOpacity={1}>
+                                <View style={{ flexDirection: 'column', paddingHorizontal: 21, backgroundColor: 'white', borderColor: isTimeValid != null && isTimeValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
+                                    <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Food Delivery Time</Text>
+                                    <View style={{ flexDirection: 'row', marginTop: 1, width: Dimensions.get('window').width * 0.3 }}>
+
+                                        <Text style={{ fontSize: 16, fontWeight: 600, color: isTimePressed ? '#383838' : "grey" }}>
+                                            {selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                        </Text>
+                                        <Image source={require('../../assets/clock.png')} style={{ height: 19, width: 19, marginLeft: 17 }} />
+                                        {showTimePicker && (
+                                            <DateTimePicker
+                                                value={selectedTime}
+                                                mode="time"
+                                                display="default"
+                                                onChange={handleTimeChange}
+                                            />
+                                        )}
+                                    </View>
+
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    {errorText != null && (
+                        <View style={{ marginStart: 21 }}>
+                            <Text style={{ fontSize: 9, fontWeight: '400', color: '#FF2F2F', marginTop: 4 }}>{errorText}</Text>
+                        </View>
+                    )}
+                    <View style={{ flexDirection: 'row', marginTop: 11, marginLeft: 20, marginRight: 1 }}>
+                        <Image style={styles.verticalSeparator} source={require('../../assets/verticalSeparator.png')}></Image>
+                    </View>
+                    <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', marginTop: 10, alignItems: 'center', marginLeft: 16, paddingBottom: 10 }}>
+                        <View style={{ justifyContent: "center", alignItems: "center", flexDirection: "row" }}>
+                            <Image source={require('../../assets/people.png')} style={{ height: 20, width: 20 }} />
+                            <Text style={{ marginLeft: 9, fontSize: 12, color: '#3C3C3E', fontWeight: '500', }}>How many people you are hosting?</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-end', marginRight: 9, alignItems: "center" }}>
+                            <TouchableOpacity onPress={decreasePeopleCount} activeOpacity={1}>
+                                <Image source={require('../../assets/ic_minus.png')} style={{ height: 20, width: 20, marginLeft: 5 }} />
+                            </TouchableOpacity>
+                            <TextInput
+                                style={{
+                                    marginLeft: 5,
+                                    paddingVertical: 3, // Adjust the padding to your preference
+                                    paddingHorizontal: 10,
+                                    fontSize: 16,
+                                    width: 40,
+                                    textAlign: 'center',
+                                    textAlignVertical: 'center', // Center the text vertically
+                                    color: 'black',
+                                    borderWidth: 1,
+                                    borderColor: 'gray',
+                                    borderRadius: 5
+                                }}
+                                value={String(peopleCount)}
+                                onChangeText={(e) => {
+                                    const parsedValue = parseInt(e);
+                                    if (!isNaN(parsedValue)) {
+                                        setPeopleCount(parsedValue);
+                                    } else {
+                                        setPeopleCount(0);
+                                    }
+                                }}
+                                keyboardType="numeric"
+                            />
+
+                            <TouchableOpacity onPress={increasePeopleCount} activeOpacity={1}>
+                                <Image source={require('../../assets/plus.png')} style={{ height: 20, width: 20, marginLeft: 5 }} />
+                            </TouchableOpacity>
+
+
+                        </View>
+                    </View>
+                </View>
+
+                <View style={{ justifyContent: 'space-between', marginTop: 1, paddingVertical: 12, paddingHorizontal: 12, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, marginTop: 16, borderRadius: 10, elevation: 2 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <TouchableOpacity onPress={() => handleSelectOption('foodDelivery')}>
+                                <View style={{
+                                    width: 16,
+                                    height: 16,
+                                    borderRadius: 12,
+                                    borderWidth: 1,
+                                    borderColor: '#9252AA',
+                                    backgroundColor: selectedOption === 'foodDelivery' ? '#9252AA' : 'transparent',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    marginRight: 10,
+                                }}>
+                                    {selectedOption === 'foodDelivery' && <View style={{ width: 8, height: 8, backgroundColor: '#fff', borderRadius: 6 }} />}
+                                </View>
+                            </TouchableOpacity>
+                            <Text style={{ fontSize: 14, color: "#9252AA", fontWeight: "600" }}>Food Delivery</Text>
+                        </View>
+                    </View>
+
+                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 6 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <TouchableOpacity onPress={() => handleSelectOption('liveCatering')}>
+                                <View style={{
+                                    width: 16,
+                                    height: 16,
+                                    borderRadius: 12,
+                                    borderWidth: 1,
+                                    borderColor: '#9252AA',
+                                    backgroundColor: selectedOption === 'liveCatering' ? '#9252AA' : 'transparent',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    marginRight: 10,
+                                }}>
+                                    {selectedOption === 'liveCatering' && <View style={{ width: 8, height: 8, backgroundColor: '#fff', borderRadius: 6 }} />}
+                                </View>
+                            </TouchableOpacity>
+                            <Text style={{ fontSize: 14, color: "#9252AA", fontWeight: "600" }}>Live Catering</Text>
+                        </View>
+                    </View>
+
+
+                </View>
+
+
+                <View style={{ flexDirection: 'row', marginTop: 20, marginHorizontal: 16 }}>
+                    <TouchableOpacity style={{
+                        backgroundColor: activeTab === 'left'
+                            ? "#D9D9D9"
+                            : 'white', borderTopRightRadius: 10, borderTopLeftRadius: 15, paddingVertical: 8, paddingStart: 48, paddingRight: 48
+                    }} onPress={() => setActiveTab('left')} activeOpacity={1}>
+                        <Text style={activeTab === 'left' ? styles.activeTab : styles.inactiveTab}>Inclusions</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{
+                        backgroundColor: activeTab === 'right'
+                            ? "#D9D9D9"
+                            : 'white', borderTopRightRadius: 10, borderTopLeftRadius: 15, paddingVertical: 8, paddingStart: 48, paddingRight: 48
+                    }} onPress={() => setActiveTab('right')} activeOpacity={1}>
+                        <Text style={activeTab === 'right' ? styles.activeTab : styles.inactiveTab}>Dish Quantity</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: "space-between", paddingLeft: "1%" , marginTop:-50, paddingRight:"4%"}}>
-                    <View style={{ flexDirection: "row" }}>
-                        <TouchableOpacity onPress={() => setShowDatePicker(true)} activeOpacity={1}>
-                            <View style={{ marginStart: 10, marginEnd: 8, flexDirection: 'column', paddingHorizontal: 17, backgroundColor: 'white', borderColor: isDateValid != null && isDateValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
-                                <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Booking Date</Text>
-                                <View style={{ flexDirection: 'row', marginTop: 1, width: Dimensions.get('window').width * 0.3 }}>
-
-                                    <Text style={{ fontSize: 16, fontWeight: 600, color: isDatePressed ? '#383838' : "grey" }}>{selectedDate.toLocaleDateString()}</Text>
-
-                                    <Image source={require('../../assets/ic_calendar.png')} style={{ height: 19, width: 19, marginLeft: 17 }} />
-                                    {showDatePicker && (
-                                        <DateTimePicker
-                                            value={selectedDate}
-                                            mode="date"
-                                            display="default"
-                                            minimumDate={minimumDate}
-                                            onChange={handleDateChange}
-                                        />
-                                    )}
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+                {renderTabContent(selectedDishQuantities)}
 
 
-                    <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => setShowTimePicker(true)} activeOpacity={1}>
-                            <View style={{ flexDirection: 'column', paddingHorizontal: 21, backgroundColor: 'white', borderColor: isTimeValid != null && isTimeValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
-                                <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Food Delivery Time</Text>
-                                <View style={{ flexDirection: 'row', marginTop: 1, width: Dimensions.get('window').width * 0.3 }}>
-
-                                    <Text style={{ fontSize: 16, fontWeight: 600, color: isTimePressed ? '#383838' : "grey" }}>
-                                        {selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                    </Text>
-                                    <Image source={require('../../assets/clock.png')} style={{ height: 19, width: 19, marginLeft: 17 }} />
-                                    {showTimePicker && (
-                                        <DateTimePicker
-                                            value={selectedTime}
-                                            mode="time"
-                                            display="default"
-                                            onChange={handleTimeChange}
-                                        />
-                                    )}
-                                </View>
-
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingTop: 12 }}>
+                    <Text style={{ fontSize: 14, fontWeight: 500, color: '#333' }}>Need more info?</Text>
+                    <TouchableOpacity onPress={contactUsRedirection} activeOpacity={1}>
+                        <View style={{ marginLeft: 5, backgroundColor: '#E8E8E8', borderRadius: 18, borderWidth: 1, borderColor: '#9252AA', justifyContent: 'center', alignItems: 'center', width: 96, height: 28 }}>
+                            <Text style={{ color: '#9252AA', fontSize: 13, fontWeight: '500' }}>Contact Us</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
-                {errorText != null && (
-                    <View style={{ marginStart: 21 }}>
-                        <Text style={{ fontSize: 9, fontWeight: '400', color: '#FF2F2F', marginTop: 4 }}>{errorText}</Text>
-                    </View>
-                )}
-                <View style={{ flexDirection: 'row', marginTop: 11, marginLeft: 20, marginRight: 1 }}>
-                    <Image style={styles.verticalSeparator} source={require('../../assets/verticalSeparator.png')}></Image>
-                </View>
-                <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', marginTop: 10, alignItems: 'center', marginLeft: 16, paddingBottom: 10 }}>
-                    <View style={{ justifyContent: "center", alignItems: "center", flexDirection: "row" }}>
-                        <Image source={require('../../assets/people.png')} style={{ height: 20, width: 20 }} />
-                        <Text style={{ marginLeft: 9, fontSize: 12, color: '#3C3C3E', fontWeight: '500', }}>How many people you are hosting?</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-end', marginRight: 9, alignItems: "center" }}>
-                        <TouchableOpacity onPress={decreasePeopleCount} activeOpacity={1}>
-                            <Image source={require('../../assets/ic_minus.png')} style={{ height: 20, width: 20, marginLeft: 5 }} />
-                        </TouchableOpacity>
-                        <TextInput
-                            style={{
-                                marginLeft: 5,
-                                paddingVertical: 3, // Adjust the padding to your preference
-                                paddingHorizontal: 10,
-                                fontSize: 16,
-                                width: 40,
-                                textAlign: 'center',
-                                textAlignVertical: 'center', // Center the text vertically
-                                color: 'black',
-                                borderWidth: 1,
-                                borderColor: 'gray',
-                                borderRadius: 5
-                            }}
-                            value={String(peopleCount)}
-                            onChangeText={(e) => {
-                                const parsedValue = parseInt(e);
-                                if (!isNaN(parsedValue)) {
-                                    setPeopleCount(parsedValue);
-                                } else {
-                                      setPeopleCount(0);
-                                }
-                            }}
-                            keyboardType="numeric"
-                        />
-
-                        <TouchableOpacity onPress={increasePeopleCount} activeOpacity={1}>
-                            <Image source={require('../../assets/plus.png')} style={{ height: 20, width: 20, marginLeft: 5 }} />
-                        </TouchableOpacity>
-
-
-                    </View>
-                </View>
-            </View>
-
-            <View style={{ justifyContent: 'space-between', marginTop: 1, paddingVertical: 12, paddingHorizontal: 12, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, marginTop:16 , borderRadius: 10, elevation: 2 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' , justifyContent:"space-between" }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <TouchableOpacity onPress={() => handleSelectOption('foodDelivery')}>
-                    <View style={{
-                        width: 16,
-                        height: 16,
-                        borderRadius: 12,
-                        borderWidth: 1,
-                        borderColor: '#9252AA',
-                        backgroundColor: selectedOption === 'foodDelivery' ? '#9252AA' : 'transparent',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginRight: 10,
-                    }}>
-                        {selectedOption === 'foodDelivery' && <View style={{ width: 8, height: 8, backgroundColor: '#fff', borderRadius: 6 }} />}
-                    </View>
-                </TouchableOpacity>
-                <Text style={{ fontSize: 14 , color:"#9252AA" , fontWeight:"600"}}>Food Delivery</Text>
-            </View>
-            </View>
-            
-            <View style={{flexDirection:"row" , alignItems:"center" , justifyContent:"space-between" , marginTop:6}}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <TouchableOpacity onPress={() => handleSelectOption('liveCatering')}>
-                    <View style={{
-                        width: 16,
-                        height: 16,
-                        borderRadius: 12,
-                        borderWidth: 1,
-                        borderColor: '#9252AA',
-                        backgroundColor: selectedOption === 'liveCatering' ? '#9252AA' : 'transparent',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginRight: 10,
-                    }}>
-                        {selectedOption === 'liveCatering' && <View style={{ width: 8, height: 8, backgroundColor: '#fff', borderRadius: 6 }} />}
-                    </View>
-                </TouchableOpacity>
-                <Text style={{ fontSize: 14 , color:"#9252AA" , fontWeight:"600"}}>Live Catering</Text>
-            </View>
-            </View>
-          
-          
-        </View>
-           
-          
-            <View style={{ flexDirection: 'row', marginTop: 20, marginHorizontal: 16 }}>
-                <TouchableOpacity style={{
-                    backgroundColor: activeTab === 'left'
-                        ? "#D9D9D9"
-                        : 'white', borderTopRightRadius: 10, borderTopLeftRadius: 15, paddingVertical: 8, paddingStart: 48, paddingRight: 48
-                }} onPress={() => setActiveTab('left')} activeOpacity={1}>
-                    <Text style={activeTab === 'left' ? styles.activeTab : styles.inactiveTab}>Inclusions</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{
-                    backgroundColor: activeTab === 'right'
-                        ? "#D9D9D9"
-                        : 'white', borderTopRightRadius: 10, borderTopLeftRadius: 15, paddingVertical: 8, paddingStart: 48, paddingRight: 48
-                }} onPress={() => setActiveTab('right')} activeOpacity={1}>
-                    <Text style={activeTab === 'right' ? styles.activeTab : styles.inactiveTab}>Dish Quantity</Text>
-                </TouchableOpacity>
-            </View>
-            {renderTabContent(selectedDishQuantities)}
-
-
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingTop: 12 }}>
-                        <Text style={{ fontSize: 14, fontWeight: 500, color: '#333' }}>Need more info?</Text>
-                        <TouchableOpacity onPress={contactUsRedirection} activeOpacity={1}>
-                            <View style={{ marginLeft: 5, backgroundColor: '#E8E8E8', borderRadius: 18, borderWidth: 1, borderColor: '#9252AA', justifyContent: 'center', alignItems: 'center', width: 96, height: 28 }}>
-                                <Text style={{ color: '#9252AA', fontSize: 13, fontWeight: '500' }}>Contact Us</Text>
-                            </View>
-                        </TouchableOpacity>
-            </View>
             </ScrollView>
 
             <View style={{ paddingHorizontal: 16, justifyContent: 'space-between' }}>
@@ -597,7 +592,7 @@ const SelectDateFoodDelivery = ({
                                 { color: isOrderValid ? 'white' : '#343333' },
                             ]}
                         >
-        {Object.values(data).length} Items | ₹ {selectedOption === 'liveCatering' ? dishPrice * peopleCount + 6500 : dishPrice * peopleCount}
+                            {Object.values(data).length} Items | ₹ {selectedOption === 'liveCatering' ? dishPrice * peopleCount + 6500 : dishPrice * peopleCount}
                         </Text>
 
                     </View>

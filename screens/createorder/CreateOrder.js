@@ -12,13 +12,10 @@ import {
   Image,
   TouchableOpacity,
   TouchableHighlight,
-  BackHandler,
 } from 'react-native';
 
 import styles from './styles';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import CustomStatusBar from '../../components/CustomStatusBar';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {
   BASE_URL,
@@ -29,11 +26,9 @@ import {
 
 import OrderWarning from '../dialog/OrderWarning';
 import CustomHeader from '../../components/CustomeHeader';
-import { Directions } from 'react-native-gesture-handler';
 import Loader from '../../components/Loader';
 
 const CreateOrder = ({ navigation }) => {
-  const viewbottomSheetRef = useRef(null);
   const bottomSheetRef = useRef(null);
   const [selected, setSelected] = useState('veg');
   const [cuisines, setCuisines] = useState([]);
@@ -44,15 +39,12 @@ const CreateOrder = ({ navigation }) => {
   const [dishDetail, setDishDetail] = useState(null);
   const [selectedCount, setSelectedCount] = useState(0);
   const [selectedDishes, setSelectedDishes] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [isViewAllSheetOpen, setIsViewAllSheetOpen] = useState(false);
   const [selectedDishPrice, setSelectedDishPrice] = useState(0);
   const [selectedDishDictionary, setSelectedDishDictionary] = useState({});
   const windowWidth = Dimensions.get('window').width;
   const [isNonVegSelected, setIsNonVegSelected] = useState(false);
   const [isVegSelected, setIsVegSelected] = useState(true);
   const [isDishSelected, setIsDishSelected] = useState(false);
-  const [isPopupVisible, setPopupVisible] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const [isWarningVisibleForDishCount, setWarningVisibleForDishCount] =
@@ -67,6 +59,18 @@ const CreateOrder = ({ navigation }) => {
   const handleWarningClose = () => {
     setWarningVisibleForDishCount(false);
     setWarningVisibleForCuisineCount(false);
+  };
+
+  const handleViewAll = categoryId => {
+    setIsViewAllExpanded(!isViewAllExpanded);
+
+    setExpandedCategories(prevExpanded =>
+      categoryId === prevExpanded[0]
+        ? prevExpanded.length === 1 ? [] : prevExpanded.slice(1) // If the first category is clicked, toggle its expansion state only if it's not the only expanded category
+        : prevExpanded.includes(categoryId)
+          ? prevExpanded.filter(id => id !== categoryId)
+          : [...prevExpanded, categoryId],
+    );
   };
 
   // get category of cuisines
@@ -575,53 +579,10 @@ const CreateOrder = ({ navigation }) => {
   );
 
 
-  const RenderViewlAllBottomSheetContent = () => {
-    // Filter the mealList to find the meal object with the selected category ID
-    const selectedMeal = mealList.find(item => item.mealObject._id === selectedCategory);
-
-    return (
-      <View style={{ flex: 1 }}>
-        <View contentContainerStyle={{ flexGrow: 1 }}>
-          {selectedMeal && selectedMeal.dish.length > 0 ? (
-            <FlatList
-              data={selectedMeal.dish}
-              renderItem={renderDishItem}
-              keyExtractor={(item) => item._id}
-              numColumns={3}
-              contentContainerStyle={styles.dishContainer}
-              columnWrapperStyle={styles.dishColumnWrapper}
-            />
-          ) : (
-            <Text>No dishes available for this category.</Text>
-          )}
-        </View>
-      </View>
-    );
-  };
-
-
   const openBottomSheet = (dishDetail, bottomSheetRef) => {
     setDishDetail(dishDetail);
     bottomSheetRef.current.open();
   };
-
-  // const openViewAllBottomSheet = (category) => {
-  //   alert("category11" + category )
-  //   setSelectedCategory(category); // Update selected category
-  //   //setIsViewAllSheetOpen(true);
-  //  // if (viewAllBottomSheetRef.current) {
-  //     alert("category22" + category )
-  //     viewbottomSheetRef.current.open(); // Open the bottom sheet
-  //  // }
-  // };
-
-  // const closeviewAllBottomSheet = () => {
-  //   alert("category23" )
-  //   setSelectedCategory(null);
-  //  // setIsViewAllSheetOpen(false);
-  //   viewbottomSheetRef.current.close();
-  // };
- 
 
   const addDish = selectedDishPrice => {
     console.log(1);
@@ -784,48 +745,23 @@ const CreateOrder = ({ navigation }) => {
                 renderItem={({ item }) => (
                   <View style={{ marginVertical: 5 }}>
                     {item.dish.length > 0 && (
-                      <View style={{ marginRight: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' , paddingTop:10 }}>
-                     <Text
+                      <View style={{ marginRight: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10 }}>
+                        <Text
                           style={{
                             color: '#000',
                             fontSize: 15,
                             fontWeight: '800',
-          
+
                           }}>
 
                           {item.mealObject.name} ({item.dish.length})
                         </Text>
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', backgroundColor: "#9252AA", paddingHorizontal: 8, paddingVertical: 2, borderRadius: 10, marginTop: -2 }}>
-
-
-                        <TouchableOpacity
-  onPress={() => openViewAllBottomSheet(item.mealObject._id)}
-  activeOpacity={1}>
-  <Text style={{ color: '#fff', fontWeight: '400', textDecorationLine: 'none', fontSize: 12 }}>View All</Text>
-</TouchableOpacity>
-
-
-                          {/* <Image style={{ width: 12, height: 12, marginLeft: 8 }} source={require('../../assets/viewAll.png')} activeOpacity={1}></Image> */}
-
-                          {/* <Image
-                  style={{
-                  width: 15,
-                  height: 15,
-                  marginLeft: 8,
-                  transform: [
-                  {
-                    rotate: expandedCategories.includes(
-                      item.mealObject._id
-                    )
-                      ? "90deg"
-                      : "0deg",
-                  },
-                  ],
-                  }}
-                  source={require("../../assets/viewAll.png")}
-                  activeOpacity={1}
-                  /> */}
-
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', paddingHorizontal: 8, paddingVertical: 2, borderRadius: 10, marginTop: -2, backgroundColor: expandedCategories.includes(item.mealObject._id) ? '#fff' : '#9252AA', borderColor: expandedCategories.includes(item.mealObject._id) ? '#000' : '#9252AA', borderWidth: 1 }}>
+                          <TouchableOpacity
+                            onPress={() => handleViewAll(item.mealObject._id)}
+                            activeOpacity={1}>
+                            <Text style={{ color: expandedCategories.includes(item.mealObject._id) ? '#000' : '#fff', fontWeight: '400', textDecorationLine: 'none', fontSize: 12 }}>View All</Text>
+                          </TouchableOpacity>
                         </View>
                       </View>
                     )}

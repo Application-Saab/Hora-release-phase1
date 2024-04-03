@@ -20,7 +20,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     const selectedTime = route.params.selectedTime
     const subCategory = route.params.subCategory
     const selectedDeliveryOption= route.params.selectedDeliveryOption
-
+    const selectedDishQuantities = route.params.selectedDishQuantities
     const selectedDishData = route.params.selectedDishes
     const [addresses, setAddresses] = useState([]);
     const [completeAddress, setCompleteAddress] = useState([]);
@@ -461,7 +461,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                 <View style={{ flexDirection: 'column', alignContent: 'flex-end', paddingRight: 7 }}>
                     <Text style={{ alignItems: 'flex-end', width: "70%", marginLeft: 7, color: '#414141', fontSize: 11, fontWeight: '500', opacity: 0.9, marginTop: 10 }}>{item.name}</Text>
                 </View>
-
+                <View>{item.qunatity}</View>
 
             </View>
         )
@@ -839,6 +839,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                     </View>
 
                     <View style={{ marginTop: 10, marginHorizontal: 15, flexDirection: 'row', flex: 1 }} >
+                       
                         <FlatList
                             //data={showAllItems ? selectedMealList : selectedMealList.slice(0, 3)}
                             data={selectedMealList}

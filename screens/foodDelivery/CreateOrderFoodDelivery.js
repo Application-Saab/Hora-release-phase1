@@ -476,16 +476,18 @@ const CreateOrderFoodDelivery = ({navigation}) => {
     setDishDetail(dishDetail);
     bottomSheetRef.current.open();
   };
+  
   const handleViewAll = categoryId => {
-  setIsViewAllExpanded(!isViewAllExpanded);
-											 
+    setIsViewAllExpanded(!isViewAllExpanded);
+
     setExpandedCategories(prevExpanded =>
-      prevExpanded.includes(categoryId)
-        ? prevExpanded.filter(id => id !== categoryId)
-        : [...prevExpanded, categoryId],
+      categoryId === prevExpanded[0]
+        ? prevExpanded.length === 1 ? [] : prevExpanded.slice(1) // If the first category is clicked, toggle its expansion state only if it's not the only expanded category
+        : prevExpanded.includes(categoryId)
+          ? prevExpanded.filter(id => id !== categoryId)
+          : [...prevExpanded, categoryId],
     );
   };
-  
 
   const addDish = selectedDishPrice => {
     // Extract dish names, quantities, and units
@@ -649,52 +651,12 @@ const CreateOrderFoodDelivery = ({navigation}) => {
 						 
                           {item.mealObject.name} ({item.dish.length})
                         </Text>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'flex-end',
-                            alignItems: 'center',
-                          }}>
-						 
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', paddingHorizontal: 8, paddingVertical: 2, borderRadius: 10, marginTop: 16, backgroundColor: expandedCategories.includes(item.mealObject._id) ? '#fff' : '#9252AA', borderColor: expandedCategories.includes(item.mealObject._id) ? '#000' : '#9252AA', borderWidth: 1 }}>
                           <TouchableOpacity
                             onPress={() => handleViewAll(item.mealObject._id)}
                             activeOpacity={1}>
-						   
-                            <Text
-                              style={{
-                                color: '#9252AA',
-                                fontWeight: '400',
-                                textDecorationLine: 'underline',
-                                fontSize: 12,
-                                marginLeft: 10,
-                              }}>
-							 
-                              View All
-                            </Text>
+                            <Text style={{ color: expandedCategories.includes(item.mealObject._id) ? '#000' : '#fff', fontWeight: '400', textDecorationLine: 'none', fontSize: 12 }}>View All</Text>
                           </TouchableOpacity>
-																																																																			  
-
-                          {/* <Image style={{ width: 12, height: 12, marginLeft: 8 }} source={require('../../assets/viewAll.png')} activeOpacity={1}></Image> */}
-
-						<Image
-                            style={{
-                              width: 15,
-                              height: 15,
-                              marginLeft: 8,
-                              transform: [
-                                {
-                                  rotate: expandedCategories.includes(
-                                    item.mealObject._id
-                                  )
-                                    ? "90deg"
-                                    : "0deg",
-                                },
-                              ],
-                            }}
-                            source={require("../../assets/viewAll.png")}
-                            activeOpacity={1}
-                          />
-							
                         </View>
                       </View>
                     )}
