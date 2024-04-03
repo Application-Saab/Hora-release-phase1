@@ -33,7 +33,8 @@ const OrderDetails = ({ navigation, route }) => {
     const [hospitalityServiceTotalAmount , setHospitalityServiceTotalAmount] = useState(0);
     const [decorationComments, setDecorationComments] = useState('');
     const [peopleCount, setPeopleCount] = useState(0);
-															   
+    const [orderCancel, setOrderCancel] =
+    useState(false);														   
 																			   
 																						   
      const orderType = route.params.orderType
@@ -87,11 +88,11 @@ const OrderDetails = ({ navigation, route }) => {
 
 
     const contactUsRedirection = () => {
-        Linking.openURL(`whatsapp://send?phone=+918982321487&text=I've canceled my order, kindly assist with the refund process. Thanks!`);
+        Linking.openURL(`whatsapp://send?phone=+917338584828&text=I've canceled my order, kindly assist with the refund process. Thanks!`);
     }
 
 	const cancelcontactUsRedirection = () =>{
-        Linking.openURL('whatsapp://send?phone=+918982321487&text=I%20have%20canceled%20my%20order%20kindly%20assist%20with%20the%20refund%20process%20Thanks!');
+        Linking.openURL('whatsapp://send?phone=+917338584828&text=I%20have%20canceled%20my%20order%20kindly%20assist%20with%20the%20refund%20process%20Thanks!');
 
     }
 
@@ -228,8 +229,6 @@ const OrderDetails = ({ navigation, route }) => {
             }); // Replace with your API endpoint for updating user profile
 
             // Handle success response
-       
-            alert('Order cancelled successfully');
             navigation.navigate("OrderList");
         } catch (error) {
             // Handle error response
@@ -392,10 +391,7 @@ const OrderDetails = ({ navigation, route }) => {
 						  
                             <TouchableHighlight style={styles.ratingbutton} underlayColor="#E56352" onPress={cancelcontactUsRedirection}>
                              <View style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-										   
-									   
-									  
-                                 <View><Text style={styles.ratingbuttonText}>Initiate Refund</Text></View>
+								 <View><Text style={styles.ratingbuttonText}>Initiate Refund</Text></View>
                              </View>
                          </TouchableHighlight>
                             :

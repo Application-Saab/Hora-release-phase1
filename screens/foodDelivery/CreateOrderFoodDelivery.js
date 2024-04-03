@@ -17,9 +17,7 @@ import {
 
 import styles from './styles';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import CustomStatusBar from '../../components/CustomStatusBar';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {
   BASE_URL,
@@ -30,7 +28,6 @@ import {
 
 import OrderWarning from '../dialog/OrderWarning';
 import CustomHeader from '../../components/CustomeHeader';
-import {Directions} from 'react-native-gesture-handler';
 import Loader from '../../components/Loader';
 const CreateOrderFoodDelivery = ({navigation}) => {
 
@@ -141,36 +138,40 @@ const CreateOrderFoodDelivery = ({navigation}) => {
   };
 
   const handleIncreaseQuantity = (dish, isSelected) => {
-    console.log("selectedDishes" + selectedDishes.length)
     if (selectedDishes.length >= 15 && !isSelected) {
       setWarningVisibleForDishCount(true);
     } else {
       const updatedSelectedDishes = [...selectedDishes];
       const updatedSelectedDishDictionary = {...selectedDishDictionary};
-      if (updatedSelectedDishes.includes(dish._id)) {
-        const index = updatedSelectedDishes.indexOf(dish._id);
-        updatedSelectedDishes.splice(index, 1);
-      } else {
-        updatedSelectedDishes.push(dish._id);
+      const dishPriceValue = parseInt(dish.cuisineArray[0], 10);
+      
+      if (!isNaN(dishPriceValue)) { // Check if the parsed value is not NaN
+        if (updatedSelectedDishes.includes(dish._id)) {
+          const index = updatedSelectedDishes.indexOf(dish._id);
+          updatedSelectedDishes.splice(index, 1);
+          const updatedPrice = selectedDishPrice - dishPriceValue;
+          setSelectedDishPrice(updatedPrice);
+        } else {
+          updatedSelectedDishes.push(dish._id);
+          const updatedPrice = selectedDishPrice + dishPriceValue;
+          setSelectedDishPrice(updatedPrice);
+        }
       }
+      
       setSelectedDishes(updatedSelectedDishes);
       setSelectedCount(updatedSelectedDishes.length);
-      if (isSelected) {
-        const updatedPrice = selectedDishPrice - parseInt(dish.cuisineArray[0], 10);
-        setSelectedDishPrice(updatedPrice);
-      } else {
-        const updatedPrice = selectedDishPrice + parseInt(dish.cuisineArray[0], 10);
-        setSelectedDishPrice(updatedPrice);
-      }
+      
       if (updatedSelectedDishDictionary[dish._id]) {
         delete updatedSelectedDishDictionary[dish._id];
       } else {
         updatedSelectedDishDictionary[dish._id] = dish;
       }
+      
       setSelectedDishDictionary(updatedSelectedDishDictionary);
       setIsDishSelected(updatedSelectedDishes.length > 0);
     }
-  };
+};
+
 
   //handleCuisinePress is used to handle cuisine clicks and called from above function
   const handleCuisinePress = cuisineId => {
@@ -289,13 +290,14 @@ const CreateOrderFoodDelivery = ({navigation}) => {
              
               <Text
                 style={{
-                  marginHorizontal: 3,
+                  marginLeft: 6,
                   textAlign: 'left',
                   fontWeight: '600',
-                  fontSize: 11,
+                  fontSize: 12,
                   color: 'transparent',
                   opacity: 0.9,
                   height: 28,
+                  marginTop:5,
                   marginBottom: 8,
                   color: selectedDishes.includes(item._id)
                     ? 'white'
@@ -324,6 +326,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
                     fontWeight: '700',
                     fontSize: 17,
                     opacity: 0.9,
+                    marginLeft:2,
                     color: selectedDishes.includes(item._id)
                       ? 'white'
                       : '#9252AA',
@@ -734,7 +737,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
       <View>
         <OrderWarning
           visible={isWarningVisibleForDishCount}
-          title={'Maximum 15 dishes can be added. Please contact to support for more imformation'}
+          title={'More than 15 dishes reachout to customer support'}
           buttonText={'OK'}
           onClose={handleWarningClose}
         />

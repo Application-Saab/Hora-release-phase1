@@ -50,18 +50,9 @@ const SelectDateFoodDelivery = ({
         setSubCategory(option);
     };
 
-    const handleAdd = () => {
-        if (selectedOption === 'foodDelivery') {
-            console.log('Add Food Delivery');
-            // Add food delivery logic here
-        } else if (selectedOption === 'liveCatering') {
-            console.log('Add Live Catering');
-            // Add live catering logic here
-        }
-    };
-
+   
     const contactUsRedirection = () => {
-        Linking.openURL('whatsapp://send?phone=+918982321487&text=Hello%20I%20have%20some%20queries%20for%20food%20delivey%20and%20live%20Catering%20service');
+        Linking.openURL('whatsapp://send?phone=+917338584828&text=Hello%20I%20have%20some%20queries%20for%20food%20delivey%20and%20live%20Catering%20service');
     }
 
     useEffect(() => {
@@ -305,9 +296,12 @@ const SelectDateFoodDelivery = ({
                         contentContainerStyle={{ paddingBottom: 2 }} // Adjust paddingBottom as needed
                     />
                 </ScrollView>
-                <View style={{ paddingLeft: 3, paddingTop: 5 }}>
-                    <Text style={{ color: '#9252AA', fontSize: 11, fontWeight: "600" }}>Complementary: Green Salad, Mint Chutney, and Achar</Text>
-                </View>
+               
+                <View style={{ alignItems: 'center', flexDirection: 'row', paddingVertical: 5, borderRadius: 10, marginRight: 12, paddingLeft: 9, marginTop: 15, borderRadius: 10, backgroundColor: '#F9E9FF' }}>
+                        <Image source={require('../../assets/info.png')} style={{ height: 13, width: 13 }} />
+                        <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 11 }}>Complementary: Green Salad, Mint Chutney, and Achar</Text>
+
+                    </View>
             </View>
 
         );
@@ -385,7 +379,7 @@ const SelectDateFoodDelivery = ({
                             <Image source={require('../../assets/info.png')} style={{ height: 16, width: 16 }} />
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: "space-between", paddingLeft: "1%", marginTop: -50, paddingRight: "4%" }}>
+                    <View style={{ flexDirection: 'row', justifyContent: "space-between", paddingLeft: "1%", marginTop: -35, paddingRight: "4%" }}>
                         <View style={{ flexDirection: "row" }}>
                             <TouchableOpacity onPress={() => setShowDatePicker(true)} activeOpacity={1}>
                                 <View style={{ marginStart: 10, marginEnd: 8, flexDirection: 'column', paddingHorizontal: 17, backgroundColor: 'white', borderColor: isDateValid != null && isDateValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
@@ -508,7 +502,7 @@ const SelectDateFoodDelivery = ({
                         </View>
                     </View>
 
-                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 6 }}>
+                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 10 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <TouchableOpacity onPress={() => handleSelectOption('liveCatering')}>
                                 <View style={{

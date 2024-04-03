@@ -435,7 +435,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
     }
 
     const contactUsRedirection = () => {
-        Linking.openURL('whatsapp://send?phone=+918982321487&text=Hello%20I%20have%20some%20queries%20for%20chef%20for%20party%20service');
+        Linking.openURL('whatsapp://send?phone=+917338584828&text=Hello%20I%20have%20some%20queries%20for%20chef%20for%20party%20service');
     }
 
    const changeLocation = async () => {

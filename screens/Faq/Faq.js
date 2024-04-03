@@ -14,7 +14,7 @@ const Faq = ({ navigation }) => {
     };
 
     const handlePage = () => {
-        Linking.openURL('whatsapp://send?phone=+918982321487&text=I%20wanted%20to%20know%20more%20about%20your%20services');
+        Linking.openURL('whatsapp://send?phone=+917338584828&text=I%20wanted%20to%20know%20more%20about%20your%20services');
     }
 
     const faqData = [
@@ -68,7 +68,7 @@ const Faq = ({ navigation }) => {
         },
         {
             question: "How many people can you serve?",
-            answer: "We can serve up to 100 people. Call us at +91-8982321487 if your gathering is bigger than 50 people. ",
+            answer: "We can serve up to 100 people. Call us at +91-7338584828 if your gathering is bigger than 50 people. ",
         },
         {
             question: "Will a Chef be sufficient for my party?",

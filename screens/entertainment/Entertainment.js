@@ -8,7 +8,7 @@ const Entertainment = ({ navigation }) => {
     const screenHeight = Dimensions.get('window').height - 30;
 
     const handlePage = () => {
-        Linking.openURL('whatsapp://send?phone=+918982321487&text=Hello%20I%20wanted%20to%20know%20about%20Entertainment%20service');
+        Linking.openURL('whatsapp://send?phone=+917338584828&text=Hello%20I%20wanted%20to%20know%20about%20Entertainment%20service');
     }
     return (
         <ScrollView>

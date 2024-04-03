@@ -459,7 +459,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                 <Image source={{ uri: `https://horaservices.com/api/uploads/${item.image}` }}
                     style={{ width: 41, height: 42, borderRadius: 20, marginBottom: 9, marginTop: 9, marginStart: 9 }} />
                 <View style={{ flexDirection: 'column', alignContent: 'flex-end', paddingRight: 7 }}>
-                    <Text style={{ alignItems: 'flex-end', width: "70%", marginLeft: 7, color: '#414141', fontSize: 11, fontWeight: '500', opacity: 0.9, marginTop: 10 }}>{item.name}</Text>
+                    <Text style={{ alignItems: 'flex-end', width: "90%", marginLeft: 7, color: '#414141', fontSize: 11, fontWeight: '500', opacity: 0.9, marginTop: 10 }}>{item.name}</Text>
                 </View>
                 <View>{item.qunatity}</View>
 
@@ -521,7 +521,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                 }
             }
         } catch (error) {
-            console.log('Error Confirming Order:', error.message);
+            alert('Error Confirming Order:', error.message);
         }
 
     };
@@ -662,7 +662,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     }
 
     const contactUsRedirection = () => {
-        Linking.openURL('whatsapp://send?phone=+918982321487&text=Hello%20I%20have%20some%20queries%20for%20chef%20for%20party%20service');
+        Linking.openURL('whatsapp://send?phone=+917338584828&text=Hello%20I%20have%20some%20queries%20for%20chef%20for%20party%20service');
     }
 
     const changeLocation = async () => {
@@ -819,6 +819,8 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                                 <Text style={{ textDecorationLine: "line-through" , color: "#9252AA", fontWeight: '600' }}> ₹ {deliveryCharges}</Text>
                             </View>
                         </View>
+                        <Image style={{ width: 290, height: 1, marginTop: 20, marginBottom: 3 }} source={require('../../assets/Rectangleline.png')} />
+
                         {/* Calculation for final total amount */}
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
                             <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20 }}>Final Amount</Text>
@@ -862,13 +864,13 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                 <View style={{ paddingLeft: 15, paddingRight: 12, marginTop: 10 }}>
                     <View style={{ padding: 7, flexDirection: 'column', justifyContent: "space-between", alignItems: "center", borderRadius: 10, paddingRight: 11, marginTop: 15, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(211, 75, 233, 0.10)', borderColor: '#E6E6E6', borderWidth: 1, }}>
                         <View>
-                            <Text style={{ fontSize: 10, color: '#9252AA', fontWeight: '400', marginLeft: 4, lineHeight: 15 }}>Cancellation and Order Change Policy:</Text>
+                            <Text style={{ fontSize: 11, color: '#9252AA', fontWeight: '400', marginLeft: 4, lineHeight: 15 }}>Cancellation and Order Change Policy:</Text>
 
                         </View>
                         <View>
-                            <Text style={{ fontSize: 10, color: '#9252AA', fontWeight: '400', marginLeft: 4, lineHeight: 15 }}>
-                                Till the order is not assigned to the service provider, 100% of the amount will be refunded, otherwise 50% of the advance will be deducted as cancellation charges to compensate the service provider.{'\n'}
-                                The order cannot be edited after paying the advance. Customers can cancel the order and replace it with a new order with the required changes.
+                            <Text style={{ fontSize: 11, color: '#9252AA', fontWeight: '400', marginLeft: 4, lineHeight: 15 }}>
+                            The order can be cancelled with 95% refund till 24 hours in advance of food delivery time.{'\n'}
+                            For any edits, reach out to our customer support team (24 hours in advance of scheduled order delivery time)
                             </Text>
                         </View>
                     </View>
