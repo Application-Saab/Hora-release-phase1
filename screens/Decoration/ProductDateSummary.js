@@ -421,10 +421,7 @@ const ProductDateSummary = ({ route, navigation }) => {
         
         
     }
-	 const contactUsedRedirection = () =>{
-        Linking.openURL('whatsapp://send?phone=+917338584828&text=Hello%20wanted%20to%20know%20about%20fooddelivery!');
-    }
-
+	
 
     const changeLocation = async () => {
         try {
@@ -496,40 +493,14 @@ const ProductDateSummary = ({ route, navigation }) => {
         if (date !== undefined) {
             setSelectedDate(date);
             setShowDatePicker(false);
-
-												   
-												   
-
-							   
-																				  
-					   
-			 
-									
-																					  
-					   
-					
-								   
-			 
+	 
         }
     };
 
     const handleTimeChange = (event, time) => {
         if (time !== undefined) {
             setSelectedTime(time);
-            setShowTimePicker(false);
-
-            
-												   
-
-							   
-																				  
-					   
-									  
-																					  
-					   
-					
-								   
-			 
+            setShowTimePicker(false);	 
         }
     };
 
