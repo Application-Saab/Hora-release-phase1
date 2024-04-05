@@ -33,6 +33,7 @@ const OrderDetails = ({ navigation, route }) => {
     const [hospitalityServiceTotalAmount , setHospitalityServiceTotalAmount] = useState(0);
     const [decorationComments, setDecorationComments] = useState('');
     const [peopleCount, setPeopleCount] = useState(0);
+    const [water, setWater] = useState(0);
     const [orderCancel, setOrderCancel] =
     useState(false);														   
 																			   
@@ -145,6 +146,7 @@ const OrderDetails = ({ navigation, route }) => {
                     setOrderDetail(responseData.data)
                     
                     setPeopleCount(responseData.data.no_of_people)
+                    setWater(responseData.data.no_of_burner)
                     setOrderMenu(responseData.data.selecteditems)
                     setOrderAppl(responseData.data.orderApplianceIds)
                     setOrderIngredients(responseData.data.ingredientUsed)
@@ -256,10 +258,14 @@ const OrderDetails = ({ navigation, route }) => {
                         </View>
                     )
                     :orderType === 6 ? (
+                        
                         <View style={styles.tabSec}>
                             {<OrderDetailsFoodMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount}/>}
                          <View style={{ backgroundColor:"#fff" , marginTop:7}}>   
+                         
                         <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 12 }}>
+                            Water {peopleCount * water} bottles
+                            {"\n"}
                         <>
                             Inclusions:
                             {"\n"}
@@ -286,6 +292,8 @@ const OrderDetails = ({ navigation, route }) => {
                             <View style={{ backgroundColor:"#fff"   , marginTop:7}}> 
                             <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 12 }}>
                             <>
+                            Water {peopleCount * water} bottles
+                            {"\n"}
                         Inclusion:
                         {"\n"}
                         - Well Groomed Waiters (2 Nos)
