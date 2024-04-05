@@ -21,7 +21,6 @@ const MyAccount = ({ navigation }) => {
   const fetchMobileNumber = async () => {
     const number= await AsyncStorage.getItem("mobileNumber")
     setMobileNumber(number)
-    console.warn(mobileNumber)
   }
 
 
@@ -37,7 +36,6 @@ const MyAccount = ({ navigation }) => {
 
     }
     const response = await axios.get(url, requestData, header)
-    console.warn(response.data)
 
     if (response.data.code === API_SUCCESS_CODE) {
       setName(response.data.data.name)
@@ -64,7 +62,6 @@ const MyAccount = ({ navigation }) => {
     }
     const response = await axios.post(url, requestData, header)
     if (response.data.code === API_SUCCESS_CODE) {
-      console.warn('success')
     }
     else {
       console.warn('success')

@@ -158,9 +158,7 @@ const DishDetails = () => {
             'authorization': token
           },
         });
-        console.warn(response.status)
         if (response.status == API_SUCCESS_CODE) {
-          console.warn(response.data.data.address)
           setAddresses(response.data.data.address)
         }
       } catch (error) {

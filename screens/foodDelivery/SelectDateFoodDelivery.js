@@ -162,9 +162,7 @@ const SelectDateFoodDelivery = ({
                 quantity = quantity * (1 - 0.15)
             }
             else if (itemCount == 7) {
-                console.log("quantity before" + quantity)
                 quantity = quantity * (1 - 0.15)
-                console.log("quantity after" + quantity)
             }
             else if (itemCount == 8) {
                 quantity = quantity * (1 - 0.25)
@@ -229,53 +227,83 @@ const SelectDateFoodDelivery = ({
 
     const LeftTabContent = () => {
         return (
-            <View style={{ justifyContent: 'space-between', marginTop: 6, paddingTop: 5, paddingBottom: 10, paddingLeft: 10, backgroundColor: '#FFFFFF', marginLeft: 15, marginRight: 15, borderRadius: 10, fontSize: 14 }}>
+            <View style={{  marginTop: 6, paddingTop: 5, paddingBottom: 10, paddingLeft: 10, backgroundColor: '#FFFFFF', marginLeft: 15, marginRight: 15, borderRadius: 10, fontSize: 14 }}>
                 <View>
-                    <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5 }}>
                         {selectedOption === "foodDelivery" && (
                             <>
-                                {"\n"}
-                                ✔️  Food Delivery at Door-step
-                                {"\n"}
-                                ✔️  Free Delivery
-                                {"\n"}
-                                ✔️  Hygienically Packed boxes
-                                {"\n"}
-                                ✔️  Freshly Cooked Food
+                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:6}}> Food Delivery at Door-step</Text>
+                                </View>
+                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:10}}>Free Delivery</Text>
+                                </View>
+                               <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                               <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:10}}>Hygienically Packed boxes</Text>
+                               </View>
+                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' , paddingLeft:7}}> Freshly Cooked Food</Text>
+                                </View>
                             </>
                         )}
-                    </Text>
+                   
                 </View>
                 <View>
-                    <Text style={{ color: '#9252AA', fontWeight: '600', marginLeft: 5 }}>
                         {selectedOption === "liveCatering" && (
                             <>
-                                ✔️  Well Groomed Waiters (2 Nos)
-                                {"\n"}
-                                ✔️  Bone-china Crockery & Quality disposal for loose items.
-                                {"\n"}
-                                ✔️  Transport (to & fro)
-                                {"\n"}
-                                ✔️  Dustbin with Garbage bag
-                                {"\n"}
-                                ✔️  Head Mask for waiters & chefs
-                                {"\n"}
-                                ✔️  Tandoor/Other cooking Utensiles
-                                {"\n"}
-                                ✔️  Chafing Dish
-                                {"\n"}
-                                ✔️  Cocktail Napkins
-                                {"\n"}
-                                ✔️  2 Chef
-                                {"\n"}
-                                ✔️  Water Can (Bisleri)(20 litres)
-                                {"\n"}
-                                ✔️  Hand gloves
-                                {"\n"}
-                                ✔️  Exclusion: Buffet table/kitchen table is in client scope (can be provided at additional cost)
+                             <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:1}}>  Well Groomed Waiters (2 Nos)</Text>
+                                </View>
+                                <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 4, flex: 1, flexWrap: 'wrap' }}> Bone-china Crockery & Quality disposal for loose items.</Text>
+                                </View>
+                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:6}}>Transport (to & fro)</Text>
+                                </View>
+                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:8}}>Dustbin with Garbage bag</Text>
+                                </View>
+                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:4}}> Head Mask for waiters & chefs</Text>
+                                </View>
+                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:7}}>Tandoor/Other cooking Utensiles</Text>
+                                </View>
+                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:8}}>Chafing Dish</Text>
+                                </View>
+                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:8}}>Cocktail Napkins</Text>
+                                </View>
+                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:8}}>2 Chef</Text>
+                                </View>
+                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:9}}>Water Can (Bisleri)(20 litres)</Text>
+                                </View>
+                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:9}}>Hand gloves</Text>
+                                </View>
+                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"90%" }}>
+                                <Image source={require('../../assets/exclusion.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:7 ,  flex: 1, flexWrap: 'wrap'}}>Exclusion: Buffet table/kitchen table is in client scope (can be provided at additional cost)</Text>
+                                </View>
                             </>
                         )}
-                    </Text>
                 </View>
             </View>
         );
