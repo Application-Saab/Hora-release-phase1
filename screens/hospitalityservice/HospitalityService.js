@@ -280,7 +280,7 @@ const HospitalityService = ({navigation}) => {
       };
       const token = await AsyncStorage.getItem('token');
 
-      console.warn(token);
+     
       const response = await axios.post(url, requestData, {
         headers: {
           'Content-Type': 'application/json',

@@ -5,7 +5,6 @@ import App from '../App';
 			 
 
 const OrderDetailsFoodMenu = ({ OrderMenu, OrderType, NoOfPeople }) => {
-  console.log(NoOfPeople)
   var Appetizer = [];
   var Breads = [];
   var Breakfast = [];
@@ -21,15 +20,12 @@ const OrderDetailsFoodMenu = ({ OrderMenu, OrderType, NoOfPeople }) => {
 
   const RenderDishQunatity = ({ item }) => {
     let quantity = item.foodQty * NoOfPeople;
-    console.log(NoOfPeople)
     if (itemCount <= 5) {
         quantity = quantity;
     } else if (itemCount == 6) {
         quantity = quantity * (1 - 0.15);
     } else if (itemCount == 7) {
-        console.log("quantity before" + quantity);
         quantity = quantity * (1 - 0.15);
-        console.log("quantity after" + quantity);
     } else if (itemCount == 8) {
         quantity = quantity * (1 - 0.25);
     } else if (itemCount == 9) {
