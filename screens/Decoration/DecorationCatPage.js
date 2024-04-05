@@ -213,7 +213,7 @@ const DecorationCatPage = ({ route, navigation }) => {
                                                 ? require('../../assets/Rectanglepurple.png')
                                                 : require('../../assets/rectanglewhite.png')
                                         }
-                                        style={{ width: "100%", height: Dimensions.get('window').height * 0.32, marginTop: 10 }}
+                                        style={{ width: "100%", height: Dimensions.get('window').height * 0.345, marginTop: 10 }}
                                         imageStyle={{ borderRadius: 16 }}
                                     >
 
@@ -238,7 +238,7 @@ const DecorationCatPage = ({ route, navigation }) => {
                                                 color: 'transparent',
                                                 opacity: 0.9,
                                                 height: 28,
-                                                marginTop: 0,
+                                                marginTop: 7,
                                                 paddingLeft: 5,
                                                 marginBottom: 2,
                                                 color: selectedProducts.some(product => product._id === item._id)
@@ -375,10 +375,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#444',
         fontWeight: '500',
-        marginTop: 1,
         textAlign: 'left',
         paddingLeft: 33,
-        marginTop: 6,
     },
     catalogueTitle: {
         fontWeight: '600',
