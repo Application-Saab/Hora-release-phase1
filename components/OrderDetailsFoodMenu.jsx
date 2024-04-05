@@ -92,29 +92,35 @@ const OrderDetailsFoodMenu = ({ OrderMenu, OrderType, NoOfPeople }) => {
      
     }
   });
-
-  Breads.forEach(x => {
-    const { quantity, unit } = RenderDishQunatity({ item: x });
-    // Now you can use the `quantity` and `unit` variables here
-    x.foodQty = quantity;
-    x.foodUnit = unit;
-});
-
-Maincourse.forEach(x => {
-  const { quantity, unit } = RenderDishQunatity({ item: x });
-  // Now you can use the `quantity` and `unit` variables here
-  x.foodQty = quantity;
-  x.foodUnit = unit;
-});
-
-Appetizer.forEach(x => {
-  const { quantity, unit } = RenderDishQunatity({ item: x });
-  // Now you can use the `quantity` and `unit` variables here
-  x.foodQty = quantity;
-  x.foodUnit = unit;
-});
-
+  if (Breads.length > 1){
+    Breads.forEach(x => {
+      const { quantity, unit } = RenderDishQunatity({ item: x });
+      // Now you can use the `quantity` and `unit` variables here
+      x.foodQty = quantity;
+      x.foodUnit = unit;
+  });
+  }
   
+
+  if(Maincourse.length > 1){
+    Maincourse.forEach(x => {
+      const { quantity, unit } = RenderDishQunatity({ item: x });
+      // Now you can use the `quantity` and `unit` variables here
+      x.foodQty = quantity;
+      x.foodUnit = unit;
+    });
+  }
+
+
+  if (Appetizer.length > 1)
+  {
+    Appetizer.forEach(x => {
+      const { quantity, unit } = RenderDishQunatity({ item: x });
+      // Now you can use the `quantity` and `unit` variables here
+      x.foodQty = quantity;
+      x.foodUnit = unit;
+    });
+  }
 
   return (
     <ScrollView style={styles.orderCon}>
