@@ -336,7 +336,7 @@ const SelectDateFoodDelivery = ({
     };
     const onContinueClick = () => {
         const totalOrderAmount = selectedOption === 'liveCatering' ? dishPrice * peopleCount + 6500 : dishPrice * peopleCount;
-        if (totalOrderAmount < 25) {
+        if (totalOrderAmount < 2500) {
             setWarningVisible(true);
         } else {
             navigation.navigate("ConfirmFoodDeliveryOrder", {
