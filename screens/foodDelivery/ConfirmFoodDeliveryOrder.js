@@ -18,7 +18,6 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     const peopleCount = route.params.peopleCount
     const selectedDate = route.params.selectedDate
     const selectedTime = route.params.selectedTime
-    const subCategory = route.params.subCategory
     const selectedDeliveryOption= route.params.selectedDeliveryOption
     const selectedDishQuantities = route.params.selectedDishQuantities
     const selectedDishData = route.params.selectedDishes
@@ -358,17 +357,17 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     );
 
     useEffect(() => {
-        console.log(subCategory)
+        console.log(selectedDishQuantities)
         Geocoder.init('AIzaSyBmHupwMPDVmKEryBTT9LlIeQITS3olFeY');
         getCurrentLocation();
         Object.values(selectedDishData).map((item) => cat.push(item.cuisineId[0]));
     }, []);
 
     useEffect(() => {
-        if (subCategory === "foodDelivery") {
+        if (selectedDeliveryOption === "foodDelivery") {
             setType(6)
         }
-        else if (subCategory === "liveCatering") {
+        else if (selectedDeliveryOption === "liveCatering") {
             setType(7)
         }
         console.log("Type " + type);
@@ -453,20 +452,88 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     };
 
 
-    const renderDishItem = ({ item }) => {
+    // const renderDishItem = ({ item }) => {
+    //     return (
+    //         <View style={{ flexDirection: 'row', marginRight: 5, width: 140, borderRadius: 8, borderColor: '#B8B8B8', borderWidth: 1, backgroundColor: '#FFF', paddingBottom: 5 }}>
+    //             <Image source={{ uri: `https://horaservices.com/api/uploads/${item.image}` }}
+    //                 style={{ width: 41, height: 42, borderRadius: 20, marginBottom: 9, marginTop: 9, marginStart: 9 }} />
+    //             <View style={{ flexDirection: 'column', alignContent: 'flex-end', paddingRight: 7 }}>
+    //                 <Text style={{ alignItems: 'flex-end', width: "90%", marginLeft: 7, color: '#414141', fontSize: 11, fontWeight: '500', opacity: 0.9, marginTop: 10 }}>{item.name}</Text>
+    //             </View>
+    //             <View>{item.qunatity}</View>
+
+    //         </View>
+    //     )
+
+    // }
+
+    const RenderDishQuantity = ({ item }) => {
+        const itemCount = selectedDishQuantities.filter(meal => meal.id[0] === "63f1b6b7ed240f7a09f7e2de" || meal.id[0] === "63f1b39a4082ee76673a0a9f" || meal.id[0] === "63edc4757e1b370928b149b3").length
+
+        let quantity = item.quantity * peopleCount;
+
+        if (item.id[0] === "63f1b6b7ed240f7a09f7e2de" || item.id[0] === "63f1b39a4082ee76673a0a9f" || item.id[0] === "63edc4757e1b370928b149b3") {
+            if (itemCount <= 5) {
+                quantity = quantity
+            }
+            else if (itemCount == 6) {
+                quantity = quantity * (1 - 0.15)
+            }
+            else if (itemCount == 7) {
+                console.log("quantity before" + quantity)
+                quantity = quantity * (1 - 0.15)
+                console.log("quantity after" + quantity)
+            }
+            else if (itemCount == 8) {
+                quantity = quantity * (1 - 0.25)
+            }
+            else if (itemCount == 8) {
+                quantity = quantity * (1 - 0.30)
+            }
+            else if (itemCount == 9) {
+                quantity = quantity * (1 - 0.35)
+            }
+            else if (itemCount == 10) {
+                quantity = quantity * (1 - 0.35)
+            }
+            else if (itemCount == 11) {
+                quantity = quantity * (1 - 0.40)
+            }
+            else if (itemCount == 11) {
+                quantity = quantity * (1 - 0.40)
+            }
+            else if (itemCount == 12) {
+                quantity = quantity * (1 - 0.50)
+            }
+            else if (itemCount == 13) {
+                quantity = quantity * (1 - 0.53)
+            }
+            else if (itemCount == 15) {
+                quantity = quantity * (1 - 0.55)
+            }
+        }
+        quantity = Math.round(quantity)
+        let unit = item.unit;
+        if (quantity >= 1000) {
+            quantity = quantity / 1000;
+            if (unit === 'Gram')
+                unit = 'KG'
+            else if (unit === 'ml')
+                unit = 'L'
+        }
         return (
-            <View style={{ flexDirection: 'row', marginRight: 5, width: 140, borderRadius: 8, borderColor: '#B8B8B8', borderWidth: 1, backgroundColor: '#FFF', paddingBottom: 5 }}>
-                <Image source={{ uri: `https://horaservices.com/api/uploads/${item.image}` }}
-                    style={{ width: 41, height: 42, borderRadius: 20, marginBottom: 9, marginTop: 9, marginStart: 9 }} />
-                <View style={{ flexDirection: 'column', alignContent: 'flex-end', paddingRight: 7 }}>
-                    <Text style={{ alignItems: 'flex-end', width: "90%", marginLeft: 7, color: '#414141', fontSize: 11, fontWeight: '500', opacity: 0.9, marginTop: 10 }}>{item.name}</Text>
+            <View style={{ width: "46%", height: 55, paddingEnd: 2, alignItems: 'center', borderRadius: 5, borderColor: '#DADADA', borderWidth: 0.5, flexDirection: 'row', marginRight: 15, marginBottom: 8 }}>
+                <View style={{ marginLeft: 5, width: 40, height: 40, backgroundColor: '#F0F0F0', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 5 }}>
+                    <Image source={{ uri: `https://horaservices.com/api/uploads/${item.image}` }} style={{ width: 31, height: 24 }} />
                 </View>
-                <View>{item.qunatity}</View>
 
+                <View style={{ flexDirection: 'column', marginLeft: 1, width: 80 }}>
+                    <Text style={{ fontSize: 10, fontWeight: '500', color: '#414141' }}>{item.name}</Text>
+                    <Text style={{ fontSize: 14, fontWeight: '700', color: '#9252AA' }}>{quantity + ' ' + unit}</Text>
+                </View>
             </View>
-        )
-
-    }
+        );
+    };
 
 
     const handleConfirmOrder = async (merchantTransactionId) => {
@@ -495,7 +562,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                     "is_discount": "0",
                     "addressId": addId,
                     "order_date": selectedDate.toDateString(),
-                    "no_of_burner": "",
+                    "no_of_burner": includeDisposable,
                     "categoryIds": cat,
                     "order_locality": locality,
                     "total_amount": totalPrice,
@@ -844,9 +911,9 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                        
                         <FlatList
                             //data={showAllItems ? selectedMealList : selectedMealList.slice(0, 3)}
-                            data={selectedMealList}
-                            keyExtractor={(item) => item._id}
-                            renderItem={renderDishItem}
+                            data={selectedDishQuantities}
+                            keyExtractor={(item) => item.name}
+                            renderItem={({ item }) => <RenderDishQuantity item={item} />}
                             numColumns={2}
                             columnWrapperStyle={styles.dishColumnWrapper}
                         />

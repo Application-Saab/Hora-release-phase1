@@ -33,8 +33,6 @@ const SelectDateFoodDelivery = ({
     const [showCookingTime, setShowCookingTime] = useState(true);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedTab, setSelectedTab] = useState('Appliances');
-
-    const [subCategory, setSubCategory] = useState('foodDelivery');
     const today = new Date();
     const minimumDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
 
@@ -47,7 +45,6 @@ const SelectDateFoodDelivery = ({
 
     const handleSelectOption = (option) => {
         setSelectedOption(option);
-        setSubCategory(option);
     };
 
    
@@ -152,7 +149,7 @@ const SelectDateFoodDelivery = ({
         setShowAll(!showAll);
     };
 
-    const RenderDishqunatity = ({ item }) => {
+    const RenderDishQuantity = ({ item }) => {
         const itemCount = Object.values(data).filter(x => x.mealId[0] === "63f1b6b7ed240f7a09f7e2de" || x.mealId[0] === "63f1b39a4082ee76673a0a9f" || x.mealId[0] === "63edc4757e1b370928b149b3").length
 
         let quantity = item.quantity * peopleCount;
@@ -291,7 +288,7 @@ const SelectDateFoodDelivery = ({
                     <FlatList
                         data={selectedDishQuantities}
                         keyExtractor={item => item.name}
-                        renderItem={({ item }) => <RenderDishqunatity item={item} />}
+                        renderItem={({ item }) => <RenderDishQuantity item={item} />}
                         numColumns={2}
                         contentContainerStyle={{ paddingBottom: 2 }} // Adjust paddingBottom as needed
                     />
@@ -308,13 +305,13 @@ const SelectDateFoodDelivery = ({
     };
     const onContinueClick = () => {
         const totalOrderAmount = selectedOption === 'liveCatering' ? dishPrice * peopleCount + 6500 : dishPrice * peopleCount;
-        if (totalOrderAmount < 2500) {
+        if (totalOrderAmount < 25) {
             setWarningVisible(true);
         } else {
             navigation.navigate("ConfirmFoodDeliveryOrder", {
                 "selectedDate": selectedDate, "selectedTime": selectedTime, "peopleCount": peopleCount,
                 "selectedDeliveryOption": selectedOption,
-                "selectedDishes": data, "items": route.params.selectedDishes, subCategory,
+                "selectedDishes": data, "items": route.params.selectedDishes, 
                 "selectedDishQuantities": selectedDishQuantities
             });
         }
