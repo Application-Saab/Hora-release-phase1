@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
          justifyContent:"space-around",
     borderBottomColor:"#efefef",
 },
+
     image2: { height: 36, width: 47},
     image3: { height: 2, width: Dimensions.get('window').width*0.22, marginTop:13 },
     image4: {height:25,width:25,marginLeft:16},
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
       paddingTop:15,
       width:"100%"
     },
+
     boxvegContainer:{
       marginRight:20,
       flexDirection:"row",

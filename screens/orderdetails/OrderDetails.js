@@ -100,36 +100,6 @@ const OrderDetails = ({ navigation, route }) => {
         alert("rate us")
     }
 
-    // const sendInvite = (dishes) => {
-    //     let message = `You are Invited!!!
-    //     * * * * * *
-    //     Enjoy the gathering with specially cooked by professional chef from hora `;
-
-    //     message = message + dishes.order_date.slice(0, 10);
-
-    //     message = message + ' ' + dishes.order_time;
-      
-    //     dishes.selecteditems.forEach((dish,index) => {
-    //       message += '\n' + (index+1) + '. ' + dish.name;
-    //     });
-
-    //     if (dishes.addressId != null)
-    //     {message = message + '\n At ' + dishes.addressId.address1 + ' ' + dishes.addressId.address2 +   `\nhttps://play.google.com/store/apps/details?id=com.hora`;}
-      
-    //     // Add the rest of your message here
-    //     // ...
-      
-    //     const shareOptions = {
-    //       message: message,
-    //     };
-      
-    //     try {
-    //       const ShareResponse = Share.open(shareOptions);
-    //     } catch (error) {
-    //       alert("error" + error);
-    //     }
-    //   };
-
     if (orderType === 2 || orderType === 6 || orderType === 7) {
         
         
@@ -139,9 +109,6 @@ const OrderDetails = ({ navigation, route }) => {
                 try {
                     const response = await fetch(BASE_URL + ORDER_DETAILS_ENDPOINT + '/v1/' + route.params?.apiOrderId);
                     const responseData = await response.json();
-                   
-
-                    
                     setOrderDetail(responseData.data)
                     
                     setPeopleCount(responseData.data.no_of_people)

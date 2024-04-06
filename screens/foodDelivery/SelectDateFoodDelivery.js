@@ -1,9 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Dimensions, ImageBackground, FlatList, ScrollView, StatusBar, Linking, View, Text, TextInput, Image, TouchableOpacity, TouchableHighlight, BackHandler } from 'react-native';
 import styles from './stylesSelectDate';
-import axios from 'axios';
-import CustomStatusBar from '../../components/CustomStatusBar';
-import { BASE_URL, GET_CUISINE_ENDPOINT, API_SUCCESS_CODE, GET_MEAL_DISH_ENDPOINT } from '../../utils/ApiConstants';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import OrderWarning from '../dialog/OrderWarning';
 import InfoModal from '../dialog/info';
@@ -106,29 +103,6 @@ const SelectDateFoodDelivery = ({
         setIsModalVisible(!isModalVisible);
     };
 
-    // const handleDateChange = (event, date) => {
-    //     if (date !== undefined) {
-    //         setSelectedDate(date);
-    //         setIsDatePressed(true)
-    //         setShowDatePicker(false);
-    //         if(checkIsDateValid()==false){
-    //             setErrorText('*Order can be placed at least 24 hours in advance.')
-    //             return
-    //         }
-    //         else{
-    //             setErrorText(null)
-    //         }
-
-    //         if(checkIsTimeValid()==false){
-    //             setErrorText('*Order can be placed only between 7:00 AM to 10:00 PM')
-    //             return
-    //         }
-    //         else{
-    //             setErrorText(null)
-    //         }
-    //     }
-    // };
-
     const handleDateChange = (event, date) => {
         if (date !== undefined) {
             AsyncStorage.setItem("selectedDate", date.toString());
@@ -143,10 +117,6 @@ const SelectDateFoodDelivery = ({
             setSelectedTime(time);
             setShowTimePicker(false);
         }
-    };
-
-    const toggleShowAll = () => {
-        setShowAll(!showAll);
     };
 
     const RenderDishQuantity = ({ item }) => {
@@ -336,7 +306,7 @@ const SelectDateFoodDelivery = ({
     };
     const onContinueClick = () => {
         const totalOrderAmount = selectedOption === 'liveCatering' ? dishPrice * peopleCount + 6500 : dishPrice * peopleCount;
-        if (totalOrderAmount < 25) {
+        if (totalOrderAmount < 3000) {
             setWarningVisible(true);
         } else {
             navigation.navigate("ConfirmFoodDeliveryOrder", {
@@ -582,7 +552,23 @@ const SelectDateFoodDelivery = ({
                         </View>
                     </TouchableOpacity>
                 </View>
+                <View style={{ paddingLeft: 12, paddingRight: 17, marginTop: 0 }}>
+                    <View style={{ padding: 7, flexDirection: 'column', justifyContent: "space-between", alignItems: "center", borderRadius: 10, paddingRight: 11, marginTop: 15, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(211, 75, 233, 0.10)', borderColor: '#E6E6E6', borderWidth: 1, }}>
+                        <View>
+                            <Text style={{ fontSize: 11, color: '#9252AA', fontWeight: '400', marginLeft: 4, lineHeight: 15 }}>Note:</Text>
+
+                        </View>
+                        <View>
+                            <Text style={{ fontSize: 11, color: '#9252AA', fontWeight: '400', marginLeft: 4, lineHeight: 15 }}>
+                            Dish quantities vary based on guest count and selections. Over 5 dishes: 550-700g per person. Under 5 dishes: 100g per person per dish
+                            </Text>
+                        </View>
+                    </View>
+                </View>
             </ScrollView>
+
+
+          
 
             <View style={{ paddingHorizontal: 16, justifyContent: 'space-between' }}>
 
@@ -621,8 +607,8 @@ const SelectDateFoodDelivery = ({
                 </TouchableHighlight>
 
                 <OrderWarning visible={isWarningVisible} title={"Total Order Amount is less than"} buttonText={"+ Add More"}
-                    message={"Total Order amount can not be less than ₹2500, Add more to continue"}
-                    amount={" ₹2500"}
+                    message={"Total Order amount can not be less than ₹3000, Add more to continue"}
+                    amount={" ₹3000"}
                     onClose={handleWarningClose} />
 
                 <InfoModal isVisible={isModalVisible} onClose={toggleModal}>

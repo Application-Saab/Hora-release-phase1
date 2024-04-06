@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     dish:{height:24,width:24,marginLeft:15},
     separator1:{height:1,width:70,marginTop:10,marginLeft:5},
     separator2:{height:1,width:70,marginTop:10,marginStart:-15},
-    verticalSeparator:{
+      verticalSeparator:{
         height:1,
         width:295
       },

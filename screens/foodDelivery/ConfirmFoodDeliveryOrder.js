@@ -726,7 +726,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     }
 
     const contactUsRedirection = () => {
-        Linking.openURL('whatsapp://send?phone=+917338584828&text=Hello%20I%20have%20some%20queries%20for%20chef%20for%20party%20service');
+        Linking.openURL('whatsapp://send?phone=+917338584828&text=Hello%20I%20have%20some%20queries%20for%20food%20delivey%20and%20live%20Catering%20service');
     }
 
     const changeLocation = async () => {
@@ -854,8 +854,8 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                            <View style={{ flexDirection:"row" , justifyContent:"space-between" , alignItems:"center" , backgroundColor: includeDisposable ? '#efefef' : '#fff'  ,paddingHorizontal: 5 ,paddingVertical:4 , marginTop:4 }}>
                                <View style={{ flexDirection:"row" , justifyContent:"space-between" , alignItems:"center" }}>
                                    <TouchableOpacity onPress={() => setIncludeDisposable(!includeDisposable)}>
-                                       <View style={{ width: 18, height: 18, borderWidth: 1, borderColor: includeDisposable ? '#008631' : '#008631', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 4 }}>
-                                           {includeDisposable && <Image source={require('../../assets/check.png')} style={{ width: 12, height: 12 }} />}
+                                       <View style={{ width: 19, height: 19, borderWidth: 1, borderColor: includeDisposable ? '#008631' : '#008631', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 4 }}>
+                                           {includeDisposable && <Image source={require('../../assets/check.png')} style={{ width: 13, height: 13 }} />}
                                        </View>
                                    </TouchableOpacity>
                                    <View style={{  }}>
