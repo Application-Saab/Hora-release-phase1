@@ -89,19 +89,7 @@ const OrderDetailsSection = ({ OrderDetail, apiOrderId, orderId, orderType }) =>
                     <Text style={styles.orderheadings}>{getOrderD(OrderDetail.order_date)}</Text>         
 
             </View> 
-																																		
-									   
-																																 
-									   
-									  
-						
-					 
-								
-						
-				  
-
-
-				   
+		
             <View style={{ paddingTop: 12, paddingBottom: 12, paddingLeft: 12, paddingRight: 12 }}>
                 <Text>
                     <Image source={require('../assets/time-icon.png')} style={{
@@ -117,18 +105,9 @@ const OrderDetailsSection = ({ OrderDetail, apiOrderId, orderId, orderType }) =>
                 </Text>
 									
                 <Text style={styles.orderheadings}>{OrderDetail.order_time}</Text>
-              
-																																 
-									   
-													
-																																													   
-						
-					 
-																														 
-						
-				  
+        	  
             </View>
-            {orderType === 2 ?
+            {orderType === 2  || orderType === 6 || orderType === 7 ? (
                 <View style={{ paddingTop: 12, paddingBottom: 12, paddingLeft: 12, paddingRight: 12 }}>
                     <Text><Image source={require('../assets/icon3.png')} style={{
                         height: 13,
@@ -143,7 +122,7 @@ const OrderDetailsSection = ({ OrderDetail, apiOrderId, orderId, orderType }) =>
                     </Text>
                     <Text style={styles.orderheadings}>{OrderDetail.no_of_people} {"People"}</Text>
                 </View>
-                : null} 
+                ): null} 
         </View>
     )
 

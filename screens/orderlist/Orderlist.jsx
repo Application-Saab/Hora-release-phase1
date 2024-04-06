@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
   Linking,
@@ -23,9 +23,9 @@ import {
 import CustomHeader from '../../components/CustomeHeader';
 import Share from 'react-native-share';
 import Loader from '../../components/Loader';
-import {useFocusEffect} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
-const Orderlist = ({navigation}) => {
+const Orderlist = ({ navigation }) => {
   const [orderData, setOrderData] = useState({});
   const [userId, setUserId] = useState('');
   const [invitedate, setInviteDate] = useState('');
@@ -46,16 +46,16 @@ const Orderlist = ({navigation}) => {
   /// order type 5 cleaner
   /// order type 6 Food Delivery
   /// order type 7 Live Catering
-  
+
   useFocusEffect(
     React.useCallback(() => {
       const fetchOrderList = async () => {
-        
+
         try {
           setLoading(true);
           const userId = await AsyncStorage.getItem('userID');
-          
-          
+
+
           const response = await fetch(BASE_URL + ORDERLIST_ENDPOINT, {
             method: 'POST',
             headers: {
@@ -69,14 +69,14 @@ const Orderlist = ({navigation}) => {
           });
           const responseData = await response.json();
 
-          
+
           if (responseData && responseData.data && responseData.data.order) {
             const sortedOrders = responseData.data.order.sort(
               (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
             );
             setOrderData(sortedOrders);
           } else {
-            
+
             setOrderData([]); // Set an empty array if no orders are found
           }
         } catch (error) {
@@ -125,8 +125,8 @@ const Orderlist = ({navigation}) => {
     }
   };
 
-  
-  
+
+
   const getOrderStatus = orderStatusValue => {
     if (orderStatusValue === 0) {
       return 'Booked';
@@ -189,7 +189,7 @@ const Orderlist = ({navigation}) => {
         style={
           orderData.length === 0 ? styles.noOrderTopContainer : styles.container
         }>
-	   
+
         {loading ? (
           <View style={styles.loaderContainer}>
             <Loader loading={loading} />
@@ -202,7 +202,7 @@ const Orderlist = ({navigation}) => {
                 style={{
                   marginBottom: 10,
                   shadowColor: '#9f9e9e',
-                  shadowOffset: {width: 0, height: 4},
+                  shadowOffset: { width: 0, height: 4 },
                   shadowOpacity: 3,
                   shadowRadius: 2,
                   elevation: 1,
@@ -211,7 +211,7 @@ const Orderlist = ({navigation}) => {
                   borderBottomLeftRadius: 10,
                   borderBottomRightRadius: 20,
                 }}>
-			   
+
                 <View style={styles.sec1}>
                   <View
                     style={{
@@ -219,8 +219,8 @@ const Orderlist = ({navigation}) => {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}>
-				   
-                    <View style={{display: 'flex', flexDirection: 'row'}}>
+
+                    <View style={{ display: 'flex', flexDirection: 'row' }}>
                       <Text
                         style={{
                           paddingLeft: 10,
@@ -228,7 +228,7 @@ const Orderlist = ({navigation}) => {
                           fontWeight: '700',
                           fontSize: 11,
                         }}>
-					   
+
                         Order Id
                       </Text>
                       <Text
@@ -238,13 +238,13 @@ const Orderlist = ({navigation}) => {
                           fontWeight: '700',
                           fontSize: 11,
                         }}>
-					   
+
                         {getOrderId(orderData[item].order_id)}
                       </Text>
                     </View>
                     <View>
                       {orderData[item].order_status === 3 ||
-                      orderData[item].order_status === 2 ? (
+                        orderData[item].order_status === 2 ? (
                         <Text style={styles.orderstatus3}>
                           {getOrderStatus(orderData[item].order_status)}
                         </Text>
@@ -265,8 +265,8 @@ const Orderlist = ({navigation}) => {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}>
-				   
-                    <View style={{display: 'flex', flexDirection: 'row'}}>
+
+                    <View style={{ display: 'flex', flexDirection: 'row' }}>
                       <Text
                         style={{
                           paddingLeft: 10,
@@ -274,7 +274,7 @@ const Orderlist = ({navigation}) => {
                           fontWeight: '700',
                           fontSize: 11,
                         }}>
-					   
+
                         OTP
                       </Text>
                       <Text
@@ -284,7 +284,7 @@ const Orderlist = ({navigation}) => {
                           fontWeight: '700',
                           fontSize: 11,
                         }}>
-					   
+
                         {orderData[item].otp}
                       </Text>
                     </View>
@@ -297,10 +297,10 @@ const Orderlist = ({navigation}) => {
                             fontWeight: '700',
                             fontSize: 11,
                           }}>
-						 
+
                           {'Chef for Party'}
                         </Text>
-						) : orderData[item].type === 3 ? (
+                      ) : orderData[item].type === 3 ? (
                         <Text
                           style={{
                             paddingLeft: 9,
@@ -333,7 +333,7 @@ const Orderlist = ({navigation}) => {
                         >
                           {"Cleaner"}
                         </Text>
-                      ) : orderData[item].type === 1 ?(
+                      ) : orderData[item].type === 1 ? (
                         <Text
                           style={{
                             paddingLeft: 9,
@@ -344,7 +344,7 @@ const Orderlist = ({navigation}) => {
                         >
                           {"Decoration"}
                         </Text>
-                      ): orderData[item].type === 6 ?(
+                      ) : orderData[item].type === 6 ? (
                         <Text
                           style={{
                             paddingLeft: 9,
@@ -355,7 +355,7 @@ const Orderlist = ({navigation}) => {
                         >
                           {"Food Delivery"}
                         </Text>
-                      ): orderData[item].type === 7 ?(
+                      ) : orderData[item].type === 7 ? (
                         <Text
                           style={{
                             paddingLeft: 9,
@@ -366,7 +366,7 @@ const Orderlist = ({navigation}) => {
                         >
                           {"Live Catering"}
                         </Text>
-                      ):(
+                      ) : (
                         <Text
                           style={{
                             paddingLeft: 9,
@@ -393,7 +393,7 @@ const Orderlist = ({navigation}) => {
                           alignItems: 'center',
                           listStyle: 'none',
                         }}>
-					   
+
                         <Image
                           source={require('../../assets/date-time-icon.png')}
                           style={{
@@ -408,7 +408,7 @@ const Orderlist = ({navigation}) => {
                             color: 'rgba(65, 65, 65, 1)',
                             fontWeight: '600',
                           }}>
-						 
+
                           {getorderDate(orderData[item].order_date)}
                         </Text>
                       </View>
@@ -422,7 +422,7 @@ const Orderlist = ({navigation}) => {
                           paddingTop: 6,
                           paddingBottom: 6,
                         }}>
-					   
+
                         <Image
                           source={require('../../assets/Time-Circle.png')}
                           style={{
@@ -437,11 +437,11 @@ const Orderlist = ({navigation}) => {
                             color: 'rgba(65, 65, 65, 1)',
                             fontWeight: '600',
                           }}>
-						 
+
                           {orderData[item].order_time}
                         </Text>
                       </View>
-                      {orderData[item].type === 2 ? (
+                      {orderData[item].type === 2 || orderData[item].type === 6 || orderData[item].type === 7 ? (
                         <View
                           style={{
                             display: 'flex',
@@ -450,7 +450,6 @@ const Orderlist = ({navigation}) => {
                             alignItems: 'center',
                             listStyle: 'none',
                           }}>
-						 
                           <Image
                             source={require('../../assets/User.png')}
                             style={{
@@ -458,18 +457,17 @@ const Orderlist = ({navigation}) => {
                               width: 13,
                             }}
                           />
-
                           <Text
                             style={{
                               marginLeft: 8,
                               color: 'rgba(65, 65, 65, 1)',
                               fontWeight: '600',
                             }}>
-						   
                             {orderData[item].no_of_people} People
                           </Text>
                         </View>
                       ) : null}
+
                     </View>
                   </View>
                   <View>
@@ -480,7 +478,7 @@ const Orderlist = ({navigation}) => {
                           listStyle: 'none',
                           paddingTop: 4,
                         }}>
-					   
+
                         <Text
                           style={{
                             color: 'rgba(146, 82, 170, 1)',
@@ -488,7 +486,7 @@ const Orderlist = ({navigation}) => {
                             fontWeight: '600',
                             paddingLeft: 13,
                           }}>
-						 
+
                           Total Amount
                         </Text>
                         <Text
@@ -498,7 +496,7 @@ const Orderlist = ({navigation}) => {
                             fontWeight: '600',
                             textAlign: 'right',
                           }}>
-						 
+
                           {'₹' + '' + orderData[item].payable_amount}
                         </Text>
                       </View>
@@ -509,17 +507,17 @@ const Orderlist = ({navigation}) => {
                           listStyle: 'none',
                           paddingTop: 4,
                         }}>
-					   
+
                         <Text
                           style={{
                             color: 'rgba(146, 82, 170, 1)',
                             fontSize: 12,
                             fontWeight: '600',
                           }}>
-						 
+
                           Balance Amount
                         </Text>
-                        {orderData[item].type === 2 || orderData[item].type === 3 || orderData[item].type === 4 || orderData[item].type === 5? (
+                        {orderData[item].type === 6 || orderData[item].type === 7 ? (
                           <Text
                             style={{
                               color: 'rgba(146, 82, 170, 1)',
@@ -527,27 +525,32 @@ const Orderlist = ({navigation}) => {
                               fontWeight: '600',
                               textAlign: 'right',
                             }}>
-						   
-                            {'₹' +
-                              '' +
-                              Math.round(
-                                (orderData[item].payable_amount * 4) / 5,
-                              )}
+                            {'₹' + Math.round(orderData[item].payable_amount * 0.35)}
                           </Text>
                         ) : (
-                          <Text
-                            style={{
-                              color: 'rgba(146, 82, 170, 1)',
-                              fontSize: 12,
-                              fontWeight: '600',
-                              textAlign: 'right',
-                            }}>
-						   
-                            {'₹' +
-                              '' +
-                              Math.round(orderData[item].payable_amount * 0.7)}
-                          </Text>
+                          orderData[item].type === 2 || orderData[item].type === 3 || orderData[item].type === 4 || orderData[item].type === 5 ? (
+                            <Text
+                              style={{
+                                color: 'rgba(146, 82, 170, 1)',
+                                fontSize: 12,
+                                fontWeight: '600',
+                                textAlign: 'right',
+                              }}>
+                              {'₹' + Math.round((orderData[item].payable_amount * 4) / 5)}
+                            </Text>
+                          ) : (
+                            <Text
+                              style={{
+                                color: 'rgba(146, 82, 170, 1)',
+                                fontSize: 12,
+                                fontWeight: '600',
+                                textAlign: 'right',
+                              }}>
+                              {'₹' + Math.round(orderData[item].payable_amount * 0.7)}
+                            </Text>
+                          )
                         )}
+
                       </View>
                     </View>
                   </View>
@@ -564,7 +567,7 @@ const Orderlist = ({navigation}) => {
                           orderData[item].type,
                         )
                       }>
-					 
+
                       <View>
                         <Text style={styles.buttonText}>View Details</Text>
                       </View>
@@ -575,15 +578,15 @@ const Orderlist = ({navigation}) => {
                     {orderData[item].type === 2 && // Check if type is not equal to 1
                       (getOrderStatus(orderData[item].order_status) ===
                         'Booked' ||
-                      getOrderStatus(orderData[item].order_status) ===
+                        getOrderStatus(orderData[item].order_status) ===
                         'Accepted' ||
-                      getOrderStatus(orderData[item].order_status) ===
+                        getOrderStatus(orderData[item].order_status) ===
                         'In-progress' ? (
                         <TouchableHighlight
                           style={styles.ratingbutton}
                           underlayColor="#E56352"
                           onPress={() => sendInvite(orderData[item])}>
-						 
+
                           <View
                             style={{
                               display: 'flex',
@@ -591,7 +594,7 @@ const Orderlist = ({navigation}) => {
                               justifyContent: 'center',
                               alignItems: 'center',
                             }}>
-						   
+
                             <View>
                               <Text style={styles.ratingbuttonText}>
                                 Send Invite
@@ -614,10 +617,10 @@ const Orderlist = ({navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-			   
+
                 <Image
                   source={require('../../assets/no_order.png')}
-                  style={{width: 70, height: 70, marginLeft: 21}}
+                  style={{ width: 70, height: 70, marginLeft: 21 }}
                 />
               </View>
 
@@ -628,7 +631,7 @@ const Orderlist = ({navigation}) => {
                   color: '#9252AA',
                   textAlign: 'center',
                 }}>
-			   
+
                 You don't have any orders yet.
               </Text>
               <Text
@@ -639,7 +642,7 @@ const Orderlist = ({navigation}) => {
                   textAlign: 'center',
                 }}>
                 {' '}
-					 
+
                 Please place the order to make your party memorable
               </Text>
               <View
@@ -648,14 +651,14 @@ const Orderlist = ({navigation}) => {
                   paddingTop: 5,
                   justifyContent: 'space-between',
                 }}>
-			   
+
                 <TouchableHighlight
                   onPress={() => navigation.navigate('Home')}
                   style={styles.continueButton}>
-				 
+
                   <Text
-                    style={{textAlign: 'center', color: '#fff', fontSize: 16}}>
-				   
+                    style={{ textAlign: 'center', color: '#fff', fontSize: 16 }}>
+
                     Continue
                   </Text>
                 </TouchableHighlight>

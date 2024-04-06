@@ -467,6 +467,7 @@ const SelectDateFoodDelivery = ({
                                     }
                                 }}
                                 keyboardType="numeric"
+                                
                             />
 
                             <TouchableOpacity onPress={increasePeopleCount} activeOpacity={1}>

@@ -272,7 +272,6 @@ const styles = StyleSheet.create({
     width: '48%', // Adjust width based on available space
     paddingTop: 2,
     paddingBottom: 2,
-    paddingRight:5,
     paddingLeft:5,
     minHeight:70,
   },

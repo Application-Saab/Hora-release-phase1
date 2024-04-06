@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Button , Linking , Dimensions} from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Linking, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OrderDetailsSection from '../../components/orderDetailsSection';
-import { ScrollView, TextInput, TouchableOpacity ,TouchableHighlight, ImageBackground, KeyboardAvoidingView } from 'react-native';
+import { ScrollView, TextInput, TouchableOpacity, TouchableHighlight, ImageBackground, KeyboardAvoidingView } from 'react-native';
 import OrderDetailsMenu from '../../components/OrderDetailsMenu';
 import OrderDetailsFoodMenu from '../../components/OrderDetailsFoodMenu';
 import OrderDetailsIngre from '../../components/OrderDetailsIngre';
 import CustomHeader from '../../components/CustomeHeader';
 import OrderDetailsAppli from '../../components/OrderDetailsAppli';
 import Orderlist from '../orderlist/Orderlist';
-import { BASE_URL, ORDER_DETAILS_ENDPOINT, ORDER_CANCEL , GET_DECORATION_DETAILS} from '../../utils/ApiConstants';
+import { BASE_URL, ORDER_DETAILS_ENDPOINT, ORDER_CANCEL, GET_DECORATION_DETAILS } from '../../utils/ApiConstants';
 // import Share from 'react-native-share';
 
 
- /// order.type is 2 for chef
-  /// order.type is 1 for decoration
-  /// order.type is 3 for waiter
-  /// order type 4  bar tender
-  /// order type 5 cleaner
-  /// order type 6 Single Plate Meal
-  /// order type 7 Live Buffer
-  /// order type 8 Bulk Catering.
+/// order.type is 2 for chef
+/// order.type is 1 for decoration
+/// order.type is 3 for waiter
+/// order type 4  bar tender
+/// order type 5 cleaner
+/// order type 6 Food Delivery
+/// order type 7 Live Catering
 const OrderDetails = ({ navigation, route }) => {
     const [orderId, setOrderId] = useState('')
     const [orderDetail, setOrderDetail] = useState({})
@@ -28,18 +27,19 @@ const OrderDetails = ({ navigation, route }) => {
     const [OrderAppl, setOrderAppl] = useState([]);
     const [orderIngredients, setOrderIngredients] = useState([]);
     const [selectedTab, setSelectedTab] = useState(1);
-	const [decorationItems, setDecorationItems] = useState([]);
-    const [hospitalityServiceCount , setHospitalityServiceCount] = useState(0);
-    const [hospitalityServiceTotalAmount , setHospitalityServiceTotalAmount] = useState(0);
+    const [decorationItems, setDecorationItems] = useState([]);
+    const [hospitalityServiceCount, setHospitalityServiceCount] = useState(0);
+    const [hospitalityServiceTotalAmount, setHospitalityServiceTotalAmount] = useState(0);
     const [decorationComments, setDecorationComments] = useState('');
     const [peopleCount, setPeopleCount] = useState(0);
+    const [water, setWater] = useState(0);
     const [orderCancel, setOrderCancel] =
-    useState(false);														   
-																			   
-																						   
-     const orderType = route.params.orderType
-    
-    
+        useState(false);
+
+
+    const orderType = route.params.orderType
+
+
 
     const Tabs = ({ onSelectTab }) => (
         <View style={{ flexDirection: 'row' }}>
@@ -91,7 +91,7 @@ const OrderDetails = ({ navigation, route }) => {
         Linking.openURL(`whatsapp://send?phone=+917338584828&text=I've canceled my order, kindly assist with the refund process. Thanks!`);
     }
 
-	const cancelcontactUsRedirection = () =>{
+    const cancelcontactUsRedirection = () => {
         Linking.openURL('whatsapp://send?phone=+917338584828&text=I%20have%20canceled%20my%20order%20kindly%20assist%20with%20the%20refund%20process%20Thanks!');
 
     }
@@ -101,17 +101,18 @@ const OrderDetails = ({ navigation, route }) => {
     }
 
     if (orderType === 2 || orderType === 6 || orderType === 7) {
-        
-        
+
+
         useEffect(() => {
-            
+
             async function fetchOrderDetails() {
                 try {
                     const response = await fetch(BASE_URL + ORDER_DETAILS_ENDPOINT + '/v1/' + route.params?.apiOrderId);
                     const responseData = await response.json();
                     setOrderDetail(responseData.data)
-                    
+
                     setPeopleCount(responseData.data.no_of_people)
+                    setWater(responseData.data.no_of_burner)
                     setOrderMenu(responseData.data.selecteditems)
                     setOrderAppl(responseData.data.orderApplianceIds)
                     setOrderIngredients(responseData.data.ingredientUsed)
@@ -126,7 +127,7 @@ const OrderDetails = ({ navigation, route }) => {
     }
     else if (orderType === 1) {
         useEffect(() => {
-            
+
             async function fetchDecorationOrderDetails() {
                 try {
                     const response = await fetch(BASE_URL + GET_DECORATION_DETAILS + '/' + route.params?.orderId);
@@ -149,7 +150,7 @@ const OrderDetails = ({ navigation, route }) => {
                     const response = await fetch(BASE_URL + ORDER_DETAILS_ENDPOINT + '/v1/' + route.params?.apiOrderId);
                     const responseData = await response.json();
                     setOrderDetail(responseData.data)
-                    
+
                     setHospitalityServiceCount(responseData.data.no_of_people)
                     setHospitalityServiceTotalAmount(responseData.data.total_amount)
                 }
@@ -162,7 +163,7 @@ const OrderDetails = ({ navigation, route }) => {
         }, [])
     }
     else {
-        
+
     }
 
     const getItemInclusion = (inclusion) => {
@@ -182,7 +183,7 @@ const OrderDetails = ({ navigation, route }) => {
     async function cancelOrder() {
         try {
             const token = await AsyncStorage.getItem("token");
-           
+
             const response = await fetch(BASE_URL + ORDER_CANCEL, {
                 method: 'POST',
                 headers: {
@@ -202,139 +203,149 @@ const OrderDetails = ({ navigation, route }) => {
             console.log('Error updating profile:', error);
         }
     }
-   
+
     return (
 
         <ScrollView contentContainerStyle={styles.scrollContainer}>
             <CustomHeader title={"Order Details"} navigation={navigation} />
-																															  
+
 
             <View style={styles.container}>
-			
+
                 <OrderDetailsSection OrderDetail={orderDetail} orderId={route.params?.orderId} orderType={orderType} />
-					  
-			   
+
+
                 <View>
                     {orderType === 2 ? (
                         <View style={styles.tabSec}>
-                            
+
                             <Tabs onSelectTab={handleTabChange} />
-                            {selectedTab === 1 ? <OrderDetailsMenu OrderMenu={orderMenu}  /> : selectedTab === 2 ? <OrderDetailsAppli OrderAppl={OrderAppl} /> : <OrderDetailsIngre OrderMenu={orderMenu} OrderDetail={orderDetail} />}
+                            {selectedTab === 1 ? <OrderDetailsMenu OrderMenu={orderMenu} /> : selectedTab === 2 ? <OrderDetailsAppli OrderAppl={OrderAppl} /> : <OrderDetailsIngre OrderMenu={orderMenu} OrderDetail={orderDetail} />}
                         </View>
                     )
-                    :orderType === 6 ? (
-                        <View style={styles.tabSec}>
-                            {<OrderDetailsFoodMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount}/>}
-                         <View style={{ backgroundColor:"#fff" , marginTop:7}}>   
-                        <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 12 }}>
-                        <>
-                            Inclusions:
-                            {"\n"}
-                            ✔️ Food Delivery at Door -Step
-                            {"\n"}
-                            ✔️ Free Delivery
-                            {"\n"}
-                            ✔️ Hygienically Packed boxes
-                            {"\n"}
-                            ✔️ Freshly Cooked Food
-                            {"\n"}
-                            ✔️ Quality Disposable set of Plates & Spoons & forks
-                            {"\n"}
-                            ✔️ Water bottles (small bottles equal to number of people)
-                            {"\n"}
-                        </>
-                       </Text>
-                       </View>
-                        </View>
-                    )
-                    :orderType === 7 ? (
-                        <View style={styles.tabSec}>
-                            {<OrderDetailsFoodMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount}/>}
-                            <View style={{ backgroundColor:"#fff"   , marginTop:7}}> 
-                            <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 12 }}>
-                            <>
-                        Inclusion:
-                        {"\n"}
-                        - Well Groomed Waiters (2 Nos)
-                        {"\n"}
-                        - Bone-china Crockery & Quality disposal for loose items.
-                        {"\n"}
-                        - Transport (to & fro)
-                        {"\n"}
-                        - Dustbin with Garbage bag
-                        {"\n"}
-                        - Head Mask for waiters & chefs
-                        {"\n"}
-                        - Tandoor/Other cooking Utensiles
-                        {"\n"}
-                        - Chafing Dish
-                        {"\n"}
-                        - Cocktail Napkins
-                        {"\n"}
-                        - 2 Chef
-                        {"\n"}
-                        - Water Can (Bisleri)(20 litres)
-                        {"\n"}
-                        - Hand gloves
-                        {"\n"}
-                        Exclusion:
-                        {"\n"}
-                        - Buffet table/kitchen table is in client scope (can be provided at additional cost)
-                    
-                    </>
-                            </Text>
+                        : orderType === 6 ? (
+
+                            <View style={styles.tabSec}>
+                                {<OrderDetailsFoodMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount} />}
+                                <View style={{ backgroundColor: "#fff", marginTop: 7, padding: 10 }}>
+                                    <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 6 }}>Inclusions:</Text>
+                                    <View style={{ width: '100%' }}>
+                                        <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                            <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                            <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 6 }}> Disposal and Water Bottle: {peopleCount * water} </Text>
+                                        </View>
+                                        <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                            <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                            <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 6 }}> Food Delivery at Door-step</Text>
+                                        </View>
+                                        <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                            <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                            <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 10 }}>Free Delivery</Text>
+                                        </View>
+                                        <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                            <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                            <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 10 }}>Hygienically Packed boxes</Text>
+                                        </View>
+                                        <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                            <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                            <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 7 }}> Freshly Cooked Food</Text>
+                                        </View>
+
+                                    </View>
+
+                                </View>
                             </View>
-                        </View>
-                    )
-                    :
-                     orderType === 3 ? (
-                        <View style={{ marginTop:10 ,  justifyContent: 'center', alignItems: 'center'  , marginTop:100}}>
-                        <Image source={require('../../assets/waiter.jpeg')} style={{ width: 200, height: 200  , marginBottom:10}} />
-                        <Text style={{fontWeight:"700"}}>You have booked Waiter for your event.</Text>
-                        <Text>Number of Waiter: {hospitalityServiceCount}</Text>
-                        <Text>Price: {hospitalityServiceTotalAmount}</Text>
-                    </View>
-                    ) : orderType === 4 ? (
-                        // Add your rendering logic for orderType 4 here
-                     <View style={{ marginTop:10 ,  justifyContent: 'center', alignItems: 'center' , marginTop:100 }}>
-                        
-                            <Image source={require('../../assets/bartender.jpg')} style={{width:200 , height:200  , marginBottom:10}}  />
-                            <Text  style={{fontWeight:"700"}}>You have Bartender for your event.</Text>
-                            <Text >Number of Bartender: {hospitalityServiceCount}</Text>
-                            <Text>Price: {hospitalityServiceTotalAmount}</Text>
-                        </View>
-                    ) : orderType === 5 ? (
+                        )
+                            : orderType === 7 ? (
+                                <View style={styles.tabSec}>
+                                    {<OrderDetailsFoodMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount} />}
+                                    <View style={{ backgroundColor: "#fff", marginTop: 7 }}>
+                                        <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 12 }}>
+                                            <>
+                                                Water {peopleCount * water} bottles
+                                                {"\n"}
+                                                Inclusion:
+                                                {"\n"}
+                                                - Well Groomed Waiters (2 Nos)
+                                                {"\n"}
+                                                - Bone-china Crockery & Quality disposal for loose items.
+                                                {"\n"}
+                                                - Transport (to & fro)
+                                                {"\n"}
+                                                - Dustbin with Garbage bag
+                                                {"\n"}
+                                                - Head Mask for waiters & chefs
+                                                {"\n"}
+                                                - Tandoor/Other cooking Utensiles
+                                                {"\n"}
+                                                - Chafing Dish
+                                                {"\n"}
+                                                - Cocktail Napkins
+                                                {"\n"}
+                                                - 2 Chef
+                                                {"\n"}
+                                                - Water Can (Bisleri)(20 litres)
+                                                {"\n"}
+                                                - Hand gloves
+                                                {"\n"}
+                                                Exclusion:
+                                                {"\n"}
+                                                - Buffet table/kitchen table is in client scope (can be provided at additional cost)
 
-                        <View style={{ marginTop:10 ,  justifyContent: 'center', alignItems: 'center' , marginTop:100 }}>
-                            <Image source={require('../../assets/cleaner.jpg')}style={{width:200 , height:200  , marginBottom:10}}  />
+                                            </>
+                                        </Text>
+                                    </View>
+                                </View>
+                            )
+                                :
+                                orderType === 3 ? (
+                                    <View style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', marginTop: 100 }}>
+                                        <Image source={require('../../assets/waiter.jpeg')} style={{ width: 200, height: 200, marginBottom: 10 }} />
+                                        <Text style={{ fontWeight: "700" }}>You have booked Waiter for your event.</Text>
+                                        <Text>Number of Waiter: {hospitalityServiceCount}</Text>
+                                        <Text>Price: {hospitalityServiceTotalAmount}</Text>
+                                    </View>
+                                ) : orderType === 4 ? (
+                                    // Add your rendering logic for orderType 4 here
+                                    <View style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', marginTop: 100 }}>
 
-                            <Text  style={{fontWeight:"700"}}>You have booked Cleaner for your event.</Text>
-                            <Text>Number of Cleaner: {hospitalityServiceCount}</Text>
-                            <Text>Price: {hospitalityServiceTotalAmount}</Text>
-                        </View>
-                    ) : (
-                        <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
-                            <View style={styles.selectedProductsContainer}>
-                                {decorationItems.map(product => (
-                                    <View>
-                                        <View key={product.id} style={styles.productContainer}>
-                                            <View>
-                                                <Image source={{ uri: `https://horaservices.com/api/uploads/${product.featured_image}` }} style={styles.productImage} />
-                                            </View>
-                                            <View style={{ width: '50%' }}>
-                                                <Text style={styles.productName}>{product.name}</Text>
-                                                <Text style={styles.productPrice}>₹{product.price}</Text>
-                                                <Text style={{color:"black"}}>{getItemInclusion(product.inclusion)}</Text>
-                                                
-                                            </View>
+                                        <Image source={require('../../assets/bartender.jpg')} style={{ width: 200, height: 200, marginBottom: 10 }} />
+                                        <Text style={{ fontWeight: "700" }}>You have Bartender for your event.</Text>
+                                        <Text >Number of Bartender: {hospitalityServiceCount}</Text>
+                                        <Text>Price: {hospitalityServiceTotalAmount}</Text>
+                                    </View>
+                                ) : orderType === 5 ? (
+
+                                    <View style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', marginTop: 100 }}>
+                                        <Image source={require('../../assets/cleaner.jpg')} style={{ width: 200, height: 200, marginBottom: 10 }} />
+
+                                        <Text style={{ fontWeight: "700" }}>You have booked Cleaner for your event.</Text>
+                                        <Text>Number of Cleaner: {hospitalityServiceCount}</Text>
+                                        <Text>Price: {hospitalityServiceTotalAmount}</Text>
+                                    </View>
+                                ) : (
+                                    <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
+                                        <View style={styles.selectedProductsContainer}>
+                                            {decorationItems.map(product => (
+                                                <View>
+                                                    <View key={product.id} style={styles.productContainer}>
+                                                        <View>
+                                                            <Image source={{ uri: `https://horaservices.com/api/uploads/${product.featured_image}` }} style={styles.productImage} />
+                                                        </View>
+                                                        <View style={{ width: '50%' }}>
+                                                            <Text style={styles.productName}>{product.name}</Text>
+                                                            <Text style={styles.productPrice}>₹{product.price}</Text>
+                                                            <Text style={{ color: "black" }}>{getItemInclusion(product.inclusion)}</Text>
+
+                                                        </View>
+                                                    </View>
+                                                </View>
+                                            ))}
+                                            {decorationComments ? <Text style={{ color: "black", fontWeight: "bold", paddingBottom: 10 }}>Additional Comments:</Text> : ""}
+                                            <Text style={{ color: "black", paddingBottom: 100 }}>{decorationComments}</Text>
                                         </View>
                                     </View>
-                                ))}
-                                {decorationComments ? <Text style={{ color: "black", fontWeight: "bold", paddingBottom: 10 }}>Additional Comments:</Text> : ""}
-                                <Text style = {{color:"black", paddingBottom:100}}>{decorationComments}</Text>
-                            </View>
-                        </View>
-                    )}
+                                )}
 
                 </View>
 
@@ -355,12 +366,12 @@ const OrderDetails = ({ navigation, route }) => {
                     </View>
                     <View>
                         {orderDetail.order_status === 4 ?
-						  
+
                             <TouchableHighlight style={styles.ratingbutton} underlayColor="#E56352" onPress={cancelcontactUsRedirection}>
-                             <View style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-								 <View><Text style={styles.ratingbuttonText}>Initiate Refund</Text></View>
-                             </View>
-                         </TouchableHighlight>
+                                <View style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                                    <View><Text style={styles.ratingbuttonText}>Initiate Refund</Text></View>
+                                </View>
+                            </TouchableHighlight>
                             :
                             ''
                         }
@@ -460,7 +471,7 @@ const styles = StyleSheet.create({
     cancelorderboxtext1: {
         fontWeight: "500",
         marginBottom: 0,
-        color:'black'
+        color: 'black'
     },
     cancelorderboxtext2: {
         fontWeight: "500",
@@ -502,7 +513,7 @@ const styles = StyleSheet.create({
     inactiveTabText: {
         color: '#969696',
     },
-	selectedProductsContainer: {
+    selectedProductsContainer: {
         flexDirection: 'column',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
@@ -524,7 +535,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '900',
         marginTop: 10,
-        color:"#000",
+        color: "#000",
     },
     productId: {
         fontSize: 14,
