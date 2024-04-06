@@ -44,7 +44,7 @@ const SelectDateFoodDelivery = ({
         setSelectedOption(option);
     };
 
-   
+
     const contactUsRedirection = () => {
         Linking.openURL('whatsapp://send?phone=+917338584828&text=Hello%20I%20have%20some%20queries%20for%20food%20delivey%20and%20live%20Catering%20service');
     }
@@ -127,7 +127,7 @@ const SelectDateFoodDelivery = ({
         const breadItemCount = Object.values(data).filter(x => x.mealId[0] === "63edc4757e1b370928b149b3").length
         let quantity = item.quantity * peopleCount;
 
-        if ((item.id[0] === "63f1b6b7ed240f7a09f7e2de" && mainCourseItemCount > 1)|| (item.id[0] === "63f1b39a4082ee76673a0a9f" && appetizerItemCount >1) || (item.id[0] === "63edc4757e1b370928b149b3" && breadItemCount > 1)) {
+        if ((item.id[0] === "63f1b6b7ed240f7a09f7e2de" && mainCourseItemCount > 1) || (item.id[0] === "63f1b39a4082ee76673a0a9f" && appetizerItemCount > 1) || (item.id[0] === "63edc4757e1b370928b149b3" && breadItemCount > 1)) {
             if (itemCount <= 5) {
                 quantity = quantity
             }
@@ -200,83 +200,83 @@ const SelectDateFoodDelivery = ({
 
     const LeftTabContent = () => {
         return (
-            <View style={{  marginTop: 6, paddingTop: 5, paddingBottom: 10, paddingLeft: 10, backgroundColor: '#FFFFFF', marginLeft: 15, marginRight: 15, borderRadius: 10, fontSize: 14 }}>
+            <View style={{ marginTop: 6, paddingTop: 5, paddingBottom: 10, paddingLeft: 10, backgroundColor: '#FFFFFF', marginLeft: 15, marginRight: 15, borderRadius: 10, fontSize: 14 }}>
                 <View>
-                        {selectedOption === "foodDelivery" && (
-                            <>
-                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                    {selectedOption === "foodDelivery" && (
+                        <>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:6}}> Food Delivery at Door-step</Text>
-                                </View>
-                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 6 }}> Food Delivery at Door-step</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:10}}>Free Delivery</Text>
-                                </View>
-                               <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
-                               <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:10}}>Hygienically Packed boxes</Text>
-                               </View>
-                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 10 }}>Free Delivery</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' , paddingLeft:7}}> Freshly Cooked Food</Text>
-                                </View>
-                            </>
-                        )}
-                   
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 10 }}>Hygienically Packed boxes</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 7 }}> Freshly Cooked Food</Text>
+                            </View>
+                        </>
+                    )}
+
                 </View>
                 <View>
-                        {selectedOption === "liveCatering" && (
-                            <>
-                             <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                    {selectedOption === "liveCatering" && (
+                        <>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:1}}>  Well Groomed Waiters (2 Nos)</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 1 }}>  Well Groomed Waiters (2 Nos)</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
                                 <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 4, flex: 1, flexWrap: 'wrap' }}> Bone-china Crockery & Quality disposal for loose items.</Text>
-                                </View>
-                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:6}}>Transport (to & fro)</Text>
-                                </View>
-                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 6 }}>Transport (to & fro)</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:8}}>Dustbin with Garbage bag</Text>
-                                </View>
-                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 8 }}>Dustbin with Garbage bag</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:4}}> Head Mask for waiters & chefs</Text>
-                                </View>
-                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 4 }}> Head Mask for waiters & chefs</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:7}}>Tandoor/Other cooking Utensiles</Text>
-                                </View>
-                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 7 }}>Tandoor/Other cooking Utensiles</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:8}}>Chafing Dish</Text>
-                                </View>
-                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 8 }}>Chafing Dish</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:8}}>Cocktail Napkins</Text>
-                                </View>
-                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 8 }}>Cocktail Napkins</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:8}}>2 Chef</Text>
-                                </View>
-                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 8 }}>2 Chef</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:9}}>Water Can (Bisleri)(20 litres)</Text>
-                                </View>
-                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"100%" }}>
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 9 }}>Water Can (Bisleri)(20 litres)</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
                                 <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:9}}>Hand gloves</Text>
-                                </View>
-                                <View style={{flexDirection:"row" , justifyContent:"flex-start" , alignItems:"center" , width:"90%" }}>
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 9 }}>Hand gloves</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "90%" }}>
                                 <Image source={require('../../assets/exclusion.jpg')} style={{ height: 16, width: 16 }} />
-                                <Text style={{color: '#9252AA', fontWeight: '700' ,  paddingLeft:7 ,  flex: 1, flexWrap: 'wrap'}}>Exclusion: Buffet table/kitchen table is in client scope (can be provided at additional cost)</Text>
-                                </View>
-                            </>
-                        )}
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 7, flex: 1, flexWrap: 'wrap' }}>Exclusion: Buffet table/kitchen table is in client scope (can be provided at additional cost)</Text>
+                            </View>
+                        </>
+                    )}
                 </View>
             </View>
         );
@@ -294,12 +294,12 @@ const SelectDateFoodDelivery = ({
                         contentContainerStyle={{ paddingBottom: 2 }} // Adjust paddingBottom as needed
                     />
                 </ScrollView>
-               
-                <View style={{ alignItems: 'center', flexDirection: 'row', paddingVertical: 5, borderRadius: 10, marginRight: 12, paddingLeft: 9, marginTop: 15, borderRadius: 10, backgroundColor: '#F9E9FF' }}>
-                        <Image source={require('../../assets/info.png')} style={{ height: 13, width: 13 }} />
-                        <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 11 }}>Complementary: Green Salad, Mint Chutney, and Achar</Text>
 
-                    </View>
+                <View style={{ alignItems: 'center', flexDirection: 'row', paddingVertical: 5, borderRadius: 10, marginRight: 12, paddingLeft: 9, marginTop: 15, borderRadius: 10, backgroundColor: '#F9E9FF' }}>
+                    <Image source={require('../../assets/info.png')} style={{ height: 13, width: 13 }} />
+                    <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 11 }}>Complementary: Green Salad, Mint Chutney, and Achar</Text>
+
+                </View>
             </View>
 
         );
@@ -312,7 +312,7 @@ const SelectDateFoodDelivery = ({
             navigation.navigate("ConfirmFoodDeliveryOrder", {
                 "selectedDate": selectedDate, "selectedTime": selectedTime, "peopleCount": peopleCount,
                 "selectedDeliveryOption": selectedOption,
-                "selectedDishes": data, "items": route.params.selectedDishes, 
+                "selectedDishes": data, "items": route.params.selectedDishes,
                 "selectedDishQuantities": selectedDishQuantities
             });
         }
@@ -446,12 +446,12 @@ const SelectDateFoodDelivery = ({
                             <TextInput
                                 style={{
                                     marginLeft: 5,
-                                    paddingVertical: 3, // Adjust the padding to your preference
+                                    paddingVertical: 3,
                                     paddingHorizontal: 10,
                                     fontSize: 16,
                                     width: 40,
                                     textAlign: 'center',
-                                    textAlignVertical: 'center', // Center the text vertically
+                                    textAlignVertical: 'center',
                                     color: 'black',
                                     borderWidth: 1,
                                     borderColor: 'gray',
@@ -460,22 +460,20 @@ const SelectDateFoodDelivery = ({
                                 value={String(peopleCount)}
                                 onChangeText={(e) => {
                                     const parsedValue = parseInt(e);
-                                    if (!isNaN(parsedValue)) {
+                                    if (!isNaN(parsedValue) && parsedValue >= 10) { // Ensure value is numeric and at least 10
                                         setPeopleCount(parsedValue);
                                     } else {
-                                        setPeopleCount(0);
+                                        setPeopleCount(10); // Set to 10 if less than 10 or non-numeric input
                                     }
                                 }}
                                 keyboardType="numeric"
-                                
+                                editable={peopleCount >= 10} // Disable if peopleCount is less than 10
                             />
-
                             <TouchableOpacity onPress={increasePeopleCount} activeOpacity={1}>
                                 <Image source={require('../../assets/plus.png')} style={{ height: 20, width: 20, marginLeft: 5 }} />
                             </TouchableOpacity>
-
-
                         </View>
+
                     </View>
                 </View>
 
@@ -561,7 +559,7 @@ const SelectDateFoodDelivery = ({
                         </View>
                         <View>
                             <Text style={{ fontSize: 11, color: '#9252AA', fontWeight: '400', marginLeft: 4, lineHeight: 15 }}>
-                            Dish quantities vary based on guest count and selections. Over 5 dishes: 550-700g per person. Under 5 dishes: 100g per person per dish
+                                Dish quantities vary based on guest count and selections. Over 5 dishes: 550-700g per person. Under 5 dishes: 100g per person per dish
                             </Text>
                         </View>
                     </View>
@@ -569,7 +567,7 @@ const SelectDateFoodDelivery = ({
             </ScrollView>
 
 
-          
+
 
             <View style={{ paddingHorizontal: 16, justifyContent: 'space-between' }}>
 

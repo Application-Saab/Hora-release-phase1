@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Button, Linking, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert, Linking  } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OrderDetailsSection from '../../components/orderDetailsSection';
 import { ScrollView, TextInput, TouchableOpacity, TouchableHighlight, ImageBackground, KeyboardAvoidingView } from 'react-native';
@@ -181,9 +181,29 @@ const OrderDetails = ({ navigation, route }) => {
     }
 
     async function cancelOrder() {
+        // Show confirmation prompt
+        Alert.alert(
+            "Confirm",
+            "Are you sure you want to cancel this order?",
+            [
+                {
+                    text: "No",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                {
+                    text: "Yes",
+                    onPress: () => performCancelOrder()
+                }
+            ],
+            { cancelable: false }
+        );
+    }
+    
+    async function performCancelOrder() {
         try {
             const token = await AsyncStorage.getItem("token");
-
+    
             const response = await fetch(BASE_URL + ORDER_CANCEL, {
                 method: 'POST',
                 headers: {
@@ -195,7 +215,7 @@ const OrderDetails = ({ navigation, route }) => {
                     Authorisation: token
                 })
             }); // Replace with your API endpoint for updating user profile
-
+    
             // Handle success response
             navigation.navigate("OrderList");
         } catch (error) {
@@ -259,40 +279,58 @@ const OrderDetails = ({ navigation, route }) => {
                             : orderType === 7 ? (
                                 <View style={styles.tabSec}>
                                     {<OrderDetailsFoodMenu OrderMenu={orderMenu} OrderType={orderType} NoOfPeople={peopleCount} />}
-                                    <View style={{ backgroundColor: "#fff", marginTop: 7 }}>
+                                    <View style={{ backgroundColor: "#fff", marginTop: 7  , padding:10 , flexWrap:"wrap" }}>
                                         <Text style={{ color: '#9252AA', fontWeight: '700', marginLeft: 5, fontSize: 12 }}>
-                                            <>
-                                                Water {peopleCount * water} bottles
-                                                {"\n"}
-                                                Inclusion:
-                                                {"\n"}
-                                                - Well Groomed Waiters (2 Nos)
-                                                {"\n"}
-                                                - Bone-china Crockery & Quality disposal for loose items.
-                                                {"\n"}
-                                                - Transport (to & fro)
-                                                {"\n"}
-                                                - Dustbin with Garbage bag
-                                                {"\n"}
-                                                - Head Mask for waiters & chefs
-                                                {"\n"}
-                                                - Tandoor/Other cooking Utensiles
-                                                {"\n"}
-                                                - Chafing Dish
-                                                {"\n"}
-                                                - Cocktail Napkins
-                                                {"\n"}
-                                                - 2 Chef
-                                                {"\n"}
-                                                - Water Can (Bisleri)(20 litres)
-                                                {"\n"}
-                                                - Hand gloves
-                                                {"\n"}
-                                                Exclusion:
-                                                {"\n"}
-                                                - Buffet table/kitchen table is in client scope (can be provided at additional cost)
-
-                                            </>
+                                        <View style={{ width: '100%' }}>
+                                           <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 1 }}>  Well Groomed Waiters (2 Nos)</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", alignItems: "center", width: "90%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 4, flex: 1, flexWrap: 'wrap' }}> Bone-china Crockery & Quality disposal for loose items.</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 6 }}>Transport (to & fro)</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 8 }}>Dustbin with Garbage bag</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 4 }}> Head Mask for waiters & chefs</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 7 }}>Tandoor/Other cooking Utensiles</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 8 }}>Chafing Dish</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 8 }}>Cocktail Napkins</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 8 }}>2 Chef</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 9 }}>Water Can (Bisleri)(20 litres)</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%" }}>
+                                <Image source={require('../../assets/tick.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 9 }}>Hand gloves</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "90%" }}>
+                                <Image source={require('../../assets/exclusion.jpg')} style={{ height: 16, width: 16 }} />
+                                <Text style={{ color: '#9252AA', fontWeight: '700', paddingLeft: 7, flex: 1, flexWrap: 'wrap' }}>Exclusion: Buffet table/kitchen table is in client scope (can be provided at additional cost)</Text>
+                            </View>
+                                           </View>
                                         </Text>
                                     </View>
                                 </View>
