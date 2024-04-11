@@ -217,9 +217,6 @@ const ProductDateSummary = ({ route, navigation }) => {
             {
                 addressID = element._id;
                 setAddId(addressID);
-
-
-            
             }
         });
 
@@ -343,40 +340,18 @@ const ProductDateSummary = ({ route, navigation }) => {
       }
 	  
 	  const onContinueClick = async () => {
-        
         if (i === 0)
         {
             setWarningVisible(true);
         }
         else
         {
-            
-            const apiUrl = BASE_URL + PAYMENT;
-            
-        
+        const apiUrl = BASE_URL + PAYMENT;
         const storedUserID = await AsyncStorage.getItem("userID");
         
         const phoneNumber = await AsyncStorage.getItem('mobileNumber')
         
         const randomInteger = Math.floor(getRandomNumber(1,1000000000000)) + Math.floor(getRandomNumber(1,1000000000000)) + Math.floor(getRandomNumber(1,1000000000000));
-
-																	
-								 
-									  
-													
-								   
-								   
-															
-			  
-
-
-				 
-																		
-							  
-																						
-					  
-				   
-
         let merchantTransactionId = randomInteger
         const requestData = {
         user_id: storedUserID,
@@ -385,9 +360,6 @@ const ProductDateSummary = ({ route, navigation }) => {
         name: storedUserID,
         merchantTransactionId: merchantTransactionId
         };
-
-        
-        
     try {
         
         const response = await axios.post(apiUrl, requestData, {
@@ -426,17 +398,7 @@ const ProductDateSummary = ({ route, navigation }) => {
     const changeLocation = async () => {
         try {
           let address = await AsyncStorage.getItem("Address");
-      
-
-																 
-															 
-															  
-																
-
-																						
-
-
-          const locality = completeAddress[4]?.long_name || "";
+      const locality = completeAddress[4]?.long_name || "";
           const city = completeAddress[5]?.long_name || "";
           const state = completeAddress[7]?.long_name || "";
           const pincode = completeAddress[9]?.long_name || "";
@@ -711,9 +673,7 @@ const ProductDateSummary = ({ route, navigation }) => {
                 <TouchableOpacity onPress={onContinueClick} style={styles.continueButton} activeOpacity={1}>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 16 }}>
                         <Text style={styles.buttonText1}>Confirm Order</Text>
-
                     </View>
-
                 </TouchableOpacity>
             </View>
         </View>
