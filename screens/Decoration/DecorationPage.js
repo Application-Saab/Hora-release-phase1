@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     width: '48%', // Set to 48% width to fit two items in a row
     aspectRatio: 1, // Maintain the aspect ratio of the images
     textAlign: 'center',
+    marginBottom:6,
   },
   decCatimage: {
     width: '100%', // Set to 100% width

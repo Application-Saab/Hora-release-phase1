@@ -429,41 +429,12 @@ const HospitalityService = ({navigation}) => {
               authorization: token,
             },
           });}
-						
-									 
-								 
-								 
-															   
-								
-								   
-												
-									  
-												  
-							
-								 
-						  
-				
-			  
-																
-
-  
               if ((responseWaiter.status !== undefined && responseWaiter.status === API_SUCCESS_CODE) || (responseBartender.status !== undefined && responseBartender.status === API_SUCCESS_CODE) ||  (responseCleaner.status !== undefined &&  responseCleaner.status === API_SUCCESS_CODE))
-													 
-									   
-				  
-				 
-
-				  
-										 
-											 
-															  
+												  
                {
                 
                 navigation.navigate('ConfirmOrder');
               }
-			 
-		   
-		 
       }
     } catch (error) {
       console.log('Error Confirming Order:', error.message);
@@ -647,7 +618,7 @@ const HospitalityService = ({navigation}) => {
 
   const checkIsTimeValid = (selectedTime, type) => {
     const isTimeBetweenRange =
-      selectedTime.getHours() >= 7 && selectedTime.getHours() <= 22;
+      selectedTime.getHours() >= 7 && selectedTime.getHours() <= 20;
 
     if (type === 1) {
       setTimeValidWaiter(isTimeBetweenRange);
@@ -676,7 +647,7 @@ const HospitalityService = ({navigation}) => {
         return;
       } else if (!isTimeValid) {
         setErrorTextWaiter(
-          '*Order can be placed only between 7:00 AM to 10:00 PM',
+          '*Order can be placed only between 7:00 AM to 8:00 PM',
         );
         return;
       } else {
@@ -704,7 +675,7 @@ const HospitalityService = ({navigation}) => {
         return;
       } else if (!isTimeValid) {
         setErrorTextBartender(
-          '*Order can be placed only between 7:00 AM to 10:00 PM',
+          '*Order can be placed only between 7:00 AM to 8:00 PM',
         );
         return;
       } else {
@@ -732,7 +703,7 @@ const HospitalityService = ({navigation}) => {
         return;
       } else if (!isTimeValid) {
         setErrorTextCleaner(
-          '*Order can be placed only between 7:00 AM to 10:00 PM',
+          '*Order can be placed only between 7:00 AM to 8:00 PM',
         );
         return;
       } else {
@@ -758,7 +729,7 @@ const HospitalityService = ({navigation}) => {
         return;
       } else if (!isTimeValid) {
         setErrorTextWaiter(
-          '*Order can be placed only between 7:00 AM to 10:00 PM',
+          '*Order can be placed only between 7:00 AM to 8:00 PM',
         );
         return;
       } else {
@@ -785,7 +756,7 @@ const HospitalityService = ({navigation}) => {
         return;
       } else if (!isTimeValid) {
         setErrorTextBartender(
-          '*Order can be placed only between 7:00 AM to 10:00 PM',
+          '*Order can be placed only between 7:00 AM to 8:00 PM',
         );
         return;
       } else {
@@ -812,7 +783,7 @@ const HospitalityService = ({navigation}) => {
         return;
       } else if (!isTimeValid) {
         setErrorTextCleaner(
-          '*Order can be placed only between 7:00 AM to 10:00 PM',
+          '*Order can be placed only between 7:00 AM to 8:00 PM',
         );
         return;
       } else {
@@ -1739,18 +1710,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
-  continueButton: {
-				  
+  continueButton: {	  
     backgroundColor: 'gray',
     marginBottom: 30,
-						 
-									
-						 
-					
-				   
-						
-    borderRadius: 20,
+		 borderRadius: 20,
     marginTop:10,
+  },
+  itemPrice:{
+    color:"#444",
   },
   buttonContent: {
     flexDirection: 'row',

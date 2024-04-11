@@ -166,11 +166,12 @@ const OrderDetails = ({ navigation, route }) => {
 
     }
 
+
     const getItemInclusion = (inclusion) => {
         const htmlString = inclusion[0];
-        const withoutDivTags = htmlString.replace(/<\/?div>/g, '');
-        const withoutBrTags = withoutDivTags.replace(/<\/?br>/g, '');
-        const statements = withoutBrTags.split('<div>');
+        const withoutTags = htmlString.replace(/<[^>]*>/g, ''); // Remove HTML tags
+        const withoutSpecialChars = withoutTags.replace(/&#[^;]*;/g, ' '); // Replace &# sequences with space
+        const statements = withoutSpecialChars.split('<div>');
         const bulletedList = statements
             .filter(statement => statement.trim() !== '')
             .map(statement => `- ${statement.trim()}`);

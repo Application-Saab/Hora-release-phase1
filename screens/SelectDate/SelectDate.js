@@ -40,36 +40,36 @@ const SelectDate = ({ navigation, route }) => {
 
     const isAppliancesSelected = selectedTab === 'Appliances';
     const isIngredientsSelected = selectedTab === 'Ingredients';
-	let count = 0;
+    let count = 0;
 
-    useEffect(() =>{
+    useEffect(() => {
         AsyncStorage.getItem("selectedDate").then((sDate) => {
             if (sDate != null) {
-              setSelectedDate(new Date(sDate));
+                setSelectedDate(new Date(sDate));
             }
-          });
-          AsyncStorage.getItem("selectedTime").then((sTime) => {
+        });
+        AsyncStorage.getItem("selectedTime").then((sTime) => {
             if (sTime != null) {
-             
-              setSelectedTime(new Date(sTime));
+
+                setSelectedTime(new Date(sTime));
             }
-         });
-    },[])
+        });
+    }, [])
 
     useEffect(() => {
         const isDateValid = checkIsDateValid();
-            const isTimeValid = checkIsTimeValid();
+        const isTimeValid = checkIsTimeValid();
 
-            if (!isTimeValid) {
-                setErrorText('*Order can be placed only between 8:00 AM to 10:00 PM');
-                return;
-            } 
-            else if (!isDateValid) {
-                setErrorText('Order can be placed at least 24 hours in advance.');
-                return;
-            } else{
-                setErrorText(null);
-            }
+        if (!isTimeValid) {
+            setErrorText('*Order can be placed only between 8:00 AM to 10:00 PM');
+            return;
+        }
+        else if (!isDateValid) {
+            setErrorText('Order can be placed at least 24 hours in advance.');
+            return;
+        } else {
+            setErrorText(null);
+        }
     }, [selectedTime, selectedDate])
 
 
@@ -84,7 +84,7 @@ const SelectDate = ({ navigation, route }) => {
     }
 
     const checkIsTimeValid = () => {
-        const isTimeBetweenRange = selectedTime.getHours() >= 7 && selectedTime.getHours() <= 22;
+        const isTimeBetweenRange = selectedTime.getHours() >= 8 && selectedTime.getHours() < 22;
         setTimeValid(isTimeBetweenRange);
         return isTimeBetweenRange
     }
@@ -125,19 +125,19 @@ const SelectDate = ({ navigation, route }) => {
             setSelectedDate(date);
             setShowDatePicker(false);
 
-												   
-												   
 
-							   
-																				  
-					   
-			 
-									
-																					  
-					   
-					
-								   
-			 
+
+
+
+
+
+
+
+
+
+
+
+
         }
     };
 
@@ -147,18 +147,18 @@ const SelectDate = ({ navigation, route }) => {
             setSelectedTime(time);
             setShowTimePicker(false);
 
-												   
-												   
 
-							   
-																				  
-					   
-									  
-																					  
-					   
-					
-								   
-			 
+
+
+
+
+
+
+
+
+
+
+
         }
     };
 
@@ -182,36 +182,28 @@ const SelectDate = ({ navigation, route }) => {
 
         let quantity = item.qty * peopleCount;
 
-        if (item.count == 4)
-        {
+        if (item.count == 4) {
             quantity = quantity * 0.7
         }
-        else if (item.count == 5)
-        {
+        else if (item.count == 5) {
             quantity = quantity * 0.6
         }
-        else if (item.count == 6)
-        {
+        else if (item.count == 6) {
             quantity = quantity * 0.5
         }
-        else if (item.count == 7)
-        {
+        else if (item.count == 7) {
             quantity = quantity * 0.4
         }
-        else if (item.count == 8)
-        {
+        else if (item.count == 8) {
             quantity = quantity * 0.35
         }
-        else if (item.count == 9)
-        {
+        else if (item.count == 9) {
             quantity = quantity * 0.3
         }
-        else if (item.count == 10)
-        {
+        else if (item.count == 10) {
             quantity = quantity * 0.28
         }
-        else if (item.count == 11)
-        {
+        else if (item.count == 11) {
             quantity = quantity * 0.25
         }
 
@@ -225,7 +217,7 @@ const SelectDate = ({ navigation, route }) => {
                 unit = 'L'
         }
         return (
-            <View style={{ width:"46%",height: 55, paddingEnd: 2, alignItems: 'center', borderRadius: 5, borderColor: '#DADADA', borderWidth: 0.5, flexDirection: 'row', marginRight: 15, marginBottom: 8 }}>
+            <View style={{ width: "46%", height: 55, paddingEnd: 2, alignItems: 'center', borderRadius: 5, borderColor: '#DADADA', borderWidth: 0.5, flexDirection: 'row', marginRight: 15, marginBottom: 8 }}>
                 <View style={{ marginLeft: 5, width: 40, height: 40, backgroundColor: '#F0F0F0', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 5 }}>
                     <Image source={{ uri: `https://horaservices.com/api/uploads/${item.image}` }} style={{ width: 31, height: 24 }} />
                 </View>
@@ -332,14 +324,14 @@ const SelectDate = ({ navigation, route }) => {
     const RightTabContent = ({ ingredientList }) => {
         return (
             <ScrollView>
-                 <View style={{ paddingHorizontal: 15, flexDirection: 'column', marginLeft: 16, marginEnd: 20, borderWidth: 1, elevation: 1, backgroundColor: 'white', borderBottomRightRadius: 15, borderBottomLeftRadius: 15, borderColor: 'white', paddingBottom: 10 }}>
+                <View style={{ paddingHorizontal: 15, flexDirection: 'column', marginLeft: 16, marginEnd: 20, borderWidth: 1, elevation: 1, backgroundColor: 'white', borderBottomRightRadius: 15, borderBottomLeftRadius: 15, borderColor: 'white', paddingBottom: 10 }}>
                     <View style={{ flexDirection: 'column' }}>
                         <Text style={{ color: '#000000', fontSize: 13, fontWeight: '600', marginTop: 20 }}>Required Ingredient</Text>
                         <Text style={{ color: '#969696', fontSize: 11, fontWeight: '500', marginTop: 6 }}>(Keep these ingredient ready at your location)</Text>
 
                     </View>
 
-                   <ScrollView style={{ flexDirection: 'column', marginTop: 15 }}>
+                    <ScrollView style={{ flexDirection: 'column', marginTop: 15 }}>
                         <FlatList
                             data={ingredientList}
                             keyExtractor={item => item.id}
@@ -387,7 +379,7 @@ const SelectDate = ({ navigation, route }) => {
                             count: 0
                         };
 
-                        
+
                     }
                     totalIngredients[ingredient._id].qty += parseInt(ingredient.qty);
                     totalIngredients[ingredient._id].count += 1
@@ -398,16 +390,16 @@ const SelectDate = ({ navigation, route }) => {
                 });
             }
 
-		// 	if (count === 0){
-        // Object.values(totalIngredients).map(item => {
-            
-        //         item.qty = item.qty * peopleCount;
-        //         count = 1
-            
-        // })}
+            // 	if (count === 0){
+            // Object.values(totalIngredients).map(item => {
+
+            //         item.qty = item.qty * peopleCount;
+            //         count = 1
+
+            // })}
         }
 
-      
+
         return Object.values(totalIngredients);
     };
 
@@ -424,12 +416,12 @@ const SelectDate = ({ navigation, route }) => {
         }
 
         if (totalBurnerCount <= 6)
-        return 2;
-    else if (totalBurnerCount > 6 && totalBurnerCount < 10)
-        return 3;
-    else if (totalBurnerCount > 10)
-        return 4;
-};
+            return 2;
+        else if (totalBurnerCount > 6 && totalBurnerCount < 10)
+            return 3;
+        else if (totalBurnerCount > 10)
+            return 4;
+    };
 
 
 
@@ -503,7 +495,7 @@ const SelectDate = ({ navigation, route }) => {
             navigation.navigate("ConfirmDishOrder", {
                 "selectedDate": selectedDate, "selectedTime": selectedTime, "peopleCount": peopleCount,
                 "burnerCount": burnerCount,
-                "selectedDishes": data, "items":route.params.selectedDishes
+                "selectedDishes": data, "items": route.params.selectedDishes
 
             })
         }
@@ -574,49 +566,47 @@ const SelectDate = ({ navigation, route }) => {
 
             <ScrollView>
 
-                <View style={{ justifyContent: 'space-between', marginTop: 17, paddingTop: 7, paddingBottom: 9, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10, height: 195, elevation: 2 }}>
+                <View style={{ justifyContent: 'space-between', marginTop: 17, paddingTop: 7, paddingBottom: 9, backgroundColor: '#FFFFFF', marginLeft: 15, marginEnd: 16, borderRadius: 10}}>
                     <View style={{ justifyContent: 'flex-end', flex: 1, flexDirection: 'row', marginEnd: 9 }}>
                         <TouchableOpacity onPress={toggleModal}>
-
-                            <Image source={require('../../assets/info.png')} style={{ height: 16, width: 16 }} />
-
+                            <Image source={require('../../assets/info.png')} style={{ height: 16, width: 16 , marginBottom:10}} />
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flexDirection: 'row'  , justifyContent:"space-between" , paddingHorizontal:"2%"  }}>
-					<View style={{flexDirection:"row"}}>
-															
-                        <TouchableOpacity onPress={() => setShowDatePicker(true)} activeOpacity={1}>
+                    <View style={{ flexDirection: 'row', justifyContent: "space-between", paddingRight: "5%", paddingLeft: "1%" }}>
+                        <View style={{ flexDirection: "row" }}>
 
-                            <View style={{ marginStart: 10, marginEnd: 8, flexDirection: 'column', paddingHorizontal: 17, backgroundColor: 'white', borderColor: isDateValid != null && isDateValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
-                                <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Booking Date</Text>
-                               <View style={{ flexDirection: 'row', marginTop: 1 , width:Dimensions.get('window').width*0.3}}>
+                            <TouchableOpacity onPress={() => setShowDatePicker(true)} activeOpacity={1}>
 
-                                    <Text style={{ fontSize: 16, fontWeight: 600, color: isDatePressed ? '#383838' : "grey" }}>{selectedDate.toLocaleDateString()}</Text>
+                                <View style={{ marginStart: 10, marginEnd: 8, flexDirection: 'column', paddingHorizontal: 17, backgroundColor: 'white', borderColor: isDateValid != null && isDateValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
+                                    <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Booking Date</Text>
+                                    <View style={{ flexDirection: 'row', marginTop: 1, width: Dimensions.get('window').width * 0.3 }}>
 
-                                    <Image source={require('../../assets/ic_calendar.png')} style={{ height: 19, width: 19, marginLeft: 17 }} />
-                                    {showDatePicker && (
-                                        <DateTimePicker
-                                            value={selectedDate}
-                                            mode="date"
-                                            display="default"
-                                            minimumDate={minimumDate}
-                                            onChange={handleDateChange}
-                                        />
-                                    )}
+                                        <Text style={{ fontSize: 16, fontWeight: 600, color: isDatePressed ? '#383838' : "grey" }}>{selectedDate.toLocaleDateString()}</Text>
+
+                                        <Image source={require('../../assets/ic_calendar.png')} style={{ height: 19, width: 19, marginLeft: 17 }} />
+                                        {showDatePicker && (
+                                            <DateTimePicker
+                                                value={selectedDate}
+                                                mode="date"
+                                                display="default"
+                                                minimumDate={minimumDate}
+                                                onChange={handleDateChange}
+                                            />
+                                        )}
+                                    </View>
                                 </View>
-                            </View>
-                        </TouchableOpacity>
-						</View>
-							   
-					   
+                            </TouchableOpacity>
+                        </View>
+
+
                         <View style={{ flexDirection: 'row' }}>
                             <TouchableOpacity onPress={() => setShowTimePicker(true)} activeOpacity={1}>
                                 <View style={{ flexDirection: 'column', paddingHorizontal: 21, backgroundColor: 'white', borderColor: isTimeValid != null && isTimeValid == false ? '#FF3636' : "#F6ECEC", borderRadius: 10, borderWidth: 1, paddingBottom: 9 }}>
                                     <Text style={{ paddingTop: 4, color: '#9252AA', fontWeight: '500', fontSize: 10 }}>Chef Arrival Time</Text>
-                                     <View style={{ flexDirection: 'row', marginTop: 1 , width:Dimensions.get('window').width*0.3}}>
+                                    <View style={{ flexDirection: 'row', marginTop: 1, width: Dimensions.get('window').width * 0.3 }}>
 
                                         <Text style={{ fontSize: 16, fontWeight: 600, color: isTimePressed ? '#383838' : "grey" }}>
-                                        {selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            {selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                         </Text>
                                         <Image source={require('../../assets/clock.png')} style={{ height: 19, width: 19, marginLeft: 17 }} />
                                         {showTimePicker && (
@@ -642,11 +632,11 @@ const SelectDate = ({ navigation, route }) => {
                         <Image style={styles.verticalSeparator} source={require('../../assets/verticalSeparator.png')}></Image>
                     </View>
 
-                   <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 13, alignItems: 'center', marginLeft: 16 }}>
-                       <View style={{justifyContent:"center", alignItems:"center" , flexDirection:"row"}}>
-                       <Image source={require('../../assets/people.png')} style={{ height: 25, width: 25 }} />
-                        <Text style={{ marginLeft: 9, fontSize: 12, color: '#3C3C3E', fontWeight: '500', }}>How many people you are hosting?</Text>
-                       </View>
+                    <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', marginTop: 10, alignItems: 'center', marginLeft: 16 , marginBottom:1 }}>
+                        <View style={{ justifyContent: "center", alignItems: "center", flexDirection: "row"  , marginBottom:5}}>
+                            <Image source={require('../../assets/people.png')} style={{ height: 25, width: 25 }} />
+                            <Text style={{ marginLeft: 9, fontSize: 12, color: '#3C3C3E', fontWeight: '500', }}>How many people you are hosting?</Text>
+                        </View>
                         <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-end', marginRight: 9 }}>
                             <TouchableOpacity onPress={decreasePeopleCount} activeOpacity={1}>
                                 <Image source={require('../../assets/ic_minus.png')} style={{ height: 25, width: 25, marginLeft: 5 }} />
@@ -684,7 +674,7 @@ const SelectDate = ({ navigation, route }) => {
                     <Text style={{ color: '#707070', fontSize: 12, fontWeight: '400' }} >Keep these Appliances and Ingredients ready before chef Arrival</Text>
                 </View>
 
-                <View style={{ flexDirection: 'row', marginTop: 20, marginHorizontal: 16}}>
+                <View style={{ flexDirection: 'row', marginTop: 20, marginHorizontal: 16 }}>
                     <TouchableOpacity style={{
                         backgroundColor: activeTab === 'left'
                             ? "#D9D9D9"
@@ -702,38 +692,13 @@ const SelectDate = ({ navigation, route }) => {
                 </View>
 
                 {renderTabContent()}
-
-
             </ScrollView>
-            <View>
-                {getTotalCookingTime() > 0.0 && showCookingTime && (
-                    <View style={{ justifyContent:"space-between", alignItems:"center", flexDirection:"row" ,  borderColor: "#F39200", borderWidth: 0.5, borderRadius: 5, backgroundColor: "#FFE3B9", marginHorizontal: 16, flexDirection: 'row', alignItems: 'center', marginTop: 5  , paddingRight:10 ,marginTop:10}}>
-                        <View style={{ justifyContent:"space-between", alignItems:"center", flexDirection:"row" , borderRadius: 5, backgroundColor: "#FFE3B9", marginRight: 16, flexDirection: 'row', alignItems: 'center', marginTop: 5 , width:"80%"}}>
-																																																																																																												
-                        <Image source={require('../../assets/orderIcon.png')} style={{ height: 28, width: 30, marginStart: 5, marginTop: 5, marginBottom: 7 }} />
-                        <Text style={{ marginStart: 9, color: '#606060', fontSize: 13, fontWeight: '400' }} >Expected cooking time of your food</Text>
-
-                        <View style={{ marginStart: 5, backgroundColor: "#FFD1B7", borderRadius: 7, justifyContent: 'center', padding: 6 }}>
-                            <Text style={{ color: '#5F5C59', fontWeight: '700', fontSize: 13 }}>
-                                {getTotalCookingTime()} Hrs
-                            </Text>
-                        </View>
-
-							   
-							  
-                        </View>
-                        <View>
-                        <TouchableOpacity style={{ marginStart: 7 }} onPress={toggleCookingTimeVisibility} activeOpacity={1}>
-                            <Image source={require('../../assets/icCross.png')} style={{ height: 12, width: 12 }} />
-                        </TouchableOpacity>
-						</View>
-							   
-					   
-                    </View>
-
-                )}
+            <View style={{ justifyContent: "space-between", alignItems: "center", flexDirection: "row", borderColor: "#F39200", borderWidth: 0.5, borderRadius: 5, backgroundColor: "#FFE3B9", marginHorizontal: 16, flexDirection: 'row', alignItems: 'center', marginTop: 5, paddingRight: 10, marginTop: 10 }}>
+                <View style={{ justifyContent: "space-between", alignItems: "center", flexDirection: "row", borderRadius: 5, backgroundColor: "#FFE3B9", marginRight: 16, flexDirection: 'row', alignItems: 'center', marginTop: 5, width: "90%" }}>
+                    <Image source={require('../../assets/orderIcon.png')} style={{ height: 28, width: 30, marginStart: 5, marginTop: 5, marginBottom: 7 }} />
+                    <Text style={{ marginStart: 9, color: '#606060', fontSize: 13, fontWeight: '400' }} >Chef completes the cooking in 5 hours. Each extra hour costs Rs. 450.</Text>
+                </View>
             </View>
-
             <View style={{ paddingHorizontal: 16, justifyContent: 'space-between' }}>
 
                 <TouchableHighlight

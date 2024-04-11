@@ -438,7 +438,7 @@ const ProductDateSummary = ({ route, navigation }) => {
     }
 
     const checkIsTimeValid = () => {
-        const isTimeBetweenRange = selectedTime.getHours() >= 8 && selectedTime.getHours() <= 22;
+        const isTimeBetweenRange = selectedTime.getHours() >= 8 && selectedTime.getHours() < 22;
         setTimeValid(isTimeBetweenRange);
         return isTimeBetweenRange
     }

@@ -230,15 +230,12 @@ const ConfirmDishOrder = ({ navigation, route }) => {
 
     const renderDishItem = ({ item }) => {
         return (
-            <View style={{ flexDirection: 'row', marginRight: 5, width: 150, borderRadius: 8, borderColor: '#B8B8B8', borderWidth: 1, backgroundColor: '#FFF', paddingBottom: 5 }}>
+            <View style={{ paddingHorizontal:5 , marginStart:10 , paddingVertical:5 , flexDirection: 'row', width: 150, borderRadius: 8, borderColor: '#B8B8B8', borderWidth: 1, backgroundColor: '#FFF', paddingBottom: 5 , justifyContent:"flex-start" , alignItems:"center"}}>
                 <Image source={{ uri: `https://horaservices.com/api/uploads/${item.image}` }}
-                    style={{ width: 41, height: 42, borderRadius: 20, marginBottom: 9, marginTop: 9, marginStart: 9 }} />
-                <View style={{ flexDirection: 'column', alignContent: 'flex-end' , paddingRight:7 }}>
-                    <Text  style={{ alignItems: 'flex-end', width: "70%", marginLeft: 7, color: '#414141', fontSize: 11, fontWeight: '500', opacity: 0.9, marginTop: 10 }}>{item.name}</Text>
-                    <Text style={{ width: 45, marginTop: 2, color: '#9252AA', fontSize: 11, fontWeight: '700', textAlign: 'center' }}>₹ {item.price}</Text>
+                    style={{ width: 39, height: 39, borderRadius: 20 , marginRight:8 }} />
+                <View style={{ flexDirection: 'column', alignContent: 'flex-end'  }}>
+                    <Text  style={{ alignItems: 'flex-end', width: "93%", color: '#414141', fontSize: 11, fontWeight: '500', opacity: 0.9}}>{item.name}</Text>
                 </View>
-
-
             </View>
         )
 
@@ -587,7 +584,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
 						
                     </View>
 
-                    <View style={{ marginTop: 10, marginHorizontal: 15, flexDirection: 'row', flex: 1 }} >
+                    <View style={{ marginTop: 10, paddingHorizontal: 15, flexDirection: 'row', justifyContent:"space-between" , alignItems:"center" }} >
                         <FlatList
                             //data={showAllItems ? selectedMealList : selectedMealList.slice(0, 3)}
                             data={selectedMealList}
