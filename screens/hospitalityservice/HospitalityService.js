@@ -254,7 +254,7 @@ const HospitalityService = ({navigation}) => {
     PhonePePaymentSDK.init(
         "PRODUCTION", // Environment (PRODUCTION or SANDBOX)
         "HORAONLINE", // Your merchant ID
-        null, // Your API key
+        "c2881f25-dc78-4aaa-a08d-d0f5c913b40d", // Your API key
         true // Enable logging if needed
     ).then(result => {
         // Handle promise, such as logging or updating state

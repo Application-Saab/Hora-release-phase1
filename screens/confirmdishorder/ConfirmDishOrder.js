@@ -12,7 +12,7 @@ import Geolocation from '@react-native-community/geolocation';
 import { getCurrentPosition } from 'react-native-geolocation-service';
 import OrderWarning from '../dialog/OrderWarning';
 import Loader from '../../components/Loader';
-import PhonePePaymentSDK from 'react-native-phonepe-pg' 
+import PhonePePaymentSDK from 'react-native-phonepe-pg'
 
 const ConfirmDishOrder = ({ navigation, route }) => {
 
@@ -152,7 +152,7 @@ const ConfirmDishOrder = ({ navigation, route }) => {
         PhonePePaymentSDK.init(
             "PRODUCTION", // Environment (PRODUCTION or SANDBOX)
             "HORAONLINE", // Your merchant ID
-            null, // Your API key
+            "c2881f25-dc78-4aaa-a08d-d0f5c913b40d", // Your API key
             true // Enable logging if needed
         ).then(result => {
             // Handle promise, such as logging or updating state

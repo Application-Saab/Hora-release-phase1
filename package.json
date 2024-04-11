@@ -34,7 +34,7 @@
     "react-native-onesignal": "^4.5.1",
     "react-native-pager-view": "^6.2.1",
     "react-native-permissions": "^3.8.4",
-    "react-native-phonepe-pg": "https://phonepe.mycloudrepo.io/public/repositories/phonepe-mobile-react-native-sdk/react-native-phonepe-pg.tgz",
+    "react-native-phonepe-pg": "https://phonepe.mycloudrepo.io/public/repositories/phonepe-mobile-react-native-sdk/releases/v2/react-native-phonepe-pg.tgz",
     "react-native-raw-bottom-sheet": "^2.2.0",
     "react-native-reanimated": "^3.5.2",
     "react-native-safe-area-context": "^4.7.0",
