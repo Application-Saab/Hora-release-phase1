@@ -22,6 +22,7 @@ import {
   CONFIRM_ORDER_ENDPOINT,
   PAYMENT,
   PAYMENT_STATUS,
+  PAYMENTSDK
 } from '../../utils/ApiConstants';
 import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
@@ -30,6 +31,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {getCurrentPosition} from 'react-native-geolocation-service';
 import OrderWarning from '../dialog/OrderWarning';
+
+import PhonePePaymentSDK from 'react-native-phonepe-pg'
 
 const HospitalityService = ({navigation}) => {
   const [addresses, setAddresses] = useState([]);
@@ -246,6 +249,21 @@ const HospitalityService = ({navigation}) => {
     Geocoder.init('AIzaSyBmHupwMPDVmKEryBTT9LlIeQITS3olFeY');
     getCurrentLocation();
   }, []);
+
+  useEffect(() => {
+    PhonePePaymentSDK.init(
+        "PRODUCTION", // Environment (PRODUCTION or SANDBOX)
+        "HORAONLINE", // Your merchant ID
+        null, // Your API key
+        true // Enable logging if needed
+    ).then(result => {
+        // Handle promise, such as logging or updating state
+        console.log("PhonePe SDK initialized successfully:", result);
+    }).catch(error => {
+        // Handle initialization error
+        console.error("PhonePe SDK initialization failed:", error);
+    });
+}, []);
 
   const getCurrentLocation = () => {
     Geolocation.getCurrentPosition(
@@ -512,7 +530,7 @@ const HospitalityService = ({navigation}) => {
       setWarningVisibleService(true);
     } else {
       const totalPrice = getTotalAmount();
-      const apiUrl = BASE_URL + PAYMENT;
+      const apiUrl = BASE_URL + PAYMENTSDK;
 
       const storedUserID = await AsyncStorage.getItem('userID');
       //const locality = await AsyncStorage.getItem("Locality");
@@ -542,16 +560,23 @@ const HospitalityService = ({navigation}) => {
         });
 
         
-        let url = response.request.responseURL;
+        console.log(response.data.checksum);
+        console.log(response.data.request);
 
-        handleConfirmOrder(merchantTransactionId);
-        Linking.openURL(url).then(supported => {
-          if (!supported) {
-            console.log(`Cannot handle URL: ${url}`);
-          } else {
-            console.log(`Opened URL: ${url}`);
-          }
-        });
+        const request = response.data.request;
+        const checksum = response.data.checksum;
+
+        PhonePePaymentSDK.startTransaction(
+            request,
+            checksum,
+            null,
+            null
+          ).then(a => {
+            console.log(JSON.stringify(a));
+            handleConfirmOrder(merchantTransactionId);
+          }).catch(error => {
+            setMessage("error:" + error.message);
+          })
       } catch (error) {
         // Handle errors
         console.error('API error:', error);

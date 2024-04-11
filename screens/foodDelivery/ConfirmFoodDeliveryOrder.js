@@ -7,11 +7,12 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import { BASE_URL, GET_CUISINE_ENDPOINT, GET_ADDRESS_LIST, API_SUCCESS_CODE, GET_MEAL_DISH_ENDPOINT, CONFIRM_ORDER_ENDPOINT, GET_ORDER_CITY_CHECK } from '../../utils/ApiConstants';
 import Geocoder from 'react-native-geocoding';
 import CustomHeader from '../../components/CustomeHeader';
-import { PAYMENT, PAYMENT_STATUS } from '../../utils/ApiConstants';
+import { PAYMENT, PAYMENT_STATUS, PAYMENTSDK } from '../../utils/ApiConstants';
 import Geolocation from '@react-native-community/geolocation';
 import { getCurrentPosition } from 'react-native-geolocation-service';
 import OrderWarning from '../dialog/OrderWarning';
 import Loader from '../../components/Loader';
+import PhonePePaymentSDK from 'react-native-phonepe-pg'
 
 const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
@@ -357,6 +358,21 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     }, []);
 
     useEffect(() => {
+        PhonePePaymentSDK.init(
+            "PRODUCTION", // Environment (PRODUCTION or SANDBOX)
+            "HORAONLINE", // Your merchant ID
+            null, // Your API key
+            true // Enable logging if needed
+        ).then(result => {
+            // Handle promise, such as logging or updating state
+            console.log("PhonePe SDK initialized successfully:", result);
+        }).catch(error => {
+            // Handle initialization error
+            console.error("PhonePe SDK initialization failed:", error);
+        });
+    }, []);
+
+    useEffect(() => {
         if (selectedDeliveryOption === "foodDelivery") {
             setType(6)
         }
@@ -663,7 +679,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
         //     setWarningVisibleForCity(true);
         // }
         else {
-            const apiUrl = BASE_URL + PAYMENT;
+            const apiUrl = BASE_URL + PAYMENTSDK;
 
             const storedUserID = await AsyncStorage.getItem("userID");
             const phoneNumber = await AsyncStorage.getItem('mobileNumber')
@@ -689,19 +705,23 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                     },
                 });
 
-                let url = response.request.responseURL;
+                console.log(response.data.checksum);
+                console.log(response.data.request);
 
-                console.log(calculateFinalTotal())
-                handleConfirmOrder(merchantTransactionId);
+                const request = response.data.request;
+                const checksum = response.data.checksum;
 
-                Linking.openURL(url)
-                    .then((supported) => {
-                        if (!supported) {
-                            console.log(`Cannot handle URL: ${url}`);
-                        } else {
-                            console.log(`Opened URL: ${url}`);
-                        }
-                    })
+                PhonePePaymentSDK.startTransaction(
+                    request,
+                    checksum,
+                    null,
+                    null
+                ).then(a => {
+                    console.log(JSON.stringify(a));
+                    handleConfirmOrder(merchantTransactionId);
+                }).catch(error => {
+                    setMessage("error:" + error.message);
+                })
 
             } catch (error) {
                 // Handle errors
