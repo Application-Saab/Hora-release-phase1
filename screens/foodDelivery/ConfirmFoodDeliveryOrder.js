@@ -19,7 +19,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     const peopleCount = route.params.peopleCount
     const selectedDate = route.params.selectedDate
     const selectedTime = route.params.selectedTime
-    const selectedDeliveryOption= route.params.selectedDeliveryOption
+    const selectedDeliveryOption = route.params.selectedDeliveryOption
     const selectedDishQuantities = route.params.selectedDishQuantities
     const selectedDishData = route.params.selectedDishes
     const [addresses, setAddresses] = useState([]);
@@ -28,7 +28,10 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     const [deliveryCharges, setDeliveryCharges] = useState(300);
     const [packingCost, setpackingCost] = useState(200);
     const [includeDisposable, setIncludeDisposable] = useState(true); // State for checkbox
+    const [includeTables, setIncludeTables] = useState(false);
+    const [numberOfTables, setNumberOfTables] = useState(1); // Define numberOfTables state
     const [currentAddress, setCurrentAddress] = useState('');
+    const [pricePerTable , setPricePerTable] = useState(400);
     const [showAllItems, setShowAllItems] = useState(false);
     const [count, setCount] = useState(0);
     const [add, setAdd] = useState('');
@@ -46,6 +49,14 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
         setWarningVisible(false);
         // setWarningVisibleForCity(false);
     };
+    const handleNumberOfTablesChange = (value) => {
+        if (value < 0) {
+            // If the new value is less than 0, set it to 0
+            value = 0;
+        }
+        setNumberOfTables(value);
+        setPricePerTable(400 * value);
+    };
 
     const selectedMealList = Object.values(selectedDishData).map(dish => {
         return {
@@ -57,21 +68,13 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
         };
     });
 
-    // const onViewAllClick = () => {
-    //     setShowAllItems(!showAllItems);
-    // }
-
+   
 
     const editAddress = (address) => {
         bottomSheetRef.current.close();
         navigation.navigate('ConfirmLocation', { 'data': address })
     }
-
-    const dishCount = selectedMealList.filter(x => x.mealId =="63f1b6b7ed240f7a09f7e2de" || x.mealId=="63f1b39a4082ee76673a0a9f" || x.mealId=="63edc4757e1b370928b149b3").length;
-
-    
-    
-
+    const dishCount = selectedMealList.filter(x => x.mealId == "63f1b6b7ed240f7a09f7e2de" || x.mealId == "63f1b39a4082ee76673a0a9f" || x.mealId == "63edc4757e1b370928b149b3").length;
     function calculateDiscountPercentage(peopleCount, dishCount) {
         if (dishCount <= 5) {
             if (peopleCount >= 0 && peopleCount <= 10) {
@@ -255,17 +258,23 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     const dishPrice = selectedMealList.reduce((total, dish) => total + dish.price, 0);
     const totalPrice = selectedDeliveryOption === 'liveCatering' ? dishPrice * peopleCount + 6500 : dishPrice * peopleCount;
 
-    
+
     const discountPercentage = calculateDiscountPercentage(peopleCount, dishCount);
     const discountedPrice = (totalPrice * (1 - discountPercentage / 100)).toFixed(0);
 
 
     const calculateFinalTotal = () => {
-        let finalTotal = parseFloat(discountedPrice) + parseFloat(deliveryCharges);
-        if (includeDisposable) {
-            finalTotal += parseFloat((20 * peopleCount).toFixed(0)); // Add disposable cost
+        let finalTotal = parseFloat(discountedPrice);
+        
+        if (selectedDeliveryOption !== 'liveCatering') {
+            finalTotal += parseFloat(packingCost);
+            if (includeDisposable) {
+                finalTotal += parseFloat((20 * peopleCount).toFixed(0));
+            }
+        } else if (numberOfTables > 0) {
+            finalTotal += parseFloat(pricePerTable.toFixed(0)); // Assuming pricePerTable is a state variable
         }
-        // Convert to number and then format to two decimal places
+    
         return finalTotal.toFixed(0);
     };
 
@@ -485,7 +494,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
         let quantity = item.quantity * peopleCount;
 
-        if ((item.id[0] === "63f1b6b7ed240f7a09f7e2de" && mainCourseItemCount > 1)|| (item.id[0] === "63f1b39a4082ee76673a0a9f" && appetizerItemCount >1) || (item.id[0] === "63edc4757e1b370928b149b3" && breadItemCount > 1)) {
+        if ((item.id[0] === "63f1b6b7ed240f7a09f7e2de" && mainCourseItemCount > 1) || (item.id[0] === "63f1b39a4082ee76673a0a9f" && appetizerItemCount > 1) || (item.id[0] === "63edc4757e1b370928b149b3" && breadItemCount > 1)) {
             if (itemCount <= 5) {
                 quantity = quantity
             }
@@ -868,43 +877,65 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                         ) : null}
 
                         <Image style={{ width: 290, height: 1, marginTop: 5, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')}></Image>
-                        
-                        {selectedDeliveryOption === 'foodDelivery' ? 
-                           <View>
-                           <View style={{ flexDirection:"row" , justifyContent:"space-between" , alignItems:"center" , backgroundColor: includeDisposable ? '#efefef' : '#fff'  ,paddingHorizontal: 5 ,paddingVertical:4 , marginTop:4 }}>
-                               <View style={{ flexDirection:"row" , justifyContent:"space-between" , alignItems:"center" }}>
-                                   <TouchableOpacity onPress={() => setIncludeDisposable(!includeDisposable)}>
-                                       <View style={{ width: 19, height: 19, borderWidth: 1, borderColor: includeDisposable ? '#008631' : '#008631', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 4 }}>
-                                           {includeDisposable && <Image source={require('../../assets/check.png')} style={{ width: 13, height: 13 }} />}
-                                       </View>
-                                   </TouchableOpacity>
-                                   <View style={{  }}>
-                                       <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}>Disposable plates + water bottle:</Text>
-                                       <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}> ₹ 20/Person</Text>
-                                   </View>
-                               </View>
-                       
-                               <View style={{  }}>
-                                   <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 14}}>₹ {includeDisposable ? 20 * peopleCount : 0}</Text>
-                               </View>
-                           </View>
-                           <Image style={{ width: 290, height: 1, marginTop: 10, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')} />
-                           </View>
-                       
-                        : null}
-                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 6 }}>
-                            <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20 }}>Packing Cost</Text>
-                            <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20 }}>₹ {packingCost}</Text>
-                        </View>
+
+                        {selectedDeliveryOption === 'foodDelivery' && (
+    <View>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: includeDisposable ? '#efefef' : '#fff', paddingHorizontal: 5, paddingVertical: 4, marginTop: 4 }}>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                <TouchableOpacity onPress={() => setIncludeDisposable(!includeDisposable)}>
+                    <View style={{ width: 19, height: 19, borderWidth: 1, borderColor: includeDisposable ? '#008631' : '#008631', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 4 }}>
+                        {includeDisposable && <Image source={require('../../assets/check.png')} style={{ width: 13, height: 13 }} />}
+                    </View>
+                </TouchableOpacity>
+                <View style={{}}>
+                    <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}>Disposable plates + water bottle:</Text>
+                    <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}> ₹ 20/Person</Text>
+                </View>
+            </View>
+
+            <View style={{}}>
+                <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 14 }}>₹ {includeDisposable ? 20 * peopleCount : 0}</Text>
+            </View>
+        </View>
+        <Image style={{ width: 290, height: 1, marginTop: 10, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')} />
+    
+    </View>
+)}
+
+{selectedDeliveryOption === 'liveCatering' && (
+    <View>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: '#efefef', paddingHorizontal: 5, paddingVertical: 4, marginTop: 4 }}>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                <View style={{}}>
+                    <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}>Select Table: ₹ {pricePerTable}</Text>
+                </View>
+            </View>
+
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => handleNumberOfTablesChange(numberOfTables - 1)}>
+                    <Image source={require('../../assets/minus.png')} style={{ width: 20, height: 20, marginRight: 5 }} />
+                </TouchableOpacity>
+                <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13 }}>{numberOfTables}</Text>
+                <TouchableOpacity onPress={() => handleNumberOfTablesChange(numberOfTables + 1)}>
+                    <Image source={require('../../assets/plus.png')} style={{ width: 20, height: 20, marginLeft: 5 }} />
+                </TouchableOpacity>
+            </View>
+        </View>
+        <Image style={{ width: 290, height: 1, marginTop: 10, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')} />
+    </View>
+)}
+
+
+                     
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
                             <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20 }}>Delivery Charges</Text>
-                            <View style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20 , flexDirection:"row"}}>
-                                <Text style={{ color: "#008631", fontWeight: '600' , marginRight:5}}>FREE</Text>
-                                <Text style={{ textDecorationLine: "line-through" , color: "#9252AA", fontWeight: '600' }}> ₹ {deliveryCharges}</Text>
+                            <View style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20, flexDirection: "row" }}>
+                                <Text style={{ color: "#008631", fontWeight: '600', marginRight: 5 }}>FREE</Text>
+                                <Text style={{ textDecorationLine: "line-through", color: "#9252AA", fontWeight: '600' }}> ₹ {deliveryCharges}</Text>
                             </View>
                         </View>
                         <Image style={{ width: 290, height: 1, marginTop: 20, marginBottom: 3 }} source={require('../../assets/Rectangleline.png')} />
-                            
+
                         {/* Calculation for final total amount */}
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
                             <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20 }}>Final Amount</Text>
@@ -919,13 +950,13 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                     </View>
 
                 </View>
-      <View style={{ justifyContent: 'space-between', marginTop: 7, borderRadius: 6, backgroundColor: '#E8E8E8', borderColor: '#D8D8D8', borderWidth: 1, width: Dimensions.get('window').width - 40, paddingBottom: 10 , marginLeft:19 }}>
+                <View style={{ justifyContent: 'space-between', marginTop: 7, borderRadius: 6, backgroundColor: '#E8E8E8', borderColor: '#D8D8D8', borderWidth: 1, width: Dimensions.get('window').width - 40, paddingBottom: 10, marginLeft: 19 }}>
                     <View style={{ marginHorizontal: 16, flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
                         <Text style={{ padding: 4, color: '#000', fontSize: 13, fontWeight: '600' }}>Dishes selected</Text>
                     </View>
 
                     <View style={{ marginTop: 10, marginHorizontal: 15, flexDirection: 'row', flex: 1 }} >
-                       
+
                         <FlatList
                             //data={showAllItems ? selectedMealList : selectedMealList.slice(0, 3)}
                             data={selectedDishQuantities}
@@ -953,8 +984,8 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                         </View>
                         <View>
                             <Text style={{ fontSize: 11, color: '#9252AA', fontWeight: '400', marginLeft: 4, lineHeight: 15 }}>
-                            The order can be cancelled with 95% refund till 24 hours in advance of food delivery time.{'\n'}
-                            For any edits, reach out to our customer support team (24 hours in advance of scheduled order delivery time)
+                                The order can be cancelled with 95% refund till 24 hours in advance of food delivery time.{'\n'}
+                                For any edits, reach out to our customer support team (24 hours in advance of scheduled order delivery time)
                             </Text>
                         </View>
                     </View>
