@@ -2,16 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Dimensions, ImageBackground, FlatList, ScrollView, StatusBar, View, Linking, Text, TextInput, Image, TouchableOpacity, TouchableHighlight, BackHandler } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CustomStatusBar from '../../components/CustomStatusBar';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { BASE_URL, GET_CUISINE_ENDPOINT, GET_ADDRESS_LIST, API_SUCCESS_CODE, GET_MEAL_DISH_ENDPOINT, CONFIRM_ORDER_ENDPOINT, GET_ORDER_CITY_CHECK } from '../../utils/ApiConstants';
+import { BASE_URL, GET_CUISINE_ENDPOINT, GET_ADDRESS_LIST, API_SUCCESS_CODE, CONFIRM_ORDER_ENDPOINT, GET_ORDER_CITY_CHECK } from '../../utils/ApiConstants';
 import Geocoder from 'react-native-geocoding';
 import CustomHeader from '../../components/CustomeHeader';
 import { PAYMENT, PAYMENT_STATUS, PAYMENTSDK } from '../../utils/ApiConstants';
 import Geolocation from '@react-native-community/geolocation';
-import { getCurrentPosition } from 'react-native-geolocation-service';
 import OrderWarning from '../dialog/OrderWarning';
-import Loader from '../../components/Loader';
 import PhonePePaymentSDK from 'react-native-phonepe-pg'
 
 const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
@@ -28,11 +25,8 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     const [deliveryCharges, setDeliveryCharges] = useState(300);
     const [packingCost, setpackingCost] = useState(200);
     const [includeDisposable, setIncludeDisposable] = useState(true); // State for checkbox
-    const [includeTables, setIncludeTables] = useState(false);
-    const [numberOfTables, setNumberOfTables] = useState(1); // Define numberOfTables state
+    const [includeTables, setIncludeTables] = useState(true);
     const [currentAddress, setCurrentAddress] = useState('');
-    const [pricePerTable, setPricePerTable] = useState(400);
-    const [showAllItems, setShowAllItems] = useState(false);
     const [count, setCount] = useState(0);
     const [add, setAdd] = useState('');
     let [addId, setAddId] = useState('')
@@ -48,14 +42,6 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     const handleWarningClose = () => {
         setWarningVisible(false);
         // setWarningVisibleForCity(false);
-    };
-    const handleNumberOfTablesChange = (value) => {
-        if (value < 0) {
-            // If the new value is less than 0, set it to 0
-            value = 0;
-        }
-        setNumberOfTables(value);
-        setPricePerTable(400 * value);
     };
 
     const selectedMealList = Object.values(selectedDishData).map(dish => {
@@ -74,179 +60,235 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
         bottomSheetRef.current.close();
         navigation.navigate('ConfirmLocation', { 'data': address })
     }
+    JSON.stringify("selectedMealList", selectedMealList)
     const dishCount = selectedMealList.filter(x => x.mealId == "63f1b6b7ed240f7a09f7e2de" || x.mealId == "63f1b39a4082ee76673a0a9f" || x.mealId == "63edc4757e1b370928b149b3").length;
-    function calculateDiscountPercentage(peopleCount, dishCount) {
+    function calculateDiscountPercentage(peopleCount, dishCount ) {
+        console.log(peopleCount + "===3333====" +  dishCount)
         if (dishCount <= 5) {
             if (peopleCount >= 0 && peopleCount <= 10) {
                 return 0;
             } else if (peopleCount >= 11 && peopleCount <= 19) {
-                return 3.5;
+                return 0;
             } else if (peopleCount >= 20 && peopleCount <= 29) {
-                return 7.0;
+                return 3.5;
             } else if (peopleCount >= 30 && peopleCount <= 39) {
-                return 10.5;
+                return 3.5;
             } else if (peopleCount >= 40 && peopleCount <= 49) {
-                return 14.0;
+                return 7.0;
             } else if (peopleCount >= 50 && peopleCount <= 59) {
-                return 17.5;
+                return 7.0;
             } else {
-                return 17.5; // For 60-150 people, use the same discount percentage as 50-59 people
+                return 10.0; // For 60-150 people, use the same discount percentage as 50-59 people
             }
         } else if (dishCount == 6) {
             if (peopleCount >= 0 && peopleCount <= 10) {
                 return 15;
             } else if (peopleCount >= 11 && peopleCount <= 19) {
-                return 18.5;
+                return 15;
             } else if (peopleCount >= 20 && peopleCount <= 29) {
-                return 22.0;
+                return 18.5;
             } else if (peopleCount >= 30 && peopleCount <= 39) {
-                return 25.5;
+                return 18.5;
             } else if (peopleCount >= 40 && peopleCount <= 49) {
-                return 29.0;
+                return 22.0;
             } else if (peopleCount >= 50 && peopleCount <= 59) {
-                return 32.5;
+                return 22.0;
             } else if (peopleCount >= 60 && peopleCount <= 69) {
-                return 32.5;
+                return 25;
             } else if (peopleCount >= 70 && peopleCount <= 99) {
-                return 32.5;
+                return 25;
             } else {
-                return 32.5; // For 100-150 people, use the same discount percentage as 70-99 people
+                return 25; // For 100-150 people, use the same discount percentage as 70-99 people
             }
         }
         else if (dishCount == 7) {
             if (peopleCount >= 0 && peopleCount <= 10) {
                 return 15;
             } else if (peopleCount >= 11 && peopleCount <= 19) {
-                return 18.5;
+                return 15;
             } else if (peopleCount >= 20 && peopleCount <= 29) {
-                return 22.0;
+                return 18.5;
             } else if (peopleCount >= 30 && peopleCount <= 39) {
-                return 25.5;
+                return 18.5;
             } else if (peopleCount >= 40 && peopleCount <= 49) {
-                return 29.0;
+                return 22.0;
             } else if (peopleCount >= 50 && peopleCount <= 59) {
-                return 32.5;
+                return 22.0;
             } else if (peopleCount >= 60 && peopleCount <= 69) {
-                return 32.5;
+                return 25;
             } else if (peopleCount >= 70 && peopleCount <= 99) {
-                return 32.5;
+                return 25;
             } else {
-                return 32.5; // For 100-150 people, use the same discount percentage as 70-99 people
+                return 25; // For 100-150 people, use the same discount percentage as 70-99 people
             }
         }
         else if (dishCount == 8) {
             if (peopleCount >= 0 && peopleCount <= 10) {
                 return 25;
             } else if (peopleCount >= 11 && peopleCount <= 19) {
-                return 28.5;
+                return 25;
             } else if (peopleCount >= 20 && peopleCount <= 29) {
-                return 32.0;
+                return 28;
             } else if (peopleCount >= 30 && peopleCount <= 39) {
-                return 35.5;
+                return 28.5;
             } else if (peopleCount >= 40 && peopleCount <= 49) {
-                return 39.0;
+                return 28.5;
             } else if (peopleCount >= 50 && peopleCount <= 59) {
-                return 42.5;
+                return 32.5;
             } else if (peopleCount >= 60 && peopleCount <= 69) {
-                return 42.5;
+                return 32.5;
             } else if (peopleCount >= 70 && peopleCount <= 99) {
-                return 42.5;
+                return 35.0;
             } else {
-                return 42.5; // For 100-150 people, use the same discount percentage as 70-99 people
+                return 35.0; // For 100-150 people, use the same discount percentage as 70-99 people
             }
         }
         else if (dishCount == 9) {
             if (peopleCount >= 0 && peopleCount <= 10) {
                 return 30;
             } else if (peopleCount >= 11 && peopleCount <= 19) {
-                return 33.5;
+                return 30;
             } else if (peopleCount >= 20 && peopleCount <= 29) {
-                return 37.0;
+                return 33.5;
             } else if (peopleCount >= 30 && peopleCount <= 39) {
-                return 40.5;
+                return 33.5;
             } else if (peopleCount >= 40 && peopleCount <= 49) {
-                return 44.0;
+                return 37;
             } else if (peopleCount >= 50 && peopleCount <= 59) {
-                return 47.5;
+                return 37;
             } else if (peopleCount >= 60 && peopleCount <= 69) {
-                return 47.5;
+                return 40;
             } else if (peopleCount >= 70 && peopleCount <= 99) {
-                return 47.5;
+                return 40;
             } else {
-                return 47.5; // For 100-150 people, use the same discount percentage as 70-99 people
+                return 40; // For 100-150 people, use the same discount percentage as 70-99 people
             }
         }
         else if (dishCount == 10) {
             if (peopleCount >= 0 && peopleCount <= 10) {
                 return 35;
             } else if (peopleCount >= 11 && peopleCount <= 19) {
-                return 38.5;
+                return 35;
             } else if (peopleCount >= 20 && peopleCount <= 29) {
-                return 42.0;
+                return 38.5;
             } else if (peopleCount >= 30 && peopleCount <= 39) {
-                return 45.5;
+                return 38.5;
             } else if (peopleCount >= 40 && peopleCount <= 49) {
-                return 49.0;
+                return 42.0;
             } else if (peopleCount >= 50 && peopleCount <= 59) {
-                return 52.5;
+                return 42.0;
             } else if (peopleCount >= 60 && peopleCount <= 69) {
-                return 52.5;
+                return 45.0;
             } else if (peopleCount >= 70 && peopleCount <= 99) {
-                return 52.5;
+                return 45.0;
             } else {
-                return 52.5; // For 100-150 people, use the same discount percentage as 70-99 people
+                return 45.0; // For 100-150 people, use the same discount percentage as 70-99 people
             }
         }
         else if (dishCount == 11) {
             if (peopleCount >= 0 && peopleCount <= 10) {
                 return 40;
             } else if (peopleCount >= 11 && peopleCount <= 19) {
-                return 43.5;
+                return 40;
             } else if (peopleCount >= 20 && peopleCount <= 29) {
-                return 47.0;
+                return 43.5;
             } else if (peopleCount >= 30 && peopleCount <= 39) {
-                return 50.5;
+                return 43.5;
             } else if (peopleCount >= 40 && peopleCount <= 49) {
-                return 54.0;
+                return 47.0;
             } else if (peopleCount >= 50 && peopleCount <= 59) {
-                return 57.5;
+                return 47.0;
             } else if (peopleCount >= 60 && peopleCount <= 69) {
-                return 57.5;
+                return 50.0;
             } else if (peopleCount >= 70 && peopleCount <= 99) {
-                return 57.5;
+                return 50.0;
             } else {
-                return 57.5; // For 100-150 people, use the same discount percentage as 70-99 people
+                return 50.0; // For 100-150 people, use the same discount percentage as 70-99 people
             }
         }
         else if (dishCount == 12) {
             if (peopleCount >= 0 && peopleCount <= 10) {
                 return 50;
             } else if (peopleCount >= 11 && peopleCount <= 19) {
-                return 53.5;
+                return 50.0;
             } else if (peopleCount >= 20 && peopleCount <= 29) {
-                return 57.0;
+                return 53.5;
             } else if (peopleCount >= 30 && peopleCount <= 39) {
-                return 60.5;
+                return 53.5;
             } else if (peopleCount >= 40 && peopleCount <= 49) {
-                return 64.0;
+                return 57.0;
             } else if (peopleCount >= 50 && peopleCount <= 59) {
-                return 67.5;
+                return 57.0;
             } else if (peopleCount >= 60 && peopleCount <= 69) {
-                return 67.5;
+                return 60.0;
             } else if (peopleCount >= 70 && peopleCount <= 99) {
-                return 67.5;
+                return 60.0;
             } else {
-                return 67.5; // For 100-150 people, use the same discount percentage as 70-99 people
+                return 60.0; // For 100-150 people, use the same discount percentage as 70-99 people
             }
         }
         else if (dishCount == 13) {
-            console.log("dishCount is 13" + dishCount)
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 53;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 53.0;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 56.5;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 56.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 60.0;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 60.0;
+            } else if (peopleCount >= 60 && peopleCount <= 69) {
+                return 63.0;
+            } else if (peopleCount >= 70 && peopleCount <= 99) {
+                return 63.0;
+            } else {
+                return 63.0; // For 100-150 people, use the same discount percentage as 70-99 people
+            }
         }
         else if (dishCount == 14) {
-            console.log("dishCount is 14" + dishCount)
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 53;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 53.0;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 56.5;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 56.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 60.0;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 60.0;
+            } else if (peopleCount >= 60 && peopleCount <= 69) {
+                return 63.0;
+            } else if (peopleCount >= 70 && peopleCount <= 99) {
+                return 63.0;
+            } else {
+                return 63.0; // For 100-150 people, use the same discount percentage as 70-99 people
+            }
         }
         else if (dishCount == 15) {
-            console.log("dishCount is 15" + dishCount)
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 55;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 55.0;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 58.5;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 58.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 62.0;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 62.0;
+            } else if (peopleCount >= 60 && peopleCount <= 69) {
+                return 65.0;
+            } else if (peopleCount >= 70 && peopleCount <= 99) {
+                return 65.0;
+            } else {
+                return 65.0; // For 100-150 people, use the same discount percentage as 70-99 people
+            }
         }
         else {
 
@@ -256,15 +298,16 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     // Assuming selectedMealList, peopleCount, and dishCount are defined earlier
 
     const dishPrice = selectedMealList.reduce((total, dish) => total + dish.price, 0);
-    var totalPrice = selectedDeliveryOption === 'liveCatering' ? (dishPrice * peopleCount + 6500) * 1.1 : dishPrice * peopleCount;
-    totalPrice = totalPrice.toFixed(0);
+    var totalPrice = selectedDeliveryOption === 'liveCatering' ?  ((dishPrice * peopleCount) * 1.1 + 6500).toFixed(0) : dishPrice * peopleCount;
+   
 
     const discountPercentage = calculateDiscountPercentage(peopleCount, dishCount);
-    const discountedPrice = (totalPrice * (1 - discountPercentage / 100)).toFixed(0);
+    console.log("discountPercentage" + discountPercentage)
+    var discountedPrice = selectedDeliveryOption === 'liveCatering' ? ((totalPrice - 6500) * (discountPercentage / 100)).toFixed(0) : (totalPrice * (discountPercentage / 100)).toFixed(0);
 
 
     const calculateFinalTotal = () => {
-        let finalTotal = parseFloat(discountedPrice);
+        let finalTotal = totalPrice - parseFloat(discountedPrice);
         console.log(totalPrice, discountedPrice);
 
         console.log("finalTotal: " + finalTotal);
@@ -278,8 +321,8 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                 console.log("finalTotal after disposable cost: " + finalTotal);
             }
         } else if (selectedDeliveryOption === 'liveCatering') {
-            if (numberOfTables > 0) {
-                finalTotal += parseFloat(pricePerTable.toFixed(0));
+            if (includeTables) {
+                finalTotal += 1600;
                 console.log("finalTotal after table cost: " + finalTotal);
             }
         }
@@ -429,10 +472,6 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                 page: '1'
             };
             const token = await AsyncStorage.getItem('token')
-
-
-
-
             const response = await axios.post(url, requestData, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -882,7 +921,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                                     <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20 }}>Item Discount:</Text>
                                 </View>
                                 <Text style={{ color: "#008631", fontWeight: '600', fontSize: 14, lineHeight: 20 }}>
-                                    {'-'} ₹ {totalPrice - discountedPrice}
+                                    {'-'} ₹ {discountedPrice}
                                 </Text>
                             </View>
                         ) : null}
@@ -920,24 +959,25 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
                         {selectedDeliveryOption === 'liveCatering' && (
                             <View>
-                                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: '#efefef', paddingHorizontal: 5, paddingVertical: 4, marginTop: 4 }}>
+                                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: includeTables ? '#efefef' : '#fff', paddingHorizontal: 5, paddingVertical: 4, marginTop: 4 }}>
                                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                        <TouchableOpacity onPress={() => setIncludeTables(!includeTables)}>
+                                            <View style={{ width: 19, height: 19, borderWidth: 1, borderColor: includeTables ? '#008631' : '#008631', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 4 }}>
+                                                {includeTables && <Image source={require('../../assets/check.png')} style={{ width: 13, height: 13 }} />}
+                                            </View>
+                                        </TouchableOpacity>
                                         <View style={{}}>
-                                            <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}>Select Table: ₹ {pricePerTable}</Text>
+                                            <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}>3-5 Serving Tables with Cloth:</Text>
+
                                         </View>
                                     </View>
 
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <TouchableOpacity onPress={() => handleNumberOfTablesChange(numberOfTables - 1)}>
-                                            <Image source={require('../../assets/minus.png')} style={{ width: 20, height: 20, marginRight: 5 }} />
-                                        </TouchableOpacity>
-                                        <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13 }}>{numberOfTables}</Text>
-                                        <TouchableOpacity onPress={() => handleNumberOfTablesChange(numberOfTables + 1)}>
-                                            <Image source={require('../../assets/plus.png')} style={{ width: 20, height: 20, marginLeft: 5 }} />
-                                        </TouchableOpacity>
+                                    <View style={{}}>
+                                        <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 14 }}>₹ {includeTables ? 1600 : 0}</Text>
                                     </View>
                                 </View>
                                 <Image style={{ width: 290, height: 1, marginTop: 10, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')} />
+
                             </View>
                         )}
 

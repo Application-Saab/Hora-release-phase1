@@ -305,7 +305,7 @@ const SelectDateFoodDelivery = ({
         );
     };
     const onContinueClick = () => {
-        const totalOrderAmount = selectedOption === 'liveCatering' ? dishPrice * peopleCount + 6500 : dishPrice * peopleCount;
+        const totalOrderAmount = selectedOption === 'liveCatering' ?  (dishPrice * peopleCount + 6500) * 1.1 : dishPrice * peopleCount;
         if (totalOrderAmount < 3000) {
             setWarningVisible(true);
         } else {
@@ -599,7 +599,7 @@ const SelectDateFoodDelivery = ({
                                 { color: isOrderValid ? 'white' : '#343333' },
                             ]}
                         >
-                            {Object.values(data).length} Items | ₹ {selectedOption === 'liveCatering' ? dishPrice * peopleCount + 6500 : dishPrice * peopleCount}
+                            {Object.values(data).length} Items | ₹ {selectedOption === 'liveCatering' ?  ((dishPrice * peopleCount) * 1.1 + 6500).toFixed(0): dishPrice * peopleCount}
                         </Text>
 
                     </View>
