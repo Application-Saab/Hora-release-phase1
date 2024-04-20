@@ -31,7 +31,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     const [includeTables, setIncludeTables] = useState(false);
     const [numberOfTables, setNumberOfTables] = useState(1); // Define numberOfTables state
     const [currentAddress, setCurrentAddress] = useState('');
-    const [pricePerTable , setPricePerTable] = useState(400);
+    const [pricePerTable, setPricePerTable] = useState(400);
     const [showAllItems, setShowAllItems] = useState(false);
     const [count, setCount] = useState(0);
     const [add, setAdd] = useState('');
@@ -68,7 +68,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
         };
     });
 
-   
+
 
     const editAddress = (address) => {
         bottomSheetRef.current.close();
@@ -256,8 +256,8 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     // Assuming selectedMealList, peopleCount, and dishCount are defined earlier
 
     const dishPrice = selectedMealList.reduce((total, dish) => total + dish.price, 0);
-    const totalPrice = selectedDeliveryOption === 'liveCatering' ? dishPrice * peopleCount + 6500 : dishPrice * peopleCount;
-
+    var totalPrice = selectedDeliveryOption === 'liveCatering' ? (dishPrice * peopleCount + 6500) * 1.1 : dishPrice * peopleCount;
+    totalPrice = totalPrice.toFixed(0);
 
     const discountPercentage = calculateDiscountPercentage(peopleCount, dishCount);
     const discountedPrice = (totalPrice * (1 - discountPercentage / 100)).toFixed(0);
@@ -265,18 +265,29 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
     const calculateFinalTotal = () => {
         let finalTotal = parseFloat(discountedPrice);
-        
-        if (selectedDeliveryOption !== 'liveCatering') {
+        console.log(totalPrice, discountedPrice);
+
+        console.log("finalTotal: " + finalTotal);
+
+        if (selectedDeliveryOption === 'foodDelivery') {
             finalTotal += parseFloat(packingCost);
+            console.log("finalTotal after packing cost: " + finalTotal);
+
             if (includeDisposable) {
                 finalTotal += parseFloat((20 * peopleCount).toFixed(0));
+                console.log("finalTotal after disposable cost: " + finalTotal);
             }
-        } else if (numberOfTables > 0) {
-            finalTotal += parseFloat(pricePerTable.toFixed(0)); // Assuming pricePerTable is a state variable
+        } else if (selectedDeliveryOption === 'liveCatering') {
+            if (numberOfTables > 0) {
+                finalTotal += parseFloat(pricePerTable.toFixed(0));
+                console.log("finalTotal after table cost: " + finalTotal);
+            }
         }
-    
+
+        console.log("finalTotal after adjustments: " + finalTotal.toFixed(0));
         return finalTotal.toFixed(0);
     };
+
 
 
     // Function to calculate the advance payment
@@ -551,7 +562,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
                 <View style={{ flexDirection: 'column', marginLeft: 1, width: 80 }}>
                     <Text style={{ fontSize: 10, fontWeight: '500', color: '#414141' }}>{item.name}</Text>
-                    <Text style={{ fontSize: 14, fontWeight: '700', color: '#9252AA' }}>{quantity + ' ' + unit}</Text>
+                    <Text style={{ fontSize: 14, fontWeight: '700', color: '#9252AA', display: selectedDeliveryOption === 'liveCatering' ? 'none' : 'inline' }}>{quantity + ' ' + unit}</Text>
                 </View>
             </View>
         );
@@ -879,54 +890,59 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                         <Image style={{ width: 290, height: 1, marginTop: 5, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')}></Image>
 
                         {selectedDeliveryOption === 'foodDelivery' && (
-    <View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: includeDisposable ? '#efefef' : '#fff', paddingHorizontal: 5, paddingVertical: 4, marginTop: 4 }}>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                <TouchableOpacity onPress={() => setIncludeDisposable(!includeDisposable)}>
-                    <View style={{ width: 19, height: 19, borderWidth: 1, borderColor: includeDisposable ? '#008631' : '#008631', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 4 }}>
-                        {includeDisposable && <Image source={require('../../assets/check.png')} style={{ width: 13, height: 13 }} />}
-                    </View>
-                </TouchableOpacity>
-                <View style={{}}>
-                    <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}>Disposable plates + water bottle:</Text>
-                    <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}> ₹ 20/Person</Text>
-                </View>
-            </View>
+                            <View>
+                                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: includeDisposable ? '#efefef' : '#fff', paddingHorizontal: 5, paddingVertical: 4, marginTop: 4 }}>
+                                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                        <TouchableOpacity onPress={() => setIncludeDisposable(!includeDisposable)}>
+                                            <View style={{ width: 19, height: 19, borderWidth: 1, borderColor: includeDisposable ? '#008631' : '#008631', borderRadius: 3, alignItems: 'center', justifyContent: 'center', marginRight: 4 }}>
+                                                {includeDisposable && <Image source={require('../../assets/check.png')} style={{ width: 13, height: 13 }} />}
+                                            </View>
+                                        </TouchableOpacity>
+                                        <View style={{}}>
+                                            <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}>Disposable plates + water bottle:</Text>
+                                            <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}> ₹ 20/Person</Text>
+                                        </View>
+                                    </View>
 
-            <View style={{}}>
-                <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 14 }}>₹ {includeDisposable ? 20 * peopleCount : 0}</Text>
-            </View>
-        </View>
-        <Image style={{ width: 290, height: 1, marginTop: 10, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')} />
-    
-    </View>
-)}
+                                    <View style={{}}>
+                                        <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 14 }}>₹ {includeDisposable ? 20 * peopleCount : 0}</Text>
+                                    </View>
+                                </View>
+                                <Image style={{ width: 290, height: 1, marginTop: 10, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')} />
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
+                                    <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20 }}>Packing Cost</Text>
+                                    <View style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20, flexDirection: "row" }}>
+                                        <Text style={{ color: "#9252AA", fontWeight: '600' }}> ₹ {packingCost}</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        )}
 
-{selectedDeliveryOption === 'liveCatering' && (
-    <View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: '#efefef', paddingHorizontal: 5, paddingVertical: 4, marginTop: 4 }}>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                <View style={{}}>
-                    <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}>Select Table: ₹ {pricePerTable}</Text>
-                </View>
-            </View>
+                        {selectedDeliveryOption === 'liveCatering' && (
+                            <View>
+                                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: '#efefef', paddingHorizontal: 5, paddingVertical: 4, marginTop: 4 }}>
+                                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                        <View style={{}}>
+                                            <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}>Select Table: ₹ {pricePerTable}</Text>
+                                        </View>
+                                    </View>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <TouchableOpacity onPress={() => handleNumberOfTablesChange(numberOfTables - 1)}>
-                    <Image source={require('../../assets/minus.png')} style={{ width: 20, height: 20, marginRight: 5 }} />
-                </TouchableOpacity>
-                <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13 }}>{numberOfTables}</Text>
-                <TouchableOpacity onPress={() => handleNumberOfTablesChange(numberOfTables + 1)}>
-                    <Image source={require('../../assets/plus.png')} style={{ width: 20, height: 20, marginLeft: 5 }} />
-                </TouchableOpacity>
-            </View>
-        </View>
-        <Image style={{ width: 290, height: 1, marginTop: 10, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')} />
-    </View>
-)}
+                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                        <TouchableOpacity onPress={() => handleNumberOfTablesChange(numberOfTables - 1)}>
+                                            <Image source={require('../../assets/minus.png')} style={{ width: 20, height: 20, marginRight: 5 }} />
+                                        </TouchableOpacity>
+                                        <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13 }}>{numberOfTables}</Text>
+                                        <TouchableOpacity onPress={() => handleNumberOfTablesChange(numberOfTables + 1)}>
+                                            <Image source={require('../../assets/plus.png')} style={{ width: 20, height: 20, marginLeft: 5 }} />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                                <Image style={{ width: 290, height: 1, marginTop: 10, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')} />
+                            </View>
+                        )}
 
 
-                     
+
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
                             <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20 }}>Delivery Charges</Text>
                             <View style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20, flexDirection: "row" }}>

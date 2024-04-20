@@ -182,7 +182,7 @@ const SelectDateFoodDelivery = ({
 
                 <View style={{ flexDirection: 'column', marginLeft: 1, width: 80 }}>
                     <Text style={{ fontSize: 10, fontWeight: '500', color: '#414141' }}>{item.name}</Text>
-                    <Text style={{ fontSize: 14, fontWeight: '700', color: '#9252AA' }}>{quantity + ' ' + unit}</Text>
+                    <Text style={{ fontSize: 14, fontWeight: '700', color: '#9252AA',  display: selectedOption === 'liveCatering' ? 'none' : 'inline' }}>{quantity + ' ' + unit}</Text>
                 </View>
             </View>
         );
@@ -537,7 +537,7 @@ const SelectDateFoodDelivery = ({
                             ? "#D9D9D9"
                             : 'white', borderTopRightRadius: 10, borderTopLeftRadius: 15, paddingVertical: 8, paddingStart: 48, paddingRight: 48
                     }} onPress={() => setActiveTab('right')} activeOpacity={1}>
-                        <Text style={activeTab === 'right' ? styles.activeTab : styles.inactiveTab}>Dish Quantity</Text>
+                        <Text style={activeTab === 'right' ? styles.activeTab : styles.inactiveTab}>Dishes Selected</Text>
                     </TouchableOpacity>
                 </View>
                 {renderTabContent(selectedDishQuantities)}
