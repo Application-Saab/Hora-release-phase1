@@ -25,9 +25,28 @@ const DecorationCatPage = ({ route, navigation }) => {
     const [themeFilter, setThemeFilter] = useState("all");
     const themeFilters = [
         { label: 'Select Theme', value: 'all' },
-        { label: 'Jungle Theme', value: 'jungle' },
+        { label: 'Astronut theme', value: 'Astronut' },
+        { label: 'Avengers theme', value: 'Avengers' },
+        { label: 'Boss baby theme', value: 'Boss' },
+        { label: 'Baby shark theme', value: 'shark' },
+        { label: 'Barbie theme', value: 'Barbie' },
+        { label: 'Cocomelon Theme', value: 'Cocomelon' },
         { label: 'Car Theme', value: 'car' },
-        { label: 'Unicorn Theme', value: 'unicorn' }
+        { label: 'Circus Theme', value: 'Circus' },
+        { label: 'Dinasuar Theme', value: 'Dinasuar' },
+        { label: 'Jungle Theme', value: 'Jungle' },
+        { label: 'Kitty Theme', value: 'Kitty' },
+        { label: 'Lion King', value: 'Lion' },
+        { label: 'Mickey Mouse Theme', value: 'Mickey' },
+        { label: 'Minecraft Theme', value: 'Minecraft' },
+        { label: 'Mermaid Theme', value: 'Mermaid' },
+        { label: 'Pikachu Theme', value: 'Pikachu' },
+        { label: 'Pokemon Theme', value: 'Pokemon' },
+        { label: 'Princess Theme', value: 'Princess' },
+        { label: 'Panda Theme', value: 'Panda' },
+        { label: 'Traffic Theme', value: 'Traffic' },
+        { label: 'Super dogs theme', value: 'dogs' },  
+        { label: 'Unicorn Theme', value: 'Unicorn' },
     ];
     const handleThemeFilter = (value) => {
         setThemeFilter(value);
