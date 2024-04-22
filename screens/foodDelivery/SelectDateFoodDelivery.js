@@ -44,6 +44,260 @@ const SelectDateFoodDelivery = ({
         setSelectedOption(option);
     };
 
+    const selectedMealList = Object.values(data).map(dish => {
+        return {
+            name: dish.name,
+            image: dish.image,
+            price: Number(dish.cuisineArray[0]),
+            id: dish._id,
+            mealId: dish.mealId
+        };
+    });
+
+
+    JSON.stringify("selectedMealList", selectedMealList)
+    const dishCount = selectedMealList.filter(x => x.mealId == "63f1b6b7ed240f7a09f7e2de" || x.mealId == "63f1b39a4082ee76673a0a9f" || x.mealId == "63edc4757e1b370928b149b3").length;
+    function calculateDiscountPercentage(peopleCount, dishCount ) {
+        console.log(peopleCount + "===3333====" +  dishCount)
+        if (dishCount <= 5) {
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 0;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 0;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 3.5;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 3.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 7.0;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 7.0;
+            } else {
+                return 10.0; // For 60-150 people, use the same discount percentage as 50-59 people
+            }
+        } else if (dishCount == 6) {
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 15;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 15;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 18.5;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 18.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 22.0;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 22.0;
+            } else if (peopleCount >= 60 && peopleCount <= 69) {
+                return 25;
+            } else if (peopleCount >= 70 && peopleCount <= 99) {
+                return 25;
+            } else {
+                return 25; // For 100-150 people, use the same discount percentage as 70-99 people
+            }
+        }
+        else if (dishCount == 7) {
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 15;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 15;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 18.5;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 18.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 22.0;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 22.0;
+            } else if (peopleCount >= 60 && peopleCount <= 69) {
+                return 25;
+            } else if (peopleCount >= 70 && peopleCount <= 99) {
+                return 25;
+            } else {
+                return 25; // For 100-150 people, use the same discount percentage as 70-99 people
+            }
+        }
+        else if (dishCount == 8) {
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 25;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 25;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 28;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 28.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 28.5;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 32.5;
+            } else if (peopleCount >= 60 && peopleCount <= 69) {
+                return 32.5;
+            } else if (peopleCount >= 70 && peopleCount <= 99) {
+                return 35.0;
+            } else {
+                return 35.0; // For 100-150 people, use the same discount percentage as 70-99 people
+            }
+        }
+        else if (dishCount == 9) {
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 30;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 30;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 33.5;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 33.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 37;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 37;
+            } else if (peopleCount >= 60 && peopleCount <= 69) {
+                return 40;
+            } else if (peopleCount >= 70 && peopleCount <= 99) {
+                return 40;
+            } else {
+                return 40; // For 100-150 people, use the same discount percentage as 70-99 people
+            }
+        }
+        else if (dishCount == 10) {
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 35;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 35;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 38.5;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 38.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 42.0;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 42.0;
+            } else if (peopleCount >= 60 && peopleCount <= 69) {
+                return 45.0;
+            } else if (peopleCount >= 70 && peopleCount <= 99) {
+                return 45.0;
+            } else {
+                return 45.0; // For 100-150 people, use the same discount percentage as 70-99 people
+            }
+        }
+        else if (dishCount == 11) {
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 40;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 40;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 43.5;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 43.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 47.0;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 47.0;
+            } else if (peopleCount >= 60 && peopleCount <= 69) {
+                return 50.0;
+            } else if (peopleCount >= 70 && peopleCount <= 99) {
+                return 50.0;
+            } else {
+                return 50.0; // For 100-150 people, use the same discount percentage as 70-99 people
+            }
+        }
+        else if (dishCount == 12) {
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 50;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 50.0;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 53.5;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 53.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 57.0;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 57.0;
+            } else if (peopleCount >= 60 && peopleCount <= 69) {
+                return 60.0;
+            } else if (peopleCount >= 70 && peopleCount <= 99) {
+                return 60.0;
+            } else {
+                return 60.0; // For 100-150 people, use the same discount percentage as 70-99 people
+            }
+        }
+        else if (dishCount == 13) {
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 53;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 53.0;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 56.5;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 56.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 60.0;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 60.0;
+            } else if (peopleCount >= 60 && peopleCount <= 69) {
+                return 63.0;
+            } else if (peopleCount >= 70 && peopleCount <= 99) {
+                return 63.0;
+            } else {
+                return 63.0; // For 100-150 people, use the same discount percentage as 70-99 people
+            }
+        }
+        else if (dishCount == 14) {
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 53;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 53.0;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 56.5;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 56.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 60.0;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 60.0;
+            } else if (peopleCount >= 60 && peopleCount <= 69) {
+                return 63.0;
+            } else if (peopleCount >= 70 && peopleCount <= 99) {
+                return 63.0;
+            } else {
+                return 63.0; // For 100-150 people, use the same discount percentage as 70-99 people
+            }
+        }
+        else if (dishCount == 15) {
+            if (peopleCount >= 0 && peopleCount <= 10) {
+                return 55;
+            } else if (peopleCount >= 11 && peopleCount <= 19) {
+                return 55.0;
+            } else if (peopleCount >= 20 && peopleCount <= 29) {
+                return 58.5;
+            } else if (peopleCount >= 30 && peopleCount <= 39) {
+                return 58.5;
+            } else if (peopleCount >= 40 && peopleCount <= 49) {
+                return 62.0;
+            } else if (peopleCount >= 50 && peopleCount <= 59) {
+                return 62.0;
+            } else if (peopleCount >= 60 && peopleCount <= 69) {
+                return 65.0;
+            } else if (peopleCount >= 70 && peopleCount <= 99) {
+                return 65.0;
+            } else {
+                return 65.0; // For 100-150 people, use the same discount percentage as 70-99 people
+            }
+        }
+        else {
+
+        }
+    }
+
+    const newDishPrice = selectedMealList.reduce((total, dish) => total + dish.price, 0);
+    var totalPrice = selectedOption === 'liveCatering' ?  ((newDishPrice * peopleCount) * 1.1 + 6500).toFixed(0) : newDishPrice * peopleCount;
+    const discountPercentage = calculateDiscountPercentage(peopleCount, dishCount);
+    console.log("discountPercentage" + discountPercentage)
+    var discountedPrice = selectedOption === 'liveCatering' ? ((totalPrice - 6500) * (discountPercentage / 100)).toFixed(0) : (totalPrice * (discountPercentage / 100)).toFixed(0);
+
+
+    console.log(totalPrice+"===="+ discountedPrice)
 
     const contactUsRedirection = () => {
         Linking.openURL('whatsapp://send?phone=+917338584828&text=Hello%20I%20have%20some%20queries%20for%20food%20delivey%20and%20live%20Catering%20service');
@@ -599,7 +853,7 @@ const SelectDateFoodDelivery = ({
                                 { color: isOrderValid ? 'white' : '#343333' },
                             ]}
                         >
-                            {Object.values(data).length} Items | ₹ {selectedOption === 'liveCatering' ?  ((dishPrice * peopleCount) * 1.1 + 6500).toFixed(0): dishPrice * peopleCount}
+                            {Object.values(data).length} Items | ₹ {totalPrice - discountedPrice}
                         </Text>
 
                     </View>

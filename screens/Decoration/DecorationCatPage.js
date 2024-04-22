@@ -22,6 +22,16 @@ const DecorationCatPage = ({ route, navigation }) => {
     const [catalogueData, setCatalogueData] = useState([])
     const [loading, setLoading] = useState(true);
     const [priceRange, setPriceRange] = useState("all");
+    const [themeFilter, setThemeFilter] = useState("all");
+    const themeFilters = [
+        { label: 'Select Theme', value: 'all' },
+        { label: 'Jungle Theme', value: 'jungle' },
+        { label: 'Car Theme', value: 'car' },
+        { label: 'Unicorn Theme', value: 'unicorn' }
+    ];
+    const handleThemeFilter = (value) => {
+        setThemeFilter(value);
+    };
     const handleIncreaseQuantity = (item) => {
         const isItemAlreadySelected = selectedProducts.some(
             (product) => product._id === item._id
@@ -147,7 +157,12 @@ const DecorationCatPage = ({ route, navigation }) => {
     </View>
     );
 
-
+    const filterCatalogueByTheme = (data, theme) => {
+        if (theme === "all") {
+            return data; // Return all products if "all" is selected
+        }
+        return data.filter(item => item.name.toLowerCase().includes(theme.toLowerCase()))
+    };
 
 
     const filterCatalogueByPriceRange = (data, range) => {
@@ -198,6 +213,23 @@ const DecorationCatPage = ({ route, navigation }) => {
                   </View>
                     
                 </ScrollView>
+                {subCategory === 'KidsBirthday' && (
+                <View style={{paddingHorizontal:14 , marginTop:15}}>
+                <View  style={{borderWidth:1, borderColor:"#9252AA" , backgroundColor:"#E0E0E0" , borderRadius:10}}>
+               
+                    <Picker
+                    selectedValue={themeFilter}
+                    onValueChange={(itemValue) => handleThemeFilter(itemValue)}
+                    style={styles.picker}
+                    >
+                    {themeFilters.map((filter) => (
+                    <Picker.Item key={filter.value} label={filter.label} value={filter.value} />
+                    ))}
+                    </Picker>
+                   
+                </View>
+                </View>
+                 )}  
                 {loading ? (
                     <View style={styles.loaderContainer}>
                         <Loader loading={loading} />
@@ -205,8 +237,7 @@ const DecorationCatPage = ({ route, navigation }) => {
                 ) : (
                     <View style={styles.container}>
                         <View style={styles.decContainer}>
-                            {filterCatalogueByPriceRange(catalogueData, priceRange).map((item) => (
-                                <View style={{ width: Dimensions.get('window').width * 0.46 }}>
+                        {filterCatalogueByPriceRange(filterCatalogueByTheme(catalogueData, themeFilter), priceRange).map((item) => (                                <View style={{ width: Dimensions.get('window').width * 0.46 }}>
                                     <ImageBackground
                                         source={
                                             selectedProducts.some((product) => product._id === item._id)
@@ -489,7 +520,12 @@ const styles = StyleSheet.create({
     filterOptionText: {
         color: '#9252AA',
     },
-
-});
+    picker: {
+        width: '98%',
+        color: '#9252AA', // Grey text color
+        borderWidth: 1,
+        borderColor: '#9252AA', // Border color
+        borderRadius: 5, // Border radius
+    },});
 
 export default DecorationCatPage;

@@ -729,7 +729,7 @@ const CreateOrderFoodDelivery = ({navigation}) => {
                 {color: isDishSelected ? 'white' : '#343333'},
               ]}>
 			 
-              {selectedCount} Items | ₹ {selectedDishPrice}
+              {selectedCount} Items 
             </Text>
           </View>
         </TouchableHighlight>

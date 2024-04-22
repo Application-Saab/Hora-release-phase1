@@ -916,7 +916,8 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
 
 
                         {discountedPrice > 0 ? (
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3, alignItems: "center" }}>
+                            <View>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3, alignItems: "center" }}>
                                 <View style={{ justifyContent: 'flex-start', alignItems: "center", flexDirection: 'row' }}>
                                     <Text style={{ color: "#9252AA", fontWeight: '600', fontSize: 14, lineHeight: 20 }}>Item Discount:</Text>
                                 </View>
@@ -924,9 +925,12 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                                     {'-'} ₹ {discountedPrice}
                                 </Text>
                             </View>
+                                                    <Image style={{ width: 290, height: 1, marginTop: 5, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')}></Image>
+
+                            </View>
+                            
                         ) : null}
 
-                        <Image style={{ width: 290, height: 1, marginTop: 5, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')}></Image>
 
                         {selectedDeliveryOption === 'foodDelivery' && (
                             <View>
@@ -990,7 +994,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                                 <Text style={{ textDecorationLine: "line-through", color: "#9252AA", fontWeight: '600' }}> ₹ {deliveryCharges}</Text>
                             </View>
                         </View>
-                        <Image style={{ width: 290, height: 1, marginTop: 20, marginBottom: 3 }} source={require('../../assets/Rectangleline.png')} />
+                        <Image style={{ width: 290, height: 1, marginTop: 10, marginBottom: 3 }} source={require('../../assets/Rectangleline.png')} />
 
                         {/* Calculation for final total amount */}
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
