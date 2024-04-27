@@ -55,7 +55,7 @@ const SelectDateFoodDelivery = ({
     });
 
 
-    JSON.stringify("selectedMealList", selectedMealList)
+   
     const dishCount = selectedMealList.filter(x => x.mealId == "63f1b6b7ed240f7a09f7e2de" || x.mealId == "63f1b39a4082ee76673a0a9f" || x.mealId == "63edc4757e1b370928b149b3").length;
     function calculateDiscountPercentage(peopleCount, dishCount ) {
         console.log(peopleCount + "===3333====" +  dishCount)
@@ -311,7 +311,6 @@ const SelectDateFoodDelivery = ({
         });
         AsyncStorage.getItem("selectedTime").then((sTime) => {
             if (sTime != null) {
-
                 setSelectedTime(new Date(sTime));
             }
         });
@@ -320,7 +319,6 @@ const SelectDateFoodDelivery = ({
     useEffect(() => {
         const isDateValid = checkIsDateValid();
         const isTimeValid = checkIsTimeValid();
-
         if (!isTimeValid) {
             setErrorText('*Order can be placed only between 8:00 AM to 10:00 PM');
             return;

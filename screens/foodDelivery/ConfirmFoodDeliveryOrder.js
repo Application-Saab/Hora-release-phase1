@@ -322,7 +322,7 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
             }
         } else if (selectedDeliveryOption === 'liveCatering') {
             if (includeTables) {
-                finalTotal += 1600;
+                finalTotal += 1200;
                 console.log("finalTotal after table cost: " + finalTotal);
             }
         }
@@ -478,16 +478,8 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                     'authorization': token
                 },
             });
-
-
             if (response.status === API_SUCCESS_CODE) {
                 setAddresses(response.data.data.address)
-
-
-
-
-
-
             }
         } catch (error) {
             console.log('Error Fetching Data:', error.message);
@@ -502,9 +494,6 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
     const handleSelectAddress = (address) => {
         setI(1);
         setAdd(address.address2)
-
-
-
         addresses.forEach(element => {
             if (element.address1 === address.address2 || element.address2 === address.address2) {
                 addressID = element._id;
@@ -971,13 +960,13 @@ const ConfirmFoodDeliveryOrder = ({ navigation, route }) => {
                                             </View>
                                         </TouchableOpacity>
                                         <View style={{}}>
-                                            <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}>3-5 Serving Tables with Cloth:</Text>
+                                            <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 13, lineHeight: 20 }}>3-4 Serving Tables with Cloth:</Text>
 
                                         </View>
                                     </View>
 
                                     <View style={{}}>
-                                        <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 14 }}>₹ {includeTables ? 1600 : 0}</Text>
+                                        <Text style={{ color: '#9252AA', fontWeight: '600', fontSize: 14 }}>₹ {includeTables ? 1200 : 0}</Text>
                                     </View>
                                 </View>
                                 <Image style={{ width: 290, height: 1, marginTop: 10, marginBottom: 5 }} source={require('../../assets/Rectangleline.png')} />
