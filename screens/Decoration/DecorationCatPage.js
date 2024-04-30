@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, Pressable, Dimensions, ImageBackground, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, Pressable, Dimensions, ImageBackground, TouchableOpacity, TouchableHighlight , Linking} from 'react-native';
 import CustomHeader from '../../components/CustomeHeader';
 import { Picker } from '@react-native-picker/picker';
 import RBSheet from 'react-native-raw-bottom-sheet';
@@ -53,7 +53,7 @@ const DecorationCatPage = ({ route, navigation }) => {
         setThemeFilter(value);
     };
     const contactUsRedirection = () => {
-        Linking.openURL('whatsapp://send?phone=+917338584828&text=Hello%20I%20have%20some%20queries%20for%20food%20delivey%20and%20live%20Catering%20service');
+        Linking.openURL('whatsapp://send?phone=+917338584828&text=Hello%20I%20have%20some%20queries%20for%20Decoration%20service.');
     }
     const handleIncreaseQuantity = (item) => {
         const isItemAlreadySelected = selectedProducts.some(
